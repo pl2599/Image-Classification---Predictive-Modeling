@@ -15,20 +15,38 @@ feature <- function(img_dir, set_name, data_name="data", export=T){
   ### Output: an .RData file contains processed features for the images
   
   ### load libraries
+  library(reticulate)
+  cv2 <- reticulate::import('cv2')
   library("EBImage")
   
   n_files <- length(list.files(img_dir))
   
   ### determine img dimensions
-  img0 <-  readImage(paste0(img_dir, "img", "_", data_name, "_", set_name, "_", 1, ".jpg"))
+  img0 <-  cv2$imread(paste0(img_dir, data_name, 1, ".jpg")) / 255
   mat1 <- as.matrix(img0)
-  n_r  <- nrow(img0)
+  #n_r  <- nrow(img0)
   
+
+  ### create a HOG object
+  winSize <- tuple(64L,64L)
+  blockSize <- tuple(16L,16L)
+  blockStride <- tuple(8L,8L)
+  cellSize <- tuple(8L,8L)
+  nbins = 9L
+
+  hog = cv2$HOGDescriptor(winSize,blockSize,blockStride,cellSize,nbins)
+
+
+  ### resize image and produce hog features of the image in a vector format
+  img_resized <- cv2$resize(img0, dsize=tuple(64L, 64L))
+  hog_values <- hog$compute(np_array(img_resized * 255, dtype='uint8'))
+
+
   ### store vectorized pixel values of images
-  dat <- matrix(NA, n_files, n_r) 
+  dat <- matrix(NA, n_files, 1764)
   for(i in 1:n_files){
-    img     <- readImage(paste0(img_dir,  "img", "_", data_name, "_", set_name, "_", i, ".jpg"))
-    dat[i,] <- rowMeans(img)
+    img     <- cv2$imread(paste0(img_dir, data_name, i, ".jpg"))
+    dat[i,] <- t(hog_values)
   }
   
   ### output constructed features
