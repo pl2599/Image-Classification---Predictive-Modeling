@@ -29,13 +29,13 @@ library("gbm")
 We first set the working directory to the location of this .Rmd file  (it should be in a project folder). Then we specify our training and testing data. If you do not have an independent test set, you need to create your own testing data by random subsampling from the training data (we haven't done this here), and in order to obain reproducible results, you should use `set.seed()` whenever randomization is used. 
 
 ```{r wkdir, eval=FALSE}
-setwd("/Users/qinqingao/Documents/GitHub/image-classification/doc") 
+setwd("/Users/qinqingao/Documents/GitHub/project-2-predictive-modelling-group-5/doc")
 # Replace the above with your own path or manually set it in RStudio to where this rmd file is located. 
 ```
 
 Now we provide directories for the raw images. Here we assume the training set and test set are in different subfolders. 
 ```{r}
-experiment_dir <- "/Users/qinqingao/Documents/GitHub/image-classification/data/" # This will be modified for different data sets.
+experiment_dir <- "/Users/qinqingao/Documents/GitHub/project-2-predictive-modelling-group-5/data/" # This will be modified for different data sets.
 img_train_dir  <- paste(experiment_dir, "train/", sep="")
 img_test_dir   <- paste(experiment_dir, "test/", sep="")
 ```
