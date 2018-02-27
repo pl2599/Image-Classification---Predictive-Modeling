@@ -1,29 +1,23 @@
-#############################################################
-### Construct visual features for training/testing images ###
-#############################################################
+feature <- function(img_dir){
+	
+	library(reticulate)
+	cv2 <- reticulate::import('cv2')
 
-### Authors: Ginny Gao
-### Project 2
-### ADS Spring 2018
+	winSize <- tuple(64L,64L)
+	blockSize <- tuple(16L,16L)
+	blockStride <- tuple(8L,8L)
+	cellSize <- tuple(8L,8L)
+	nbins <- 9L	
+	hog <- cv2$HOGDescriptor(winSize,blockSize,blockStride,cellSize,nbins)
 
-#SIFT feature, first try: select row with max keypoint feature sum
+	n_files <- length(list.files(img_dir))
+	dat <- matrix(NA, n_files, 1764)
 
-feature <- function(img_dir, set_name, data_name="data", export=T){
-
-train_features_dir <- paste(experiment_dir, "train-features/", sep = "")
-
-n_files <- length(list.files(img_dir))
-
-dat <- matrix(NA, n_files, 128)
-for(i in 1 : n_files){
-    load(paste(train_features_dir, 'pet', i, '.jpg.sift.Rdata', sep = ''))
-    dat[i,] <- subset(features, rowSums(features) == max(rowSums(features)))
-    }
-
-### output constructed features
-if(export){
-    save(dat, file = paste0("../output/feature_", data_name, "_", set_name, ".RData"))
-    }
-return(dat)
+	for (i in 1:n_files){
+		img <- readImage(paste0(img_dir, "pet", i, ".jpg"))
+		img_resized <- cv2$resize(img, dsize=tuple(64L, 64L))
+		hog_values <- hog$compute(np_array(img_resized * 255, dtype='uint8'))
+		dat[i,] <- hog_values
+	}
+	return(dat)
 }
-
