@@ -1,0 +1,32 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+```{r}
+library(reticulate)
+use_python("/Users/admin/anaconda3/bin/python")
+cv2 <- reticulate::import("cv2")
+library(EBImage)
+
+
+
+# use cv2 to create a python array of the image !!learn more about this object type
+# figure out how to relationally set the path later
+img1 <- cv2$imread('/Users/admin/Desktop/Columbia/Spring 2018/Applied DS/Pet Images and Extracted Features - Project 2/Pet Images/pet1.jpg')
+
+# Converts to grey scale. I don't understand why np_array(img1, dtype='float32') is necessary ***??? would it not be necessary if I was natively in python?
+gray_img1 <- cv2$cvtColor(np_array(img1, dtype='float32'), cv2$COLOR_BGR2GRAY)
+
+# this loads the detector code so that we ca use it on the image
+orb <- cv2$ORB_create()
+
+#What kind of object are the keypoints before we creat the descriptors of those key points, are they just regions on the initial image***??? What 128 descriptors of teh key point?  or the equivalent from FAST and BRIEF? ***??? Why the transformation again!!!
+keypoints_and_descriptors1 <- orb$detectAndCompute(np_array(gray_img1 * 255, dtype='uint8'), NULL)
+descriptors1 <- keypoints_and_descriptors1[[2]]
+
+## Questions going forward: 
+# Does the number of key points vary per image in ORB? If so, will I have to index them into a constant form?
+# What is the code to run feature extraction on every image and output a single .rdata file. This is building a feature_ORB.R file.
+```
+
