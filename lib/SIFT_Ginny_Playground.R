@@ -21,9 +21,8 @@ dat <- rbind(subset(features, rowSums(features) == max(rowSums(features))),
 
 for (i in 2 : n_files) {
     	load(paste(train_features_dir, 'pet', i, '.jpg.sift.Rdata', sep = ''))
-    	dat_i[1 : 2, ] <- rbind(subset(features, rowSums(features) == max(rowSums(features))),
-    	                        subset(features, rowSums(features) == min(rowSums(features))))
-    	dat <- rbind(dat, dat_i[1 : 2, ])
+    	dat <- rbind(dat, rbind(subset(features, rowSums(features) == max(rowSums(features))),
+    	                        subset(features, rowSums(features) == min(rowSums(features)))))
 	}
 
 
@@ -33,6 +32,7 @@ if(export){
     }
 return(dat)
 }
+
 
 
 
