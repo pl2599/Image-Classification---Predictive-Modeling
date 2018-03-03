@@ -28,3 +28,28 @@ cv.function <- function(X.train, y.train, d, K) {
   }			
   return(c(mean(cv.error), sd(cv.error)))
 }
+
+cv.xgboost <- function(dat_train, label_train, par, K){
+  
+  xgb <- xgb.cv(data = dat_train,
+                label = label_train,
+                eta <- par$eta,
+                max_depth <- par$max_depth,
+                gamma <- par$gamma,
+                min_child_weight = par$min_child_weight,
+                subsample <- par$subsample,,
+                colsample_bytree <- colsample_bytree,
+                nrounds = 100,
+                nfold = K,
+                num_class = 3,
+                early_stopping_rounds = 100,
+                metrics = "mlogloss",
+                objective = "multi:softmax",
+                stratified = TRUE)
+  
+  best_iter <- xgb$best_iteration
+  cv.err <- xgb$evaluation_log[iter, ]$test_merror_mean
+  cv.sd <- xgb$evaluation_log[iter, ]$test_merror_std
+  
+  return (list(cv.error = cv.err, cv.sd = cv.sd))
+}

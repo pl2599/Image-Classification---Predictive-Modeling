@@ -29,13 +29,12 @@ library("gbm")
 We first set the working directory to the location of this .Rmd file  (it should be in a project folder). Then we specify our training and testing data. If you do not have an independent test set, you need to create your own testing data by random subsampling from the training data (we haven't done this here), and in order to obain reproducible results, you should use `set.seed()` whenever randomization is used. 
 
 ```{r wkdir, eval=FALSE}
-setwd("Spring2018/Project_Starter_Codes/Project2-PredictiveModelling/doc") 
-# Replace the above with your own path or manually set it in RStudio to where this rmd file is located. 
+setwd("~/Documents/GitHub/project-2-predictive-modelling-group-5/doc") 
 ```
 
-Now we provide directories for teh raw images. Here we assume the training set and test set are in different subfolders. 
+Now we provide directories for the raw images. Here we assume the training set and test set are in different subfolders. 
 ```{r}
-experiment_dir <- "../data/zipcode/" # This will be modified for different data sets.
+experiment_dir <- "../data/pets/" # This will be modified for different data sets.
 img_train_dir  <- paste(experiment_dir, "train/", sep="")
 img_test_dir   <- paste(experiment_dir, "test/", sep="")
 ```
@@ -51,11 +50,12 @@ In this step, we have a set of controls for the model evaluation.  The code in t
 + (TRUE/FALSE) process features for test set
 
 ```{r exp_setup}
-run.cv            <- TRUE # run cross-validation on the training set
+run.cv            <- FALSE # run cross-validation on the training set
 K                 <- 5    # number of CV folds
-run.feature.train <- TRUE # process features for training set
-run.test          <- TRUE # run evaluation on an independent test set
-run.feature.test  <- TRUE # process features for test set
+run.feature.train <- FALSE # process features for training set
+run.test          <- FALSE # run evaluation on an independent test set
+run.feature.test  <- FALSE # process features for test set
+run.rgb.train
 ```
 
 Using cross-validation or independent test set evaluation, we compare the performance of different classifiers. In this example, we use GBM with different `depth`. In the following code chunk, we list, in a vector, setups (in this case, `depth`) corresponding to model parameters that we will compare. In your project, you will likely be comparing different classifiers than the one considered here and therefore will need to expand this code. You could, for example, assign them numerical IDs and labels specific to your project. 
@@ -67,11 +67,20 @@ model_labels <- paste("GBM with depth =", model_values)
 
 ### Step 2: Import training images class labels.
 
-For the example of zip code digits, we code digit 9 as "1" and digit 7 as "0" for binary classification.
+We code digit Cat as "1" and Dog as "0" for binary classification.
 
 ```{r train_label}
 label_train <- read.table(paste(experiment_dir, "train_label.txt", sep = ""), header = F)
-label_train <- as.numeric(unlist(label_train) == "9")
+label_train <- as.numeric(unlist(label_train) == "cat")
+label_test <- label_train[201:300]
+label_train <- label_train[1:200]
+
+if(!run.test)
+{
+  train_index <- sample(1:length(label_train),0.75*length(label_train))
+  label_test <- label_train[-train_index]
+  label_train <- label_train[train_index]
+}
 ```
 
 ### Step 3: Construct visual features
@@ -95,9 +104,12 @@ if(run.feature.test){
                                                      data_name = "zip", export = TRUE))
 }
 
+rgb_feature <- feature_rgb(img_train_dir, "train", data_name = "pets", export = F)
+rgb_feature_test <- feature_rgb(img_test_dir, "test", data_name = "pets", export = F)
 #save(dat_train, file = "../output/feature_train.RData")
 #save(dat_test, file = "../output/feature_test.RData")
 ```
+
 
 ### Step 4: Train a classification model with training images (and the visual features constructed above)
 
@@ -168,6 +180,8 @@ par_best <- list(depth = model_best)
 tm_train <- NA
 tm_train <- system.time(fit_train <- train(dat_train, label_train, par_best))
 save(fit_train, file = "../output/fit_train.RData")
+
+xgb_train <- train_xgboost(rgb_feature, label_train)
 ```
 
 ### Step 5: Make prediction 
@@ -182,6 +196,10 @@ if(run.test){
   tm_test <- system.time(pred_test <- test(fit_train, dat_test))
   save(pred_test, file = "../output/pred_test.RData")
 }
+
+pred_test <- test(xgb_train, rgb_feature_test)
+sum(pred_test == label_test)
+mean(pred_test == label_test)
 ```
 
 ### Summarize Running Time

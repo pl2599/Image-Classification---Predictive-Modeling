@@ -37,3 +37,44 @@ feature <- function(img_dir, set_name, data_name="data", export=T){
   }
   return(dat)
 }
+
+
+feature_rgb <- function(img_dir, set_name, data_name="pets", export=T)
+{
+  library("EBImage")
+  file.sources = list.files(img_dir, pattern="*.jpg")
+  
+  
+  #Create dimensions of the matrix
+  img0 <- readImage(paste0(img_dir, file.sources[1]))
+  img0 <- resize(img0, 128, 128)
+  n_c <- length(img0)
+  
+  rgb_feature <- matrix(NA, length(file.sources), n_c) 
+
+  for(i in 1:length(file.sources))
+  {
+    img <- readJPEG(paste0(img_dir, file.sources[i]))
+    img <- resize(img, 128, 128)
+    rgb_feature[i,] <- c(img)
+  }
+    
+  if(export)
+  {
+    save(rgb_feature, file = paste0("../output/rgb_feature_", data_name, "_", set_name, ".RData"))
+  }
+  
+  return(rgb_feature)
+}
+
+feature_pca <- function(data, feature_name, data_name = "pets", set_name, n, cen = FALSE, sca = FALSE, export = T)
+{
+  pca <- prcomp(data, center = cen, scale = sca)
+  
+  if(export)
+  {
+    save(pca$x[,1:n], file = paste0("../output/pca_", feature_name, "feature_", data_name, "_", set_name, ".RData"))
+  }
+  
+  return(pca$x[,1:n])
+}
