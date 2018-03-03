@@ -16,13 +16,35 @@ train_features_dir <- paste(experiment_dir, "train-features/", sep = "")
 n_files <- length(list.files(img_dir))
 
 load(paste(train_features_dir, 'pet', 1, '.jpg.sift.Rdata', sep = ''))
-dat <- cbind(t(subset(features, rowSums(features) == max(rowSums(features)))[1, ]), 
-             t(subset(features, rowSums(features) == min(rowSums(features)))[1, ]))
+
+set.seed(1234)
+bof <- kmeans(features, 10)
+
+dat <- cbind(t(bof$centers[1, ]), 
+             t(bof$centers[2, ]),
+             t(bof$centers[3, ]),
+             t(bof$centers[4, ]),
+             t(bof$centers[5, ]),
+             t(bof$centers[6, ]),
+             t(bof$centers[7, ]),
+             t(bof$centers[8, ]),
+             t(bof$centers[9, ]),
+             t(bof$centers[10, ])
+)
 
 for (i in 2 : n_files) {
     	load(paste(train_features_dir, 'pet', i, '.jpg.sift.Rdata', sep = ''))
-    	dat <- rbind(dat, cbind(t(subset(features, rowSums(features) == max(rowSums(features)))[1, ]),
-    	                        t(subset(features, rowSums(features) == min(rowSums(features)))[1, ])))
+    	dat <- rbind(dat, cbind(t(bof$centers[1, ]),
+                                t(bof$centers[2, ]),
+                                t(bof$centers[3, ]),
+                                t(bof$centers[4, ]),
+                                t(bof$centers[5, ]),
+                                t(bof$centers[6, ]),
+                                t(bof$centers[7, ]),
+                                t(bof$centers[8, ]),
+                                t(bof$centers[9, ]),
+                                t(bof$centers[10, ])
+    	                        ))
 	}
 
 
