@@ -5,12 +5,13 @@
 
 ----
 
+![image](figs/dog_cat.png)
 
 ### [Project Description](doc/)
 
 Term: Spring 2018
 
-+ Project title: Cat or Dog?
++ Project title: Cats :cat2: or Dogs :dog2: ?
 + Team Number: 5
 + Team Members:
   + Ginny Gao
