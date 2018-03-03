@@ -1,7 +1,7 @@
 # Spring 2018
 
 
-# Project 2: Predictive Modelling
+# Project 2: Image Classification - Predictive Modelling
 
 ----
 
