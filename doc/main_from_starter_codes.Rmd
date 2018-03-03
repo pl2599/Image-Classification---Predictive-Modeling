@@ -1,5 +1,5 @@
 ---
-title: "Project 3 - Example Main Script"
+title: "Project 2 - Example Main Script"
 author: "Yuting Ma, Tian Zheng with updates by Cindy Rush"
 date: "February 2, 2018"
 output:
@@ -29,7 +29,7 @@ library("gbm")
 We first set the working directory to the location of this .Rmd file  (it should be in a project folder). Then we specify our training and testing data. If you do not have an independent test set, you need to create your own testing data by random subsampling from the training data (we haven't done this here), and in order to obain reproducible results, you should use `set.seed()` whenever randomization is used. 
 
 ```{r wkdir, eval=FALSE}
-setwd("/Users/admin/Desktop/Columbia/Spring 2018/Applied DS/GitHub/project-2-predictive-modelling-group-5/doc") 
+setwd("Spring2018/Project_Starter_Codes/Project2-PredictiveModelling/doc") 
 # Replace the above with your own path or manually set it in RStudio to where this rmd file is located. 
 ```
 
@@ -56,10 +56,6 @@ K                 <- 5    # number of CV folds
 run.feature.train <- TRUE # process features for training set
 run.test          <- TRUE # run evaluation on an independent test set
 run.feature.test  <- TRUE # process features for test set
-
-################################
-####Improvement ideas?
-# add a set_name assignment for the feature_XX.R functions, either "train" or "test". "test" only used monday at class.
 ```
 
 Using cross-validation or independent test set evaluation, we compare the performance of different classifiers. In this example, we use GBM with different `depth`. In the following code chunk, we list, in a vector, setups (in this case, `depth`) corresponding to model parameters that we will compare. In your project, you will likely be comparing different classifiers than the one considered here and therefore will need to expand this code. You could, for example, assign them numerical IDs and labels specific to your project. 
@@ -88,14 +84,11 @@ For this simple example, we use the row averages of raw pixel values as the visu
 source("../lib/feature.R")
 
 tm_feature_train <- NA
-
-# This loop take the "dat" output of the feature as input function and outputs an object "dat_train" which includes extracted features for ALL of our training images (without separating out a validation set) "dat_train" gets put inside another object, "tm_feature_train", which also includes system perfomance indicies for the calculations required to create "dat_train".
 if(run.feature.train){
   tm_feature_train <- system.time(dat_train <- feature(img_train_dir, "train", 
                                                        data_name = "zip", export = TRUE))
 }
 
-#This loop merely outputs a "dat_test" object (inside of "tm_feature_test") which consists of the extracted features from all of the TEST image set. These extracted features will only be used a the very final stage of our testing precedure as inputs to our ultimately selected fitted/estimated/optimzed model which will be used to produce the final measure of our empiracal test error.
 tm_feature_test <- NA
 if(run.feature.test){
   tm_feature_test <- system.time(dat_test <- feature(img_test_dir, "test", 

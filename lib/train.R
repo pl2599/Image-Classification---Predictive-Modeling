@@ -6,7 +6,17 @@
 ### Project 3
 ### ADS Spring 2016
 
+## Questions: 
+# What form of object does GBM.fit take as input? x= data.frame of predictors
+#y = data fram of labels. n_rows of both must be the same.
+# As output to gbm.perf?
 
+# train.R returns a fitted (i.e estimated parameters) model object from 
+#gbm.fit() [the fitted model can be used with a predict function to get
+#test predictions] and ....
+
+
+# par = hyper-parameter
 train <- function(dat_train, label_train, par = NULL){
   
   ### Train a Gradient Boosting Model (GBM) using processed features from training images

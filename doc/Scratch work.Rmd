@@ -1,0 +1,175 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+```{r}
+### load libraries
+library(reticulate)
+use_python("/Users/admin/anaconda3/bin/python")
+cv2 <- reticulate::import("cv2")
+
+main4$images <- holi
+```
+
+
+```{r}
+# definitions??  
+img_dir <- "/Users/admin/Desktop/Columbia/Spring 2018/Applied DS/Pet Images and Extracted Features - Project 2/Practice image set 500"
+  n_files <- length(list.files(img_dir))
+  nfeatures <- 5
+
+### Create our empty matrix; cols = number of images in directory ,  rows = 32 * nfeatures 
+  dat <- matrix(NA, nrow = length(holi), ncol = 32*nfeatures) 
+  
+  for (i in 1:length(holi)) {
+    
+    gray_img <- cv2$cvtColor(np_array(holi[[i]], dtype='float32'), cv2$COLOR_BGR2GRAY)
+    
+    ### Extract features
+    # activate ORB module in python and tell it to extract "nfeatures = ?" keypoints per image
+    orb <- cv2$ORB_create(nfeatures = as.integer(nfeatures))
+    # extract keypoints and their 32 descriptor values for the ith image
+    keypoints_and_descriptors <- orb$detectAndCompute(np_array(gray_img * 255, dtype='uint8'), NULL)
+    # creat an object of just the keypoint descriptors of the ith image
+    descriptors <- keypoints_and_descriptors[[2]]
+    
+    ### Populate our output matrix
+    # combine the keypoint descriptors of the ith image consequetively into one vector and assign that vector to the ith row of our data matrix
+    dat[i,] <- as.vector(t(descriptors))
+  }
+```
+
+
+
+
+
+
+
+
+
+```{r}
+img_dir <- "/Users/admin/Desktop/Columbia/Spring 2018/Applied DS/Pet Images and Extracted Features - Project 2/Practice image set 500"
+n_files <- length(main2$filenames)
+dat <- matrix(NA, nrow = n_files, ncol = 200) 
+  
+  #for(i in 1:n_files) {
+    ### Read in and convert ith image
+    #read in the ith image
+
+names <- paste0(img_dir,"/", main2$filenames)
+    img <- cv2$imread(names)
+    # covert ith image to gray
+    gray_img <- cv2$cvtColor(np_array(img, dtype='float32'), cv2$COLOR_BGR2GRAY)
+    dat[i,] <- as.vector(gray_img)[1:200]
+  #}
+
+
+
+```
+
+#python redo
+
+
+```{r}
+
+img_dir <- "/Users/admin/Desktop/Columbia/Spring 2018/Applied DS/Pet Images and Extracted Features - Project 2/Practice image set 500"
+n_files <- length(list.files(img_dir))
+dat <- matrix(NA, nrow = n_files, ncol = 200) 
+  
+#Figure out how to create a python iterater in R (a) call on main python functions in R:import_builtins() and use py$... (b) write a python scrit  and source it..py_run_file but how and where to save it??? (c) use reticulate::iterate() (d) py_run_string
+
+py <- import_builtins()
+x <- py$range(as.integer(5))
+reticulate::iterate(x, print())
+
+
+py <- import_builtins()
+i <- py$range(1:100)
+reticulate::iterate(i, py$print())
+
+x <- vector("integer",100)
+py <- import_builtins()
+i <- py$iter(1:100)
+reticulate::iterate(i)
+x <- result(i)
+
+
+
+main <- py_run_string(
+"list1 = ['Me','You','Sam']
+list2 = ['Joe','Jen']
+
+for item in list2:
+   list1.append(item)
+
+print(list1)"  
+)
+main$list1
+
+main2 <- py_run_file("/Users/admin/Desktop/Columbia/Spring 2018/Applied DS/GitHub/project-2-predictive-modelling-group-5/doc/script1.py")
+
+main3 <- py_run_file("/Users/admin/Desktop/Columbia/Spring 2018/Applied DS/GitHub/project-2-predictive-modelling-group-5/doc/script3.py")
+
+main4 <- py_run_file("/Users/admin/Desktop/Columbia/Spring 2018/Applied DS/GitHub/project-2-predictive-modelling-group-5/doc/script4.py")
+
+print(x)
+
+
+
+
+
+```
+
+
+
+```{python}
+
+import os
+indir = '/Users/admin/Desktop/Columbia/Spring 2018/Applied DS/Pet Images and Extracted Features - Project 2/Practice image set 500'
+for root, dirs, filenames in os.walk(indir):
+    for f in filenames:
+        print(f)
+
+import os
+import cv2
+indir = '/Users/admin/Desktop/Columbia/Spring 2018/Applied DS/Pet Images and Extracted Features - Project 2/Practice image set 500'
+for root, dirs, filenames in os.walk(indir):
+    for f in filenames:
+        img = cv2.imread(os.path.join(root, f))
+        
+        
+
+  for i  in range(len(n_files)) 
+    ### Read in and convert ith image
+    #read in the ith image
+    img <- cv2$imread(paste0(img_dir, "pet", i, ".jpg"))
+    # covert ith image to gray
+    gray_img <- cv2$cvtColor(np_array(img, dtype='float32'), cv2$COLOR_BGR2GRAY)
+    dat[i,] <- as.vector(gray_img)[1:200]
+  }
+
+
+______
+
+import cv2
+from os import listdir
+from os.path import isfile, join
+import numpy
+import cv2
+
+mypath='/Users/admin/Desktop/Columbia/Spring 2018/Applied DS/Pet Images and Extracted Features - Project 2/Practice image set 500'
+onlyfiles = [ f for f in listdir(mypath) if isfile(join(mypath,f)) ]
+images = numpy.empty(len(onlyfiles), dtype=object)
+for n in range(0, len(onlyfiles)):
+  images[n] = cv2.imread( join(mypath,onlyfiles[n]) )
+.... fails from her
+for n in range(0, len(onlyfiles)):
+  cv2.cvtColor(images[n], cv2.COLOR_BGR2GRAY) = gray_img[n]
+
+orb = cv2.ORB_create(nfeatures = 5)
+keypoints[n], py_descriptor[n] = orb.detectAndCompute(gray_img[n], None)
+  print(py_descriptors)
+
+
+```
+
