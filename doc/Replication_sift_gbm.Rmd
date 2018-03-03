@@ -1,0 +1,124 @@
+---
+title: "Project 2"
+author: "Group 5"
+date: "March 5, 2018"
+output:
+  pdf_document: default
+  html_document: default
+---
+
+```{r, warning = FALSE}
+install.packages("EBImage")
+install.packages("gbm")
+
+library(EBImage)
+library(gbm)
+```
+
+```{r wkdir, eval=FALSE}
+setwd("~/Documents/Replication/doc")
+```
+
+```{r}
+experiment_dir <- "~/Documents/Replication/data/"
+img_train_dir  <- paste(experiment_dir, "train/", sep="")
+img_test_dir   <- paste(experiment_dir, "test/", sep="")
+```
+
+```{r exp_setup}
+run.cv            <- TRUE # run cross-validation on the training set
+K                 <- 5    # number of CV folds
+run.feature.train <- TRUE # process features for training set
+run.test          <- TRUE # run evaluation on an independent test set
+run.feature.test  <- TRUE # process features for test set
+```
+
+```{r model_setup}
+model_values <- seq(3, 11, 2)
+model_labels <- paste("GBM with depth =", model_values)
+```
+
+```{r train_label}
+label_train <- read.table(paste(experiment_dir, "train_label.txt", sep = ""), header = F)
+label_train <- as.numeric(unlist(label_train) == "cat")
+```
+
+```{r feature}
+source("../lib/feature_sift.R")
+
+tm_feature_train <- NA
+if(run.feature.train){
+  tm_feature_train <- system.time(dat_train <- feature_sift(img_train_dir, "train", 
+                                                       data_name = "pets", export = TRUE))
+}
+
+tm_feature_test <- NA
+if(run.feature.test){
+  tm_feature_test <- system.time(dat_test <- feature_sift(img_test_dir, "test", 
+                                                     data_name = "pets", export = TRUE))
+}
+```
+
+```{r loadlib}
+source("../lib/train.R")
+source("../lib/test.R")
+```
+
+```{r runcv, message=FALSE, warning=FALSE}
+source("../lib/cross_validation.R")
+
+if(run.cv){
+  err_cv <- array(dim = c(length(model_values), 2))
+  for(k in 1:length(model_values)){
+    cat("k=", k, "\n")
+    err_cv[k,] <- cv.function(dat_train, label_train, model_values[k], K)
+  }
+  save(err_cv, file = "../output/err_cv.RData")
+}
+```
+
+```{r cv_vis}
+if(run.cv){
+  load("../output/err_cv.RData")
+  #pdf("../fig/cv_results.pdf", width=7, height=5)
+  plot(model_values, err_cv[,1], xlab = "Interaction Depth", ylab = "CV Error",
+       main = "Cross Validation Error", type = "n", ylim = c(0, 0.35))
+  points(model_values, err_cv[,1], col = "blue", pch=16)
+  lines(model_values, err_cv[,1], col = "blue")
+  arrows(model_values, err_cv[,1] - err_cv[,2], model_values, err_cv[,1] + err_cv[,2], 
+        length = 0.1, angle = 90, code = 3)
+  #dev.off()
+}
+```
+
+```{r best_model}
+model_best <- model_values[1]
+if(run.cv){
+  model_best <- model_values[which.min(err_cv[, 1])]
+}
+
+par_best <- list(depth = model_best)
+```
+
+```{r final_train}
+tm_train <- NA
+tm_train <- system.time(fit_train <- train(dat_train, label_train, par_best))
+save(fit_train, file = "../output/fit_train.RData")
+```
+
+```{r test}
+tm_test <- NA
+if(run.test){
+  load(file = paste0("../output/feature_test.RData"))
+  load(file = "../output/fit_train.RData")
+  tm_test <- system.time(pred_test <- test(fit_train, dat_test))
+  save(pred_test, file = "../output/pred_test.RData")
+}
+```
+
+```{r running_time}
+cat("Time for constructing training features=", tm_feature_train[1], "s \n")
+cat("Time for constructing testing features=", tm_feature_test[1], "s \n")
+cat("Time for training model=", tm_train[1], "s \n")
+cat("Time for making prediction=", tm_test[1], "s \n")
+```
