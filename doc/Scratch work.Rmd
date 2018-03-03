@@ -173,3 +173,35 @@ keypoints[n], py_descriptor[n] = orb.detectAndCompute(gray_img[n], None)
 
 ```
 
+
+
+
+# SIFT Features
+```{r}
+
+  img_dir <-  "/Users/admin/Desktop/Columbia/Spring 2018/Applied DS/Pet Images and Extracted Features - Project 2/Practice SIFT Set 500/"
+  n_files <- length(list.files(img_dir))  
+  k <- 10
+  
+  #test <- load(paste0("/Users/admin/Desktop/Columbia/Spring 2018/Applied DS/Pet Images and Extracted Features - Project 2/Practice SIFT Set 500/","pet11.jpg.sift.Rdata"))
+  
+  dat <- list()
+  
+  for (i in 1:n_files) {
+    load(paste(img_dir, 'pet', i, '.jpg.sift.Rdata', sep = ''))
+    #set.seed(1234)
+    bof <- kmeans(features, k)
+    
+    # sequentially concatonated the 10 length =128 centers for the ith image;
+    #assigned to the ith element of "dat"
+    
+    dat[[i]] <- as.vector(t(bof$centers))
+    # could take some time checking to NA values within the vectors of the list "dat", because I got 3 "did not converge in 10 iterations" warnings. But that is too much for now.
+  }
+  
+  dat <- do.call(rbind, dat)
+  
+```
+For the turning a list into a matrix part:
+https://stackoverflow.com/questions/1329940/how-do-i-make-a-matrix-from-a-list-of-vectors-in-r
+
