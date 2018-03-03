@@ -6,19 +6,25 @@
 ### Project 2
 ### ADS Spring 2018
 
-#SIFT feature, first try: select row with max keypoint feature sum
+#SIFT features with max, min sum per image, one row per image
 
-feature <- function(img_dir, set_name, data_name="data", export=T){
+
+feature <- function(img_dir, set_name, data_name = "data", export = T){
 
 train_features_dir <- paste(experiment_dir, "train-features/", sep = "")
 
 n_files <- length(list.files(img_dir))
 
-dat <- matrix(NA, n_files, 128)
-for(i in 1 : n_files){
-    load(paste(train_features_dir, 'pet', i, '.jpg.sift.Rdata', sep = ''))
-    dat[i,] <- subset(features, rowSums(features) == max(rowSums(features)))
-    }
+load(paste(train_features_dir, 'pet', 1, '.jpg.sift.Rdata', sep = ''))
+dat <- cbind(t(subset(features, rowSums(features) == max(rowSums(features)))[1, ]), 
+             t(subset(features, rowSums(features) == min(rowSums(features)))[1, ]))
+
+for (i in 2 : n_files) {
+    	load(paste(train_features_dir, 'pet', i, '.jpg.sift.Rdata', sep = ''))
+    	dat <- rbind(dat, cbind(t(subset(features, rowSums(features) == max(rowSums(features)))[1, ]),
+    	                        t(subset(features, rowSums(features) == min(rowSums(features)))[1, ])))
+	}
+
 
 ### output constructed features
 if(export){
