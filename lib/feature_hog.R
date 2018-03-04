@@ -1,4 +1,4 @@
-feature_hog <- function(img_dir, set_name="set", data_name="data", export=T){
+feature_hog <- function(img_dir, set_name, data_name = "pet", export = TRUE){
 	
 	library(reticulate)
 	cv2 <- reticulate::import('cv2')
