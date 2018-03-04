@@ -54,7 +54,7 @@ feature_rgb <- function(img_dir, set_name, data_name="pets", export=T)
 
   for(i in 1:length(file.sources))
   {
-    img <- readJPEG(paste0(img_dir, file.sources[i]))
+    img <- readImage(paste0(img_dir, file.sources[i]))
     img <- resize(img, 128, 128)
     rgb_feature[i,] <- c(img)
   }
@@ -67,14 +67,15 @@ feature_rgb <- function(img_dir, set_name, data_name="pets", export=T)
   return(rgb_feature)
 }
 
-feature_pca <- function(data, feature_name, data_name = "pets", set_name, n, cen = FALSE, sca = FALSE, export = T)
+feature_pca <- function(data, feature_name, set_name, data_name = "pets", n, cen = FALSE, sca = FALSE, export = T)
 {
   pca <- prcomp(data, center = cen, scale = sca)
+  pca <- pca$x[,1:n]
   
   if(export)
   {
-    save(pca$x[,1:n], file = paste0("../output/pca_", feature_name, "feature_", data_name, "_", set_name, ".RData"))
+    save(pca, file = paste0("../output/", feature_name, "_pca_feature_", data_name, "_", set_name, ".RData"))
   }
   
-  return(pca$x[,1:n])
+  return(pca)
 }

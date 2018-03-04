@@ -42,7 +42,7 @@ cv_xgboost <- function(dat_train, label_train){
                 min_child_weight = 0,
                 subsample = .5,
                 colsample_bytree = .75,
-                nrounds = 5,
+                nrounds = 100,
                 nfold = 5,
                 metrics = "error",
                 objective = "binary:logistic",
@@ -59,18 +59,20 @@ cv_xgboost <- function(dat_train, label_train){
   # Set up the parameteres to be tested
   xgb_grid <- expand.grid(nrounds = 100,
                           eta = c(0.01,0.05,0.1),
-                          max_depth = c(2,6,10,14),
-                          gamma = .01,
+                          max_depth = c(2,6,10),
+                          gamma = c(0, .1, .5),
                           colsample_bytree = .75,
-                          min_child_weight = 0,
-                          subsample = .5
+                          min_child_weight = c(0, 1, 2),
+                          subsample = .75
                           
   )
   colnames(dat_train) <- 1:ncol(dat_train)
+  train_label <- ifelse(label_train==1, "cat", "dog")
+  train_label <- as.factor(train_label)
   
   # Tune the parameters
   xgb_tune <- caret::train(x = dat_train,
-                    y = as.factor(label_train),
+                    y = as.factor(train_label),
                     method = "xgbTree",
                     trControl = xgb_control,
                     tuneGrid = xgb_grid)
