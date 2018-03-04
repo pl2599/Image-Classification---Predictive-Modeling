@@ -1,5 +1,7 @@
 #### Description: turns SIFT keypoints and descriptors from many images into a single matrix where nrows=number of images, ncols = the sequentially concatentated k=10 center vectors from doing kmeans on the 128-dim keypoints from each image.
 
+## THIS IS A WORK IN PROGRESS. INCOMPLETE implementation of bag of words.
+
 #### Inputs:
 # "img_dir" = 
 
@@ -27,12 +29,12 @@ feature_SIFT <- function(img_dir, set_name = "", data_name = "pets", export=T, k
   
   for (i in 1:n_files) {
     load(paste(img_dir, 'pet', i, '.jpg.sift.Rdata', sep = ''))
-    #set.seed(1234)
     
     # kmeans considers the matrix of keypoint descriptors for each image to be
     # n=number of key points observations in 128-dimensional space. kmeans 
     # summarized those n=number of key points observations into 10 means each a
     # location in 128-dim space.
+    set.seed(1234)
     bof <- kmeans(features, k)
     
     # sequentially concatonated the 10 length =128 centers for the ith image;
