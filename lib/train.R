@@ -2,9 +2,9 @@
 ### Train a classification model with training images ###
 #########################################################
 
-### Author: Yuting Ma
-### Project 3
-### ADS Spring 2016
+### Author: Yuting Ma with modification by Ginny Gao
+### Project 2
+### ADS Spring 2018
 
 
 train <- function(dat_train, label_train, par = NULL){
@@ -26,7 +26,7 @@ train <- function(dat_train, label_train, par = NULL){
     depth <- par$depth
   }
   fit_gbm <- gbm.fit(x = dat_train, y = label_train,
-                     n.trees = 5000,
+                     n.trees = 500,
                      distribution = "bernoulli",
                      interaction.depth = depth, 
                      bag.fraction = 0.5,

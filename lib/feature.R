@@ -18,7 +18,7 @@ n_files <- length(list.files(img_dir))
 load(paste(train_features_dir, 'pet', 1, '.jpg.sift.Rdata', sep = ''))
 
 set.seed(1234)
-bof <- kmeans(features, 10)
+bof <- kmeans(features, 20, iter.max = 20)
 
 dat <- cbind(t(bof$centers[1, ]), 
              t(bof$centers[2, ]),
@@ -35,7 +35,7 @@ dat <- cbind(t(bof$centers[1, ]),
 for (i in 2 : n_files) {
     	load(paste(train_features_dir, 'pet', i, '.jpg.sift.Rdata', sep = ''))
         set.seed(1234)
-        bof <- kmeans(features, 10)
+        bof <- kmeans(features, 20, iter.max = 20)
     	dat <- rbind(dat, cbind(t(bof$centers[1, ]),
                                 t(bof$centers[2, ]),
                                 t(bof$centers[3, ]),
