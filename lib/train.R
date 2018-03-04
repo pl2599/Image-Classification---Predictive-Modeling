@@ -63,7 +63,7 @@ train_xgboost <- function(dat_train, label_train, par = NULL){
     gamma <- par$gamma
     min_child_weight = par$min_child_weight
     subsample <- par$subsample
-    colsample_bytree <- colsample_bytree
+    colsample_bytree <- par$colsample_bytree
   }
   
   ### train with Xgboost
@@ -77,9 +77,8 @@ train_xgboost <- function(dat_train, label_train, par = NULL){
                      min_child_weight = min_child_weight,
                      subsample = subsample,
                      colsample_bytree = 1, 
-                     eval_metric = "mlogloss",
-                     objective = "multi:softmax",
-                     num_class = 3)
+                     eval_metric = "error",
+                     objective = "binary:logistic")
   
   return(xgb_train)
 }

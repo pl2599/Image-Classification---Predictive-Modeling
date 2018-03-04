@@ -29,27 +29,53 @@ cv.function <- function(X.train, y.train, d, K) {
   return(c(mean(cv.error), sd(cv.error)))
 }
 
-cv.xgboost <- function(dat_train, label_train, par, K){
+cv_xgboost <- function(dat_train, label_train){
+  
+  library(xgboost)
+  library(caret)
   
   xgb <- xgb.cv(data = dat_train,
                 label = label_train,
-                eta <- par$eta,
-                max_depth <- par$max_depth,
-                gamma <- par$gamma,
-                min_child_weight = par$min_child_weight,
-                subsample <- par$subsample,,
-                colsample_bytree <- colsample_bytree,
-                nrounds = 100,
-                nfold = K,
-                num_class = 3,
-                early_stopping_rounds = 100,
-                metrics = "mlogloss",
-                objective = "multi:softmax",
+                eta = 0.01,
+                max_depth = 2,
+                gamma = .01,
+                min_child_weight = 0,
+                subsample = .5,
+                colsample_bytree = .75,
+                nrounds = 5,
+                nfold = 5,
+                metrics = "error",
+                objective = "binary:logistic",
                 stratified = TRUE)
   
-  best_iter <- xgb$best_iteration
-  cv.err <- xgb$evaluation_log[iter, ]$test_merror_mean
-  cv.sd <- xgb$evaluation_log[iter, ]$test_merror_std
+  # Set up the nuances of the caret's train function
+  xgb_control <- trainControl(method = "cv",
+                          number = 5,
+                          classProbs = TRUE,
+                          allowParallel=T,
+                          verboseIter = T,
+                          returnData = F)
   
-  return (list(cv.error = cv.err, cv.sd = cv.sd))
+  # Set up the parameteres to be tested
+  xgb_grid <- expand.grid(nrounds = 100,
+                          eta = c(0.01,0.05,0.1),
+                          max_depth = c(2,6,10,14),
+                          gamma = .01,
+                          colsample_bytree = .75,
+                          min_child_weight = 0,
+                          subsample = .5
+                          
+  )
+  colnames(dat_train) <- 1:ncol(dat_train)
+  
+  # Tune the parameters
+  xgb_tune <- caret::train(x = dat_train,
+                    y = as.factor(label_train),
+                    method = "xgbTree",
+                    trControl = xgb_control,
+                    tuneGrid = xgb_grid)
+  
+  return(xgb_tune$bestTune)
+
+
 }
