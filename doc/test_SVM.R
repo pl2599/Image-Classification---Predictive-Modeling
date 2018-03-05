@@ -17,9 +17,9 @@
 #######################################
 
 
-test <- function(fit_train, dat_test){
+test_SVM <- function(fit_train, dat_test){
   
-  pred <- predict(fit_train, newdata = dat_test, type = "response")
+  pred <- predict(fit_train$fit, newdata = dat_test, type = "response")
   
   return(pred)
 }

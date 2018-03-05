@@ -25,22 +25,15 @@ train_SVM <- function(dat_train, label_train, par = 10) {
   
   ##########If it doesn't come in the right form already
   #label_train <- "/Users/admin/Desktop/Columbia/Spring 2018/Applied DS/Pet Images and Extracted Features - Project 2/train_label.txt"
-  #label_train <- as.matrix(read.table(label_train))
-  #new <- matrix(NA, nrow = nrow(label_train), ncol = 1)
-  #for (i in 1:nrow(label_train)) {
-  #  if (label_train[i,] == "cat") {
-  #    new[i,] <- 0
-  #  } else {
-  #    new[i,] <- 1
-  #  }
-  #}
-  #label_train <- new
+  #label <- read.table(label_train, header = F)
+  #label <- as.numeric(unlist(label) == "dog")
+  #label_train <- as.matrix(label)
   #colnames(label_train) <- "labels"
   ##########
   
   svmfit <- svm(x = dat_train, y = as.factor(label_train) , kernel="linear", cost = par, scale=FALSE)
   
-  return(svmfit)
+  return(list(fit = svmfit))
 }
 
 ###########################################

@@ -24,11 +24,11 @@ feature_SIFT_Ginny <- function(img_dir, set_name, data_name = "data", export = T
   
   #test_features_dir <- paste(experiment_dir, "test-features/", sep = "")
   
-  if (img_dir == img_train_dir) {
+  if (img_dir == train_features_dir) {
     
     n_files <- length(list.files(img_dir))
     
-    load(paste(train_features_dir, 'pet', 1, '.jpg.sift.Rdata', sep = ''))
+    load(paste(img_dir, 'pet', 1, '.jpg.sift.Rdata', sep = ''))
     
     set.seed(1234)
     bof <- kmeans(features, 20, iter.max = 20)
@@ -46,7 +46,7 @@ feature_SIFT_Ginny <- function(img_dir, set_name, data_name = "data", export = T
     )
     
     for (i in 2 : n_files) {
-      load(paste(train_features_dir, 'pet', i, '.jpg.sift.Rdata', sep = ''))
+      load(paste(img_dir, 'pet', i, '.jpg.sift.Rdata', sep = ''))
       set.seed(1234)
       bof <- kmeans(features, 20, iter.max = 20)
       dat <- rbind(dat, cbind(t(bof$centers[1, ]),

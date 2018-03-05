@@ -207,15 +207,77 @@ https://stackoverflow.com/questions/1329940/how-do-i-make-a-matrix-from-a-list-o
 
 
 
-#Extracting Giny's SIFT features
+#Extracting Giny's SIFT features and practicing train, test, cv workflow
 
 ```{r}
 
+######## Required packages
+#library(e1071)
+
+
+### Extracting Giny 2000
 source("../doc/feature_SIFT_Ginny.R")
 
-feature_SIFT_Ginny()
+feature_SIFT_Ginny("/Users/admin/Desktop/Columbia/Spring 2018/Applied DS/Pet Images and Extracted Features - Project 2/Extracted SIFT features/", "Ginny_2000")
 
 
+### Extracting Noah 2000
+
+source("../doc/feature_SIFT_Random_Noah.R")
+
+feature_SIFT_Ginny("/Users/admin/Desktop/Columbia/Spring 2018/Applied DS/Pet Images and Extracted Features - Project 2/Extracted SIFT features/", "Noah_2000")
+
+### Testing Train SVM on 40 rows
+
+label_train <- "/Users/admin/Desktop/Columbia/Spring 2018/Applied DS/Pet Images and Extracted Features - Project 2/train_label.txt"
+label <- read.table(label_train, header = F)
+label <- as.numeric(unlist(label) == "dog")
+label_train <- as.matrix(label)
+colnames(label_train) <- "labels"
+
+
+load("/Users/admin/Desktop/Columbia/Spring 2018/Applied DS/GitHub/project-2-predictive-modelling-group-5/output/feature_data_Ginny_2000.RData")
+
+test <- dat
+
+source("../doc/train_SVM.R")
+fit_train <- train_SVM(test[1:40,], label_train[1:40,])
+
+### Testing Test SVM on last 40 rows
+
+source("../doc/test_SVM.R")
+pred_test <- test_SVM(fit_train, test[1960:2000,])
+
+#### deriving test accuracy for last 40 rows
+
+comparison_chart <- table(predict=pred_test, truth=label_train[1960:2000,])
+misclass <- sum(comparison_chart[1,2],comparison_chart[2,1])
+test_error <- misclass/40
+
+#library(dplyr)
+#true <- as_tibble(label_train)
+#predicted <- as_tibble(pred_test)
+#colnames(true) <- true
+#colnames(predicted) <- predicted
+#cbind(true, predicted)
+
+###### CV and predtic/test error with best model
+
+test <- dat
+#note: redefined label train again from above
+
+#remeber to train.y value in as.factor(). Without as.factor the svm() function will do regression and give very different (continuous) outputs
+cv.duration <- system.time(cv.output <- tune(svm, train.x = test[1:40,], train.y = as.factor(label_train[1:40,]), kernel = "linear", ranges = list(cost=c(0.001, 0.01, 0.1, 1,5,10,100)), tunecontrol = tune.control(cross = 10)))
+
+summary(cv.output)
+
+best_svm_model <- list(fit = cv.output$best.model)
+summary(best_svm_model$fit)
+
+pred_test2 <- test_SVM(best_svm_model, test[1960:2000,])
+comparison_chart <- table(predict=pred_test2, truth=label_train[1960:2000,])
+misclass <- sum(comparison_chart[1,2],comparison_chart[2,1])
+test_error <- misclass/40
 
 ```
 

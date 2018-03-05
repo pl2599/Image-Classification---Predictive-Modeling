@@ -1,0 +1,84 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+```{r}
+######## Required packages
+#library(e1071)
+
+###### CV and predtic/test error with best model
+
+
+label_train <- "/Users/admin/Desktop/Columbia/Spring 2018/Applied DS/Pet Images and Extracted Features - Project 2/train_label.txt"
+label <- read.table(label_train, header = F)
+label <- as.numeric(unlist(label) == "dog")
+label_train <- as.matrix(label)
+colnames(label_train) <- "labels"
+  
+load("/Users/admin/Desktop/Columbia/Spring 2018/Applied DS/GitHub/project-2-predictive-modelling-group-5/output/feature_data_Ginny_2000.RData")
+ginny <- dat
+
+#remeber to train.y value in as.factor(). Without as.factor the svm() function will do regression and give very different (continuous) outputs
+cv.duration.ginny.svm.1000 <- system.time(cv.output.ginny.svm.1000 <- tune(svm, train.x = ginny[1:1000,], train.y = as.factor(label_train[1:1000,]), kernel = "linear", ranges = list(cost=c(.00000001, .0000001, .000001, .00001, 0.0001, 0.001, 0.01)), tunecontrol = tune.control(cross = 5)))
+cv.duration.ginny.svm.1000
+#   user  system elapsed 
+#167.252   4.342 171.892 
+
+
+summary(cv.output.ginny.svm.1000)
+
+best_svm_model.ginny.svm <- list(fit = cv.output.ginny.svm.1000$best.model)
+summary(best_svm_model.ginny.svm$fit)
+
+pred_test.ginny.svm.1000 <- test_SVM(best_svm_model.ginny.svm, ginny[1001:2000,])
+comparison_chart.ginny.svm.1000 <- table(predict=pred_test.ginny.svm.1000, truth=label_train[1001:2000,])
+chart <- comparison_chart.ginny.svm.1000
+misclass <- sum(chart[1,2],chart[2,1])
+test_error.ginny.svm.1000 <- misclass/length(pred_test.ginny.svm.1000)
+test_error.ginny.svm.1000
+#0.318
+```
+
+
+# Train Ginny + SVM on 1600 files
+
+```{r}
+#Chosen value of cost = 0.00000001
+
+label_train <- "/Users/admin/Desktop/Columbia/Spring 2018/Applied DS/Pet Images and Extracted Features - Project 2/train_label.txt"
+label <- read.table(label_train, header = F)
+label <- as.numeric(unlist(label) == "dog")
+label_train <- as.matrix(label)
+colnames(label_train) <- "labels"
+
+load("/Users/admin/Desktop/Columbia/Spring 2018/Applied DS/GitHub/project-2-predictive-modelling-group-5/output/feature_data_Ginny_2000.RData")
+ginny <- dat
+
+source("../doc/train_SVM.R")
+train.duration.ginny.svm.1600 <- system.time(fit_train.ginny.svm <- train_SVM(ginny[1:1600,], label_train[1:1600,], par = 0.00000001))
+train.duration.ginny.svm.1600
+#user  system elapsed 
+ #14.968   0.175  15.159 
+
+summary(fit_train.ginny.svm$fit)
+
+source("../doc/test_SVM.R")
+test.duration.ginny.svm.400 <- system.time(pred_test.ginny.svm <- test_SVM(fit_train.ginny.svm, ginny[1601:2000,]))
+comparison_chart.ginny.svm <- table(predict=pred_test.ginny.svm, truth=label_train[1601:2000,])
+chart <- comparison_chart.ginny.svm
+misclass <- sum(chart[1,2],chart[2,1])
+test_error.ginny.svm <- misclass/length(pred_test.ginny.svm)
+test_error.ginny.svm
+# 0.3225
+test.duration.ginny.svm.400
+#  user  system elapsed 
+#  1.228   0.042   1.272  
+
+
+```
+
+
+```{r}
+
+```
+
