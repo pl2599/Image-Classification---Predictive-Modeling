@@ -55,9 +55,14 @@ c. Tested the neuron network classifier.
 a. Constructed HoG features  
 b. Built randomForest classifier  
 c. Tested models; SIFT + GBM, SIFT + RF, HoG + RF, SIFT + HoG + RF
-d. Debugged SIFT and HoG
+d. Debugged SIFT and HoG; ran the final model
+e. Contributed to `readMe.md`
 
 #### Chris Lai
+a. Constructed RGB + PCA features
+b. Built XGBoost classifier
+c. Tested XGBoost models
+d. Contributed to `main.Rmd`
 
 #### Noah Chasek-Macfoy
 a. Constructed SVM model, cross validated cost parameter on SIFT and HoG features  
