@@ -1,6 +1,6 @@
 ---
 title: 'Project 2 - Image Classification: Cats vs Dogs'
-author: "Ginny Gao"
+author: Group 5
 date: "February 11, 2018"
 output:
   html_document: default
@@ -15,18 +15,36 @@ if(!require("EBImage")){
   source("https://bioconductor.org/biocLite.R")
   biocLite("EBImage")
 }
-
 if(!require("gbm")){
   install.packages("gbm")
 }
-
 if(!require("randomForest")){
-  install.packages("randomForest")
+  install.packages("randomForest")  
+}
+if(!require("ppls")){
+  install.packages("ppls")  
+}
+if(!require("caret")){
+  install.packages("caret")  
+}
+if(!require("xgboost")){
+  install.packages("xgboost")  
+}
+if(!require("e1071")){
+  install.packages("e1071")  
+}
+if(!require("RcppCNPy")){
+  install.packages("RcppCNPy")  
 }
 
 library("EBImage")
 library("gbm")
 library("randomForest")
+library("ppls")
+library("caret")
+library("xgboost")
+library("e1071")
+library("RcppCNPy")
 ```
 
 ### Step 0: Specify directories.
@@ -34,7 +52,7 @@ library("randomForest")
 We first set the working directory to the location of this .Rmd file  (it should be in a project folder). Then we specify our training and testing data. If you do not have an independent test set, you need to create your own testing data by random subsampling from the training data (we haven't done this here), and in order to obain reproducible results, you should use `set.seed()` whenever randomization is used. 
 
 ```{r wkdir, eval=FALSE}
-setwd("/Users/qinqingao/Documents/GitHub/project-2-predictive-modelling-group-5/doc")
+setwd("./Documents/GitHub/project-2-predictive-modelling-group-5/doc")
 # Replace the above with your own path or manually set it in RStudio to where this rmd file is located. 
 ```
 
@@ -72,7 +90,7 @@ model_labels <- paste("GBM with depth =", model_values)
 
 ### Step 2: Import training images class labels.
 
-For the example of zip code digits, we code Dog as "1" and Cat as "0" for binary classification.
+We code Dog as "1" and Cat as "0" for binary classification.
 
 ```{r train_label}
 label_train <- read.table(paste(experiment_dir, "train_label.txt", sep = ""), header = F)
@@ -81,7 +99,7 @@ label_train <- as.numeric(unlist(label_train) == "dog")
 
 ### Step 3: Construct visual features
 
-For this example, we use SIFT as the visual features. The feature function should be able to handle heterogeneous input images. Save the constructed features to the output subfolder.
+For this example, we use SIFT as base visual features. The feature function should be able to handle heterogeneous input images. Save the constructed features to the output subfolder.
 
 `feature.R` should be the wrapper for all your feature engineering functions and options. The function `feature( )` should have options that correspond to different scenarios for your project and produces an R object that contains features that are required by all the models you are going to evaluate later. 
 
@@ -123,7 +141,7 @@ source("../lib/test.R")
 
 #### Model selection with cross-validation
 
-* Do model selection.  Here we choose between model parameters, in this case the interaction depth for GBM. 
+* Do model selection. Here we choose between model parameters, in this case the interaction depth for baseline model GBM. 
 
 ```{r runcv, message=FALSE, warning=FALSE}
 source("../lib/cross_validation.R")
@@ -185,6 +203,14 @@ if(run.test){
   tm_test <- system.time(pred_test <- test(fit_train, dat_test))
   save(pred_test, file = "../output/pred_test.RData")
 }
+```
+
+### Summarize Accuracy
+```{r accuracy}
+label_test <- read.table(paste(experiment_dir, "test_label.txt", sep = ""), header = F)
+label_test <- as.numeric(unlist(label_test) == "dog")
+
+confusionMatrix(get(load('./Documents/GitHub/project-2-predictive-modelling-group-5/output/pred_test.RData')), label_test)$overall['Accuracy']
 ```
 
 ### Summarize Running Time
