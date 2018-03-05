@@ -46,12 +46,12 @@ a. Contributed to `main.Rmd` and `README.md`.
 b. Facilitated meetings, discussions, result output.
 
 
-#### Sile Yang
-
-Convolutional Neural Networks
-a. Extracted arrays from raw iamges and organized them into one dataset that is suitable for convolutional Neural Networks model. 
-b. Built neural networks model with three layers by Tensorflow. 
-c. Tested the neuron network classifier with an accuracy of ?%.
+#### Sile Yang  
+   
+Convolutional Neural Networks   
+a. Extracted arrays from raw iamges and organized them into one dataset that is suitable for convolutional Neural Networks model.   
+b. Built neural networks model with three layers by Tensorflow.   
+c. Tested the neuron network classifier with an accuracy of ?%.  
 
 
 
