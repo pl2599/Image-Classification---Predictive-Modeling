@@ -28,7 +28,7 @@ Term: Spring 2018
 
 + Project details: We explored different feature extraction methods, such as SIFT, HoG, SIFT + HoG, RGB + PCA, and SIFT + HoG + RGB + PCA. We also tested different classfication models to select a model that achieves best performance, from algorithm accuracy, runtime, and memory perspective. Please refer to our [`main.Rmd`](https://github.com/GU4243-ADS/project-2-predictive-modelling-group-5/blob/master/doc/main.Rmd) for more details. For the efficiency of computation and the improved accuracy, we chose XGBoost classifer with SIFT + HoG features, which increased the accuracy from 64% to 79% and decreased runtime from 1096.47s to 183.979s.
 
-+ CNN architecture
++ CNN architecture. More details can be found [here](https://github.com/GU4243-ADS/project-2-predictive-modelling-group-5/blob/master/lib/cnn.ipynb).
 ![image](figs/cnn-image-1.jpg)
 
 Contribution statement: [default](doc/a_note_on_contributions.md) All team members contributed equally in all stages of this project. All team members approve our work presented in this GitHub repository including this contributions statement.
@@ -56,8 +56,8 @@ c. Tested the neuron network classifier.
 a. Constructed HoG features  
 b. Built randomForest classifier  
 c. Tested models; SIFT + GBM, SIFT + RF, HoG + RF, SIFT + HoG + RF
-d. Debugged SIFT and HoG; ran the final model
-e. Contributed to `readMe.md`
+d. Debugged SIFT and HoG; ran the final model  
+e. Contributed to `README.md`
 
 #### Chris Lai
 a. Constructed RGB + PCA features  
