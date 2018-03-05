@@ -38,7 +38,7 @@ for n in range(0, len(onlyfiles)):
   gray_images[n] = cv2.imread( join(mypath,onlyfiles[n]), 0)
 
 
-orb = cv2.ORB_create(nfeatures = 5)
+orb = cv2.ORB_create(nfeatures = 30)
 
 ##maybe make ky and desc lists?
 #py_keypoints = numpy.empty(shape =(5*len(onlyfiles), 32), dtype=object)
@@ -56,12 +56,35 @@ for n in range(len(gray_images)):
     py_keypoints.append(keypoint)
     py_descriptors.append(descriptor)
     
-#print(py_descriptors)
+print(py_descriptors)
 
-numpy.save('test2',py_descriptors[5])
-
-numpy.savez('test2',py_descriptors)
+#numpy.save('testagain',py_descriptors[5])
 
 
+
+
+#a = iter(list(range(10)))
+#for i in a:
+#    numpy.save('Printing {}'.format(i), py_descriptors[i] )
+#    next(a)
+
+
+#This WORKS!!!!!!
+#a = iter(list(range(len(py_descriptors))))
+#for i in a:
+#    numpy.save('pet{}'.format(i), py_descriptors[i] )
+#don't use this
+#    next(a)
+
+
+savepath = "/Users/admin/Desktop/Columbia/Spring 2018/Applied DS/Pet Images and Extracted Features - Project 2/python pets"
+
+a = iter(list(range(len(py_descriptors))))
+for i in a:
+    numpy.save(join(savepath, 'pet{}'.format(i)), py_descriptors[i] )
+
+
+
+#len(py_descriptors)
 #######################
 

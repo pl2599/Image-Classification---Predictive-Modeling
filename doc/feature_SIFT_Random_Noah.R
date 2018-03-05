@@ -28,12 +28,13 @@
 
 #img_dir <-  "/Users/admin/Desktop/Columbia/Spring 2018/Applied DS/Pet Images and Extracted Features - Project 2/Practice SIFT Set 500/"
 
-feature_SIFT_random <- function(img_dir, set_name = "", data_name = "pets", export=T, nfeatures = 10) {
+feature_SIFT_random_Noah <- function(img_dir, set_name = "", data_name = "pets", export=T, nfeatures = 10) {
   
   n_files <- length(list.files(img_dir))  
   #dat <- matrix(NA, nrow = length(n_files), ncol = 128*nfeatures)
   dat <- list()
   
+  set.seed(123)
   for (i in 1:n_files) {
     # loads two data objects, one of which, features, has nrows = number of 
     # image keypoints
@@ -45,7 +46,12 @@ feature_SIFT_random <- function(img_dir, set_name = "", data_name = "pets", expo
     for(n in 1:nfeatures) {
       # choose nfeatures=10 random rows (=keypoint descriptors) from the
       #features matrix and assign them to list "subset" 
-      subset[n,] <- features[sample(nrow(features), nfeatures)[[n]],]
+      if (nrow(features) >= nfeatures) {
+        
+        subset[n,] <- features[sample(nrow(features), nfeatures)[[n]],]
+      } else {
+        subset[n,] <- features[sample(nrow(features), nfeatures, replace = TRUE)[[n]],]
+      }
     }
     #turn my list of vectors into a matrix with each vector as a row
     #subset <- t(simplify2array(subset))
@@ -65,7 +71,7 @@ feature_SIFT_random <- function(img_dir, set_name = "", data_name = "pets", expo
     save(dat, file = paste0("../output/feature_SIFT_random", data_name, "_", set_name, ".RData"))
   } 
   #output "dat" as matrix
-  return(dat)
+  #return(dat)
 }
 
 

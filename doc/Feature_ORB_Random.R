@@ -26,23 +26,17 @@
 
 ###################################
 
-#img_dir <-  "/Users/admin/Desktop/Columbia/Spring 2018/Applied DS/Pet Images and Extracted Features - Project 2/Practice SIFT Set 500/"
+#img_dir <-  "/Users/admin/Desktop/Columbia/Spring 2018/Applied DS/Pet Images and Extracted Features - Project 2/python pets"
 
-feature_ORB_random <- function(img_dir, set_name = "", data_name = "pets", export=T, nfeatures = 10) {
+feature_ORB_random <- function(img_dir, set_name = "", data_name = "pets", export=T, nfeatures = 5) {
   
   library(reticulate)
   use_python("/Users/admin/anaconda3/bin/python")
   cv2 <- reticulate::import("cv2")
-  
   library(RcppCNPy)
-  retest <- npyLoad("/Users/admin/Desktop/Columbia/Spring 2018/Applied DS/GitHub/project-2-predictive-modelling-group-5/doc/{0}.npy")
-  
-  
   
   #py_load_object("/Users/admin/Desktop/Columbia/Spring 2018/Applied DS/GitHub/project-2-predictive-modelling-group-5/doc/py_descriptors.npy")
-  
   #py_run_file("/Users/admin/Desktop/Columbia/Spring 2018/Applied DS/GitHub/project-2-predictive-modelling-group-5/doc/py_ORB_FINAL.py")
-  
   #py_run_file("../lib/py_ORB_FINAL.py")
   
   n_files <- length(list.files(img_dir))  
@@ -50,15 +44,17 @@ feature_ORB_random <- function(img_dir, set_name = "", data_name = "pets", expor
   dat <- list()
   
   for (i in 1:n_files) {
-    # loads two data objects, one of which, features, has nrows = number of 
+    # loads i (5,32) top ***5 key pointdescriptors
     # image keypoints
-    load(paste(img_dir,'/', 'pet', i, '.jpg.sift.Rdata', sep = ''))
+    
+    #retest <- npyLoad("/Users/admin/Desktop/Columbia/Spring 2018/Applied DS/GitHub/project-2-predictive-modelling-group-5/doc/Printing 2.npy")
+    array <- npyLoad(paste(img_dir,'/', 'pet', i, '.npy', sep = ''))
     
     #create matrix
-    subset <- matrix(NA, nrow = nfeatures, ncol = 128)
+    subset <- matrix(NA, nrow = nfeatures, ncol = 32)
     
     for(n in 1:nfeatures) {
-      # choose nfeatures=10 random rows (=keypoint descriptors) from the
+      # choose nfeatures=5 random rows (=keypoint descriptors) from the
       #features matrix and assign them to list "subset" 
       subset[n,] <- features[sample(nrow(features), nfeatures)[[n]],]
     }

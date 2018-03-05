@@ -6,8 +6,15 @@ output: html_notebook
 ######## Required packages
 #library(e1071)
 
-###### CV and predtic/test error with best model
 
+### Extracting Noah 2000 ... I am playing with number of features picked
+
+source("../doc/feature_SIFT_Random_Noah.R")
+
+feature_SIFT_random_Noah("/Users/admin/Desktop/Columbia/Spring 2018/Applied DS/Pet Images and Extracted Features - Project 2/Extracted SIFT features/", "Noah_2000_n100", nfeatures = 100)
+
+
+###### CV and predtic/test error with best model
 
 label_train <- "/Users/admin/Desktop/Columbia/Spring 2018/Applied DS/Pet Images and Extracted Features - Project 2/train_label.txt"
 label <- read.table(label_train, header = F)
@@ -15,21 +22,21 @@ label <- as.numeric(unlist(label) == "dog")
 label_train <- as.matrix(label)
 colnames(label_train) <- "labels"
   
-load("/Users/admin/Desktop/Columbia/Spring 2018/Applied DS/GitHub/project-2-predictive-modelling-group-5/output/feature_data_Noah_2000.RData")
-Noah <- dat
+load("/Users/admin/Desktop/Columbia/Spring 2018/Applied DS/GitHub/project-2-predictive-modelling-group-5/output/feature_SIFT_randompets_Noah_2000.RData")
+noah <- dat
 
 #remeber to train.y value in as.factor(). Without as.factor the svm() function will do regression and give very different (continuous) outputs
-cv.duration.noah.svm.1000 <- system.time(cv.output.noah.svm <- tune(svm, train.x = Noah[1:1000,], train.y = as.factor(label_train[1:1000,]), kernel = "linear", ranges = list(cost=c(.00000001, .0000001, .000001, .00001, 0.0001, 0.001, 0.01)), tunecontrol = tune.control(cross = 5)))
+cv.duration.noah.svm.1000 <- system.time(cv.output.noah.svm.1000 <- tune(svm, train.x = noah[1:1000,], train.y = as.factor(label_train[1:1000,]), kernel = "linear", scale = FALSE, ranges = list(cost=c(.00000001, .0000001, .000001, .00001, 0.0001, 0.001, 0.01)), tunecontrol = tune.control(cross = 5)))
 cv.duration.noah.svm.1000
 #   user  system elapsed 
-#164.783   4.160 169.282 
+#370.326   3.346 374.581 
 
-summary(cv.output.noah.svm)
+summary(cv.output.noah.svm.1000)
 
-best_svm_model.noah.svm <- list(fit = cv.output.noah.svm$best.model)
-summary(best_svm_model.noah.svm$fit)
+best_svm_model.noah.svm.1000 <- list(fit = cv.output.noah.svm.1000$best.model)
+summary(best_svm_model.noah.svm.1000$fit)
 
-pred_test.noah.svm.1000 <- test_SVM(best_svm_model.noah.svm, Noah[1001:2000,])
+pred_test.noah.svm.1000 <- test_SVM(best_svm_model.noah.svm.1000, noah[1001:2000,])
 comparison_chart.noah.svm.1000 <- table(predict=pred_test.noah.svm.1000, truth=label_train[1001:2000,])
 chart <- comparison_chart.noah.svm.1000
 misclass <- sum(chart[1,2],chart[2,1])
@@ -39,7 +46,7 @@ test_error.noah.svm.1000
 ```
 
 
-# Train Ginny + SVM on 1600 files
+# Train noah + SVM on 1600 files
 
 ```{r}
 #Chosen value of cost = 0.001
@@ -50,29 +57,41 @@ label <- as.numeric(unlist(label) == "dog")
 label_train <- as.matrix(label)
 colnames(label_train) <- "labels"
 
-load("/Users/admin/Desktop/Columbia/Spring 2018/Applied DS/GitHub/project-2-predictive-modelling-group-5/output/feature_data_Ginny_2000.RData")
-
-ginny <- dat
+# Notes which file I am uploading!!!!
+load("/Users/admin/Desktop/Columbia/Spring 2018/Applied DS/GitHub/project-2-predictive-modelling-group-5/output/feature_SIFT_randompets_Noah_2000_n100.RData")
+noah <- dat
 
 source("../doc/train_SVM.R")
-train.duration.ginny.svm.1600 <- system.time(fit_train.ginny.svm <- train_SVM(ginny[1:1600,], label_train[1:1600,], par = 0.001))
-train.duration.ginny.svm.1600
-#user  system elapsed 
-#18.668   0.197  18.890 
+train.duration.noah.svm.1600 <- system.time(fit_train.noah.svm.1600 <- train_SVM(noah[1:1600,], label_train[1:1600,], par = 0.00001))
+train.duration.noah.svm.1600
+#n=30
+#   user  system elapsed 
+#116.250   0.859 117.322
+# n=100
+#   user  system elapsed 
+#422.034   4.384 427.441 
 
-summary(fit_train.ginny.svm$fit)
+summary(fit_train.noah.svm.1600$fit)
 
 source("../doc/test_SVM.R")
-test.duration.ginny.svm.400 <- system.time(pred_test.ginny.svm <- test_SVM(fit_train.ginny.svm, ginny[1601:2000,]))
-comparison_chart.ginny.svm <- table(predict=pred_test.ginny.svm, truth=label_train[1601:2000,])
-chart <- comparison_chart.ginny.svm
+test.duration.noah.svm.400 <- system.time(pred_test.noah.svm.400 <- test_SVM(fit_train.noah.svm.1600, noah[1601:2000,]))
+comparison_chart.noah.svm.400 <- table(predict=pred_test.noah.svm.400, truth=label_train[1601:2000,])
+chart <- comparison_chart.noah.svm.400
 misclass <- sum(chart[1,2],chart[2,1])
-test_error.ginny.svm <- misclass/length(pred_test.ginny.svm)
-test_error.ginny.svm
-# 0.415
-test.duration.ginny.svm.400
-#  user  system elapsed 
-#  0.931   0.069   1.028 
+test_error.noah.svm.400 <- misclass/length(pred_test.noah.svm.400)
+test_error.noah.svm.400
+# 0.365
+
+# n= 100, par = 0.00001
+#0.4325
+
+test.duration.noah.svm.400
+#user  system elapsed 
+#  8.835   0.074   8.916 
+
+# n= 100, par = 0.00001
+#   user  system elapsed 
+# 34.066   0.806  34.964
 
 
 ```

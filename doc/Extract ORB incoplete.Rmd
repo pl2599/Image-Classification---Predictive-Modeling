@@ -1,0 +1,161 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+How is "dat" created in feature.R [structure of dat is one row per image]... and implication for rows per variable
+look at role of feature.R in Main.R
+Write Feature_orb.R
+Extract sample of 500
+
+what are the dimensions we are doing SVM on? for orb isn't each image a collecton of 500 variables in 32 dimensional space?
+
+#Extract ORB features from pet1
+```{r}
+library(reticulate)
+use_python("/Users/admin/anaconda3/bin/python")
+cv2 <- reticulate::import("cv2")
+library(EBImage)
+
+
+
+# use cv2 to create a python array of the image !!learn more about this object type
+# figure out how to relationally set the path later
+img1 <- cv2$imread('/Users/admin/Desktop/Columbia/Spring 2018/Applied DS/Pet Images and Extracted Features - Project 2/Pet Images/pet1.jpg')
+
+# Converts to grey scale. I don't understand why np_array(img1, dtype='float32') is necessary ***??? would it not be necessary if I was natively in python?
+gray_img1 <- cv2$cvtColor(np_array(img1, dtype='float32'), cv2$COLOR_BGR2GRAY)
+
+# this loads the detector code so that we ca use it on the image
+orb <- cv2$ORB_create()
+
+# What kind of object are the keypoints before we creat the descriptors of those key points, are they just regions on the initial image***??? What 500 key point mean?   from FAST and BRIEF? ***??? 
+# converts from [0,1] pixel intensity to [0, 255] scale. What is dtype='uint8'? Why the transformation again?
+keypoints_and_descriptors1 <- orb$detectAndCompute(np_array(gray_img1 * 255, dtype='uint8'), NULL)
+descriptors1 <- keypoints_and_descriptors1[[2]]
+
+## Questions going forward: 
+# Does the number of key points vary per image in ORB? If so, will I have to index them into a constant form?
+# What is the code to run feature extraction on every image and output a single .rdata file. This is building a feature_ORB.R file.
+```
+
+#Extract ORB features from pet2 (and play with number of extracted keypoints)
+
+```{r}
+##Note: pet1 and pet2 are of different hieghts, but outputed features are
+#same [500, 32] dimensions *** Ihave changed that to 5 here
+# Same pprocess as for pet1 
+
+img2 <- cv2$imread('/Users/admin/Desktop/Columbia/Spring 2018/Applied DS/Pet Images and Extracted Features - Project 2/Pet Images/pet2.jpg')
+
+gray_img2 <- cv2$cvtColor(np_array(img2, dtype='float32'), cv2$COLOR_BGR2GRAY)
+
+# setting nfeatures = 5 tells the functions to return only top 5 keypoints
+# I assume this is the top 5 most "charateristic" keypoint because they are choosen by their Harris corner detection score as I understand the documentation. 
+orb <- cv2$ORB_create(nfeatures = as.integer(5))
+
+keypoints_and_descriptors2 <- orb$detectAndCompute(np_array(gray_img2 * 255, dtype='uint8'), NULL)
+
+descriptors2 <- keypoints_and_descriptors2[[2]]
+```
+
+
+#Extracting img2 in Python
+```{python}
+import cv2
+
+# same as R implementation but *without* any of the image re-formatting
+img2 = cv2.imread('/Users/admin/Desktop/Columbia/Spring 2018/Applied DS/Pet Images and Extracted Features - Project 2/Pet Images/pet2.jpg')
+
+gray_img2 = cv2.cvtColor(img2, cv2.COLOR_BGR2GRAY)
+
+# nfeatures = 5 tells the functions to return only top 5 keypoints
+orb = cv2.ORB_create(nfeatures = 5)
+
+keypoints2, py_descriptors2 = orb.detectAndCompute(gray_img2, None)
+
+print(py_descriptors2)
+
+```
+
+
+should I add nfeatures as a variable?
+# Creating the feature_ORB.R function
+```{r}
+
+### Goal: ???/ construct features regardless of whether images come from training or ultimate test set
+
+### Inputs: 
+# "img_dir" = a directory path that contains images ready for processing
+# "export" = logical value telling me whether to save the .rdata to the output folder 
+# "nfeatures" = number of keypoints the algo will extract per image. Default = 5
+# Note: The "img_dir" input is a path name ending in a folder
+# Note: I got rid of the input "data_name" because all our data is "pets" 
+
+
+### Output: 
+# "dat" =   an .RData file containing a matrix of  processed features for the images in "img_dir" *** row? columns?
+
+
+#########################################################
+
+
+
+### name and define function inputs (and defaults)
+feature_ORB <- function(img_dir, set_name, export=T, nfeatures=5){
+
+### load libraries
+library(reticulate)
+use_python("/Users/admin/anaconda3/bin/python")
+cv2 <- reticulate::import("cv2")
+  
+  # definitions??
+  n_files <- length(list.files(img_dir))
+
+### Create our empty matrix; cols = number of images in directory ,  rows = 32 * nfeatures 
+  dat <- matrix(NA, nrow = n_files, ncol = 32*nfeatures) 
+  
+  for(i in 1:n_files) {
+    ### Read in and convert ith image
+    #read in the ith image
+    img <- cv2$imread(paste0(img_dir, "pet", i, ".jpg"))
+    # covert ith image to gray
+    gray_img <- cv2$cvtColor(np_array(img, dtype='float32'), cv2$COLOR_BGR2GRAY)
+    
+    ### Extract features
+    # activate ORB module in python and tell it to extract "nfeatures = ?" keypoints per image
+    orb <- cv2$ORB_create(nfeatures = as.integer(nfeatures))
+    # extract keypoints and their 32 descriptor values for the ith image
+    keypoints_and_descriptors <- orb$detectAndCompute(np_array(gray_img * 255, dtype='uint8'), NULL)
+    # creat an object of just the keypoint descriptors of the ith image
+    descriptors <- keypoints_and_descriptors[[2]]
+    
+    ### Populate our output matrix
+    # combine the keypoint descriptors of the ith image consequetively into one vector and assign that vector to the ith row of our data matrix
+    dat[i,] <- as.vector(t(descriptors))
+  }
+  
+  ### save .RData file of constructed features ** "export" is defined in binaries in "main.Rmd"
+  if(export){
+    save(dat, file = paste0("../output/features_ORB_", set_name, ".RData"))
+  }
+  # output "dat" matrix
+  return(dat)
+}
+
+###############################################
+#####Possible improvements or changes
+
+##does maintaining the 32 key points in order even make a difference in estimating the parameters....? probs not
+
+##Possible approaches to changing rows in to single vector keeping rows together:
+#(a)paste = to past vectors (maybe unite then separete)
+#(b)tapply option/tidy option
+#(c)for loop option w/ c() 
+#(d) for splotting cols: split(descriptors2, rep(1:ncol(descriptors2), each = nrow(descriptors2)))
+
+## Make the python version called by reticulate a relative path 
+
+feature_ORB("/Users/admin/Desktop/Columbia/Spring 2018/Applied DS/Pet Images and Extracted Features - Project 2/Practice image set 500", "practice",export = FALSE)
+
+```
+
