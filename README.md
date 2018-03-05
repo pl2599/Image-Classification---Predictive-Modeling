@@ -62,7 +62,10 @@ c. Tested models; SIFT + GBM, SIFT + RF, HoG + RF, SIFT + HoG + RF
 
 
 
-
+#### All
+a. Client problem analysis  
+b. Github collaboration and organization  
+c. Contribution to presentation content
 
 
 
