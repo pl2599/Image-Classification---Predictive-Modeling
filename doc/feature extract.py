@@ -33,6 +33,8 @@ print(py_descriptors)
 #https://stackoverflow.com/questions/30506126/open-cv-error-215-scn-3-scn-4-in-function-cvtcolor
 
 
+####### change 501 to 500 I think first image is repeated because of range starting at 0
+
 import cv2
 from os import listdir
 from os.path import isfile, join
@@ -60,9 +62,10 @@ py_descriptors = []
 #output of orb.detectAndCompute() with input of gray_images[n]
 # took out start range at 0
 for n in range(len(gray_images)):
-    # take out the [n] for the ky and desc objs?
-    py_keypoints[n], py_descriptors[n] = orb.detectAndCompute(gray_images[n], None)
-    #py_keypoints, py_descriptors = orb.detectAndCompute(gray_images[n], None)
+    keypoint, descriptor = orb.detectAndCompute(gray_images[n], None)
+    py_keypoints.append(keypoint)
+    py_descriptors.append(descriptor)
+    
 print(py_descriptors)
 
 ________________________________

@@ -1,8 +1,8 @@
-#### Description: turns SIFT keypoints and descriptors from many images into a single matrix where nrows=number of images, ncols = length of 10 random sequentially concatentated 128-dim keypoint descriptors (for each image.)
+############### Description: turns SIFT keypoints and descriptors from many images into a single matrix where nrows=number of images, ncols = length of 10 random sequentially concatentated 128-dim keypoint descriptors (for each image.)
 
 ## 
 
-#### Inputs:
+############### Inputs:
 # "img_dir" = must NOT end with a "/"
 
 
@@ -15,12 +15,18 @@
 # "nfeatures" = number of random keypoint descriptors to use image. 
 # default = 10
 
-#### Outputs:
+############## Outputs:
 # "dat" = an .RData file of SIFT features for all images in input directory. 
-# nrow = number of images in input directory. ncol = *****???
+# nrow = number of images in input directory. ncol = 128*nfeatures
+
+# "feature_SIFT_random_data_name_set_name.RData" = file containing the "dat" 
+# data object
+
+
+
+###################################
 
 #img_dir <-  "/Users/admin/Desktop/Columbia/Spring 2018/Applied DS/Pet Images and Extracted Features - Project 2/Practice SIFT Set 500/"
-
 
 feature_SIFT_random <- function(img_dir, set_name = "", data_name = "pets", export=T, nfeatures = 10) {
   
@@ -56,7 +62,7 @@ feature_SIFT_random <- function(img_dir, set_name = "", data_name = "pets", expo
   
   ### output constructed features
   if(export){
-    save(dat, file = paste0("../output/feature_SIFT_", data_name, "_", set_name, ".RData"))
+    save(dat, file = paste0("../output/feature_SIFT_random", data_name, "_", set_name, ".RData"))
   } 
   #output "dat" as matrix
   return(dat)

@@ -205,3 +205,19 @@ keypoints[n], py_descriptor[n] = orb.detectAndCompute(gray_img[n], None)
 For the turning a list into a matrix part:
 https://stackoverflow.com/questions/1329940/how-do-i-make-a-matrix-from-a-list-of-vectors-in-r
 
+
+
+#Extracting Giny's SIFT features
+
+```{r}
+
+source("../doc/feature_SIFT_Ginny.R")
+
+feature_SIFT_Ginny()
+
+
+
+```
+
+
+

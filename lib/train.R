@@ -7,7 +7,7 @@
 ### ADS Spring 2016
 
 ## Questions: 
-# What form of object does GBM.fit take as input? x= data.frame of predictors
+# What form of object does GBM.fit take as input? A:  x= data.frame of predictors
 #y = data fram of labels. n_rows of both must be the same.
 # As output to gbm.perf?
 
