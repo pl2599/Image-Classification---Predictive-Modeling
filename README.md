@@ -23,7 +23,7 @@ Term: Spring 2018
 + Project summary: In this project, we extracted features of cats and dogs, explored and compared various classification models to detect whether an image shows a cat or dog.
 
   + Baseline model: GBM with SIFT features
-  + Proposed model: XGBoost with SIFT + HoG features
+  + Proposed model: XGBoost with SIFT + HoG features, Convolutional Neral Network 
 
 + Project details: We explored different feature extraction methods, such as SIFT, HoG, SIFT + HoG, RGB + PCA, and SIFT + HoG + RGB + PCA. We also tested different classfication models to select a model that achieves best performance, from algorithm accuracy, runtime, and memory perspective. Please refer to our `main.Rmd` for more details. For the efficiency of computation and the improved accuracy, we chose XGBoost classifer with SIFT + HoG features, which increased the accuracy by % and decreased runtime by %.
 
