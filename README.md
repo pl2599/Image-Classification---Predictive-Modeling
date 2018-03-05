@@ -46,17 +46,13 @@ a. Contributed to `main.Rmd` and `README.md`.
 b. Facilitated meetings, discussions, result output.
 
 
-#### Chris Lai
+#### Sile Yang
 
-1. Feature
-a. Compiled RGB and RGB+PCA features.
+Convolutional Neural Networks
+a. Extracted arrays from raw iamges and organized them into one dataset that is suitable for convolutional Neural Networks model. 
+b. Built neural networks model with three layers by Tensorflow. 
+c. Tested the neuron network classifier with an accuracy of ?%.
 
-2. Model
-a. Coded the entirety of XGBoost and ran it with all features available, including SIFT, HOG, SIFT + HOG, RGB, RGB + PCA features. Included a cross validation technique for hyper parameter tuning using a grid of potential parameters. 
-
-3. Misc
-a. Contributed to 'main.Rmd'.
-b. Facilitated discussions.
 
 
 
