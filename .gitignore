@@ -33,3 +33,10 @@ vignettes/*.pdf
 *.knit.md
 
 .DS_Store
+*.Rdata
+*.jpg
+*.jpg
+*.jpg
+data/test/pet203.jpg
+*.jpg
+data/test/pet297.jpg
