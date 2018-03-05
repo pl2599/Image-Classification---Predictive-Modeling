@@ -8,7 +8,8 @@ The lib directory contains various files with function definitions that are call
 
 Convolution is a mathematical operation that’s used in single processing to filter signals, find patterns in signals.    
 In cnn, we used `tf.nn.conv2d` to create 3 convolutional layers (one is gray)  
-![image](figs/cnn-image-1.png)  
+
+![](figs/cnn-image-1.png)  
 
 For prediction and optimization, we use `session.run()` to calculate accuracy. Function `print_accuracy` is a function for printing the classification accuracy on the test set.  
 
