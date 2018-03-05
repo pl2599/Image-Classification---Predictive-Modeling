@@ -2,7 +2,7 @@
 ### Train a classification model with training images ###
 #########################################################
 
-### Author: Ginny Gao
+### Author: Yuting Ma with modification by Ginny Gao
 ### Project 2
 ### ADS Spring 2018
 
@@ -17,7 +17,7 @@ train <- function(dat_train, label_train, par = NULL){
   ### Output: training model specification
   
   ### load libraries
-  library("randomForest")
+  library("gbm")
   
   ### Train with gradient boosting model
   if(is.null(par)){
@@ -25,8 +25,13 @@ train <- function(dat_train, label_train, par = NULL){
   } else {
     depth <- par$depth
   }
-  fit_rf <- randomForest(x = dat_train, y = label_train)
-#  best_iter <- gbm.perf(fit_gbm, method = "OOB", plot.it = FALSE)
+  fit_gbm <- gbm.fit(x = dat_train, y = label_train,
+                     n.trees = 2000,
+                     distribution = "bernoulli",
+                     interaction.depth = depth, 
+                     bag.fraction = 0.5,
+                     verbose = FALSE)
+  best_iter <- gbm.perf(fit_gbm, method = "OOB", plot.it = FALSE)
 
-  return(list(fit = fit_rf))
+  return(list(fit = fit_gbm, iter = best_iter))
 }
