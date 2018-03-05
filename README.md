@@ -28,7 +28,10 @@ Term: Spring 2018
 
 + Project details: We explored different feature extraction methods, including as SIFT, HoG, SIFT + HoG, RGB + PCA, and SIFT + HoG + RGB + PCA. We also tested different classification models to select a model that achieves best performance, from algorithm accuracy, runtime, and memory perspective. Please refer to our [`main.Rmd`](https://github.com/GU4243-ADS/project-2-predictive-modelling-group-5/blob/master/doc/main.Rmd) for more details. For the efficiency of computation and the improved accuracy, we chose XGBoost classier with SIFT + HoG features, which increased the accuracy over the baseline from 64% to 79% and decreased the training runtime from a the baseline of 1096.47s down to 183.979s.
 
-+ CNN architecture. More details can be found [here](https://github.com/GU4243-ADS/project-2-predictive-modelling-group-5/blob/master/lib/cnn.ipynb).
++ CNN architecture. 
+Convolution is a mathematical operation that’s used in single processing to filter signals, find patterns in signals.    
+In cnn, we used `tf.nn.conv2d` to create 3 convolutional layers (one is gray)  
+More details can be found [here](https://github.com/GU4243-ADS/project-2-predictive-modelling-group-5/blob/master/lib/cnn.ipynb).
 ![image](figs/cnn-image-1.jpg)
 
 Contribution statement: [default](doc/a_note_on_contributions.md) All team members contributed equally in all stages of this project. All team members approve our work presented in this GitHub repository including this contributions statement.
