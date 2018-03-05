@@ -30,7 +30,7 @@ Term: Spring 2018
 
 + CNN architecture. 
 Convolution is a mathematical operation that’s used in single processing to filter signals, find patterns in signals.    
-In cnn, we used `tf.nn.conv2d` to create 3 convolutional layers (one is gray)  
+In cnn, we used `tf.nn.conv2d` to create 3 convolutional layers (one is gray). For prediction and optimization, we use `session.run()` to calculate accuracy. Function `print_accuracy` is a function for printing the classification accuracy on the test set.    
 More details can be found [here](https://github.com/GU4243-ADS/project-2-predictive-modelling-group-5/blob/master/lib/cnn.ipynb).
 ![image](figs/cnn-image-1.jpg)
 
