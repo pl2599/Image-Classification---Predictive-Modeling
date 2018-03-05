@@ -143,7 +143,7 @@ $(document).ready(function () {
 </style>
 <script>
 $(document).ready(function () {
-  window.initializeSourceEmbed("Extract ORB.Rmd");
+  window.initializeSourceEmbed("ORB+SVM CV+Predict .Rmd");
   window.initializeCodeFolding("show" === "show");
 });
 </script>
@@ -173,150 +173,91 @@ $(document).ready(function () {
 
 
 <!-- rnb-text-begin -->
-<p>How is “dat” created in feature.R [structure of dat is one row per image]… and implication for rows per variable look at role of feature.R in Main.R Write Feature_orb.R Extract sample of 500</p>
-<p>what are the dimensions we are doing SVM on? for orb isn’t each image a collecton of 500 variables in 32 dimensional space?</p>
-<div id="extract-orb-features-from-pet1" class="section level1">
-<h1>Extract ORB features from pet1</h1>
+<div id="cv-and-predtictest-error-with-best-model" class="section level1">
+<h1>CV and predtic/test error with best model</h1>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxua2V5cG9pbnRzX2FuZF9kZXNjcmlwdG9yczEgPC0gb3JiJGRldGVjdEFuZENvbXB1dGUoZ3JheV9pbWcxLCBOVUxMKVxuXG5gYGAifQ== -->
-<pre class="r"><code>keypoints_and_descriptors1 &lt;- orb$detectAndCompute(gray_img1, NULL)
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubG9hZChcIi9Vc2Vycy9hZG1pbi9EZXNrdG9wL0NvbHVtYmlhL1NwcmluZyAyMDE4L0FwcGxpZWQgRFMvR2l0SHViL3Byb2plY3QtMi1wcmVkaWN0aXZlLW1vZGVsbGluZy1ncm91cC01L291dHB1dC9mZWF0dXJlX09SQl9yYW5kb21wZXRzX24zMC5SRGF0YVwiKVxuXG5gYGAifQ== -->
+<pre class="r"><code>load(&quot;/Users/admin/Desktop/Columbia/Spring 2018/Applied DS/GitHub/project-2-predictive-modelling-group-5/output/feature_ORB_randompets_n30.RData&quot;)
 </code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiT3BlbkNWIEVycm9yOiBBc3NlcnRpb24gZmFpbGVkIChkZXB0aCA9PSBDVl84VSB8fCBkZXB0aCA9PSBDVl8xNlUgfHwgZGVwdGggPT0gQ1ZfMzJGKSBpbiBjdnRDb2xvciwgZmlsZSAvVXNlcnMvdHJhdmlzL2J1aWxkL3NrdmFyay9vcGVuY3YtcHl0aG9uL29wZW5jdi9tb2R1bGVzL2ltZ3Byb2Mvc3JjL2NvbG9yLmNwcCwgbGluZSA5NzEwXG5FcnJvciBpbiBweV9jYWxsX2ltcGwoY2FsbGFibGUsIGRvdHMkYXJncywgZG90cyRrZXl3b3JkcykgOiBcbiAgZXJyb3I6IC9Vc2Vycy90cmF2aXMvYnVpbGQvc2t2YXJrL29wZW5jdi1weXRob24vb3BlbmN2L21vZHVsZXMvaW1ncHJvYy9zcmMvY29sb3IuY3BwOjk3MTA6IGVycm9yOiAoLTIxNSkgZGVwdGggPT0gQ1ZfOFUgfHwgZGVwdGggPT0gQ1ZfMTZVIHx8IGRlcHRoID09IENWXzMyRiBpbiBmdW5jdGlvbiBjdnRDb2xvclxuIn0= -->
-<pre><code>OpenCV Error: Assertion failed (depth == CV_8U || depth == CV_16U || depth == CV_32F) in cvtColor, file /Users/travis/build/skvark/opencv-python/opencv/modules/imgproc/src/color.cpp, line 9710
-Error in py_call_impl(callable, dots$args, dots$keywords) : 
-  error: /Users/travis/build/skvark/opencv-python/opencv/modules/imgproc/src/color.cpp:9710: error: (-215) depth == CV_8U || depth == CV_16U || depth == CV_32F in function cvtColor</code></pre>
+<!-- rnb-output-begin eyJkYXRhIjoiV2FybmluZyBtZXNzYWdlczpcbjE6IEluIGRpci5jcmVhdGUoZGlybmFtZShkZXN0KSwgcmVjdXJzaXZlID0gVFJVRSkgOlxuICBjYW5ub3QgY3JlYXRlIGRpciAnL1VzZXJzL2FkbWluLy4uL2RvYycsIHJlYXNvbiAnUGVybWlzc2lvbiBkZW5pZWQnXG4yOiBJbiBmaWxlLmNyZWF0ZSh0b1tva2F5XSkgOlxuICBjYW5ub3QgY3JlYXRlIGZpbGUgJy9Vc2Vycy9hZG1pbi8uLi9kb2MvdHJhaW5fU1ZNLlInLCByZWFzb24gJ05vIHN1Y2ggZmlsZSBvciBkaXJlY3RvcnknXG4zOiBJbiBkaXIuY3JlYXRlKGRpcm5hbWUoZGVzdCksIHJlY3Vyc2l2ZSA9IFRSVUUpIDpcbiAgY2Fubm90IGNyZWF0ZSBkaXIgJy9Vc2Vycy9hZG1pbi8uLi9kb2MnLCByZWFzb24gJ1Blcm1pc3Npb24gZGVuaWVkJ1xuNDogSW4gZmlsZS5jcmVhdGUodG9bb2theV0pIDpcbiAgY2Fubm90IGNyZWF0ZSBmaWxlICcvVXNlcnMvYWRtaW4vLi4vZG9jL3Rlc3RfU1ZNLlInLCByZWFzb24gJ05vIHN1Y2ggZmlsZSBvciBkaXJlY3RvcnknXG4ifQ== -->
+<pre><code>Warning messages:
+1: In dir.create(dirname(dest), recursive = TRUE) :
+  cannot create dir '/Users/admin/../doc', reason 'Permission denied'
+2: In file.create(to[okay]) :
+  cannot create file '/Users/admin/../doc/train_SVM.R', reason 'No such file or directory'
+3: In dir.create(dirname(dest), recursive = TRUE) :
+  cannot create dir '/Users/admin/../doc', reason 'Permission denied'
+4: In file.create(to[okay]) :
+  cannot create file '/Users/admin/../doc/test_SVM.R', reason 'No such file or directory'</code></pre>
 <!-- rnb-output-end -->
-<!-- rnb-chunk-end -->
-<!-- rnb-text-begin -->
-</div>
-<div id="extract-orb-features-from-pet2-and-play-with-number-of-extracted-keypoints" class="section level1">
-<h1>Extract ORB features from pet2 (and play with number of extracted keypoints)</h1>
-<!-- rnb-text-end -->
-<!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyNOb3RlOiBwZXQxIGFuZCBwZXQyIGFyZSBvZiBkaWZmZXJlbnQgaGllZ2h0cywgYnV0IG91dHB1dGVkIGZlYXR1cmVzIGFyZVxuI3NhbWUgWzUwMCwgMzJdIGRpbWVuc2lvbnMgKioqIEloYXZlIGNoYW5nZWQgdGhhdCB0byA1IGhlcmVcbiMgU2FtZSBwcHJvY2VzcyBhcyBmb3IgcGV0MSBcbmltZzIgPC0gY3YyJGltcmVhZCgnL1VzZXJzL2FkbWluL0Rlc2t0b3AvQ29sdW1iaWEvU3ByaW5nIDIwMTgvQXBwbGllZCBEUy9QZXQgSW1hZ2VzIGFuZCBFeHRyYWN0ZWQgRmVhdHVyZXMgLSBQcm9qZWN0IDIvUGV0IEltYWdlcy9wZXQyLmpwZycpXG5ncmF5X2ltZzIgPC0gY3YyJGN2dENvbG9yKG5wX2FycmF5KGltZzIsIGR0eXBlPSdmbG9hdDMyJyksIGN2MiRDT0xPUl9CR1IyR1JBWSlcbiMgc2V0dGluZyBuZmVhdHVyZXMgPSA1IHRlbGxzIHRoZSBmdW5jdGlvbnMgdG8gcmV0dXJuIG9ubHkgdG9wIDUga2V5cG9pbnRzXG4jIEkgYXNzdW1lIHRoaXMgaXMgdGhlIHRvcCA1IG1vc3QgXCJjaGFyYXRlcmlzdGljXCIga2V5cG9pbnQgYmVjYXVzZSB0aGV5IGFyZSBjaG9vc2VuIGJ5IHRoZWlyIEhhcnJpcyBjb3JuZXIgZGV0ZWN0aW9uIHNjb3JlIGFzIEkgdW5kZXJzdGFuZCB0aGUgZG9jdW1lbnRhdGlvbi4gXG5vcmIgPC0gY3YyJE9SQl9jcmVhdGUobmZlYXR1cmVzID0gYXMuaW50ZWdlcig1KSlcbmtleXBvaW50c19hbmRfZGVzY3JpcHRvcnMyIDwtIG9yYiRkZXRlY3RBbmRDb21wdXRlKG5wX2FycmF5KGdyYXlfaW1nMiAqIDI1NSwgZHR5cGU9J3VpbnQ4JyksIE5VTEwpXG5kZXNjcmlwdG9yczIgPC0ga2V5cG9pbnRzX2FuZF9kZXNjcmlwdG9yczJbWzJdXVxuYGBgIn0= -->
-<pre class="r"><code>##Note: pet1 and pet2 are of different hieghts, but outputed features are
-#same [500, 32] dimensions *** Ihave changed that to 5 here
-# Same pprocess as for pet1 
-img2 &lt;- cv2$imread('/Users/admin/Desktop/Columbia/Spring 2018/Applied DS/Pet Images and Extracted Features - Project 2/Pet Images/pet2.jpg')
-gray_img2 &lt;- cv2$cvtColor(np_array(img2, dtype='float32'), cv2$COLOR_BGR2GRAY)
-# setting nfeatures = 5 tells the functions to return only top 5 keypoints
-# I assume this is the top 5 most &quot;charateristic&quot; keypoint because they are choosen by their Harris corner detection score as I understand the documentation. 
-orb &lt;- cv2$ORB_create(nfeatures = as.integer(5))
-keypoints_and_descriptors2 &lt;- orb$detectAndCompute(np_array(gray_img2 * 255, dtype='uint8'), NULL)
-descriptors2 &lt;- keypoints_and_descriptors2[[2]]</code></pre>
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxub3JiIDwtIGRhdFxuYGBgIn0= -->
+<pre class="r"><code>orb &lt;- dat</code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 </div>
-<div id="extracting-img2-in-python" class="section level1">
-<h1>Extracting img2 in Python</h1>
+<div id="train-orb-svm-on-1600-files" class="section level1">
+<h1>Train ORB + SVM on 1600 files</h1>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgcHl0aG9uXG5pbXBvcnQgY3YyXG5cbiMgc2FtZSBhcyBSIGltcGxlbWVudGF0aW9uIGJ1dCAqd2l0aG91dCogYW55IG9mIHRoZSBpbWFnZSByZS1mb3JtYXR0aW5nXG5pbWcyID0gY3YyLmltcmVhZCgnL1VzZXJzL2FkbWluL0Rlc2t0b3AvQ29sdW1iaWEvU3ByaW5nIDIwMTgvQXBwbGllZCBEUy9QZXQgSW1hZ2VzIGFuZCBFeHRyYWN0ZWQgRmVhdHVyZXMgLSBQcm9qZWN0IDIvUGV0IEltYWdlcy9wZXQyLmpwZycpXG5cbmdyYXlfaW1nMiA9IGN2Mi5jdnRDb2xvcihpbWcyLCBjdjIuQ09MT1JfQkdSMkdSQVkpXG5cbiMgbmZlYXR1cmVzID0gNSB0ZWxscyB0aGUgZnVuY3Rpb25zIHRvIHJldHVybiBvbmx5IHRvcCA1IGtleXBvaW50c1xub3JiID0gY3YyLk9SQl9jcmVhdGUobmZlYXR1cmVzID0gNSlcblxua2V5cG9pbnRzMiwgcHlfZGVzY3JpcHRvcnMyID0gb3JiLmRldGVjdEFuZENvbXB1dGUoZ3JheV9pbWcyLCBOb25lKVxuXG5wcmludChweV9kZXNjcmlwdG9yczIpXG5cbmBgYCJ9 -->
-<pre class="python"><code>import cv2
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuI0Nob3NlbiB2YWx1ZSBvZiBjb3N0ID0gPz8/Pz9cblxubGFiZWxfdHJhaW4gPC0gXCIvVXNlcnMvYWRtaW4vRGVza3RvcC9Db2x1bWJpYS9TcHJpbmcgMjAxOC9BcHBsaWVkIERTL1BldCBJbWFnZXMgYW5kIEV4dHJhY3RlZCBGZWF0dXJlcyAtIFByb2plY3QgMi90cmFpbl9sYWJlbC50eHRcIlxubGFiZWwgPC0gcmVhZC50YWJsZShsYWJlbF90cmFpbiwgaGVhZGVyID0gRilcbmxhYmVsIDwtIGFzLm51bWVyaWModW5saXN0KGxhYmVsKSA9PSBcImRvZ1wiKVxubGFiZWxfdHJhaW4gPC0gYXMubWF0cml4KGxhYmVsKVxuY29sbmFtZXMobGFiZWxfdHJhaW4pIDwtIFwibGFiZWxzXCJcblxuIyBOb3RlcyB3aGljaCBmaWxlIEkgYW0gdXBsb2FkaW5nISEhIVxubG9hZChcIi9Vc2Vycy9hZG1pbi9EZXNrdG9wL0NvbHVtYmlhL1NwcmluZyAyMDE4L0FwcGxpZWQgRFMvR2l0SHViL3Byb2plY3QtMi1wcmVkaWN0aXZlLW1vZGVsbGluZy1ncm91cC01L291dHB1dC9mZWF0dXJlX1NJRlRfcmFuZG9tcGV0c19Ob2FoXzIwMDBfbjEwMC5SRGF0YVwiKVxuT1JCIDwtIGRhdFxuXG5zb3VyY2UoXCIuLi9kb2MvdHJhaW5fU1ZNLlJcIilcbnRyYWluLmR1cmF0aW9uLm5vYWguc3ZtLjE2MDAgPC0gc3lzdGVtLnRpbWUoZml0X3RyYWluLm5vYWguc3ZtLjE2MDAgPC0gdHJhaW5fU1ZNKG5vYWhbMToxNjAwLF0sIGxhYmVsX3RyYWluWzE6MTYwMCxdLCBwYXIgPSAwLjAwMDAxKSlcbnRyYWluLmR1cmF0aW9uLm5vYWguc3ZtLjE2MDBcbiNuPTMwXG4jICAgdXNlciAgc3lzdGVtIGVsYXBzZWQgXG4jMTE2LjI1MCAgIDAuODU5IDExNy4zMjJcbiMgbj0xMDBcbiMgICB1c2VyICBzeXN0ZW0gZWxhcHNlZCBcbiM0MjIuMDM0ICAgNC4zODQgNDI3LjQ0MSBcblxuc3VtbWFyeShmaXRfdHJhaW4ubm9haC5zdm0uMTYwMCRmaXQpXG5cbnNvdXJjZShcIi4uL2RvYy90ZXN0X1NWTS5SXCIpXG50ZXN0LmR1cmF0aW9uLm5vYWguc3ZtLjQwMCA8LSBzeXN0ZW0udGltZShwcmVkX3Rlc3Qubm9haC5zdm0uNDAwIDwtIHRlc3RfU1ZNKGZpdF90cmFpbi5ub2FoLnN2bS4xNjAwLCBub2FoWzE2MDE6MjAwMCxdKSlcbmNvbXBhcmlzb25fY2hhcnQubm9haC5zdm0uNDAwIDwtIHRhYmxlKHByZWRpY3Q9cHJlZF90ZXN0Lm5vYWguc3ZtLjQwMCwgdHJ1dGg9bGFiZWxfdHJhaW5bMTYwMToyMDAwLF0pXG5jaGFydCA8LSBjb21wYXJpc29uX2NoYXJ0Lm5vYWguc3ZtLjQwMFxubWlzY2xhc3MgPC0gc3VtKGNoYXJ0WzEsMl0sY2hhcnRbMiwxXSlcbnRlc3RfZXJyb3Iubm9haC5zdm0uNDAwIDwtIG1pc2NsYXNzL2xlbmd0aChwcmVkX3Rlc3Qubm9haC5zdm0uNDAwKVxudGVzdF9lcnJvci5ub2FoLnN2bS40MDBcbiMgMC4zNjVcblxuIyBuPSAxMDAsIHBhciA9IDAuMDAwMDFcbiMwLjQzMjVcblxudGVzdC5kdXJhdGlvbi5ub2FoLnN2bS40MDBcbiN1c2VyICBzeXN0ZW0gZWxhcHNlZCBcbiMgIDguODM1ICAgMC4wNzQgICA4LjkxNiBcblxuIyBuPSAxMDAsIHBhciA9IDAuMDAwMDFcbiMgICB1c2VyICBzeXN0ZW0gZWxhcHNlZCBcbiMgMzQuMDY2ICAgMC44MDYgIDM0Ljk2NFxuXG5cbmBgYCJ9 -->
+<pre class="r"><code>#Chosen value of cost = ?????
 
-# same as R implementation but *without* any of the image re-formatting
-img2 = cv2.imread('/Users/admin/Desktop/Columbia/Spring 2018/Applied DS/Pet Images and Extracted Features - Project 2/Pet Images/pet2.jpg')
+label_train &lt;- &quot;/Users/admin/Desktop/Columbia/Spring 2018/Applied DS/Pet Images and Extracted Features - Project 2/train_label.txt&quot;
+label &lt;- read.table(label_train, header = F)
+label &lt;- as.numeric(unlist(label) == &quot;dog&quot;)
+label_train &lt;- as.matrix(label)
+colnames(label_train) &lt;- &quot;labels&quot;
 
-gray_img2 = cv2.cvtColor(img2, cv2.COLOR_BGR2GRAY)
+# Notes which file I am uploading!!!!
+load(&quot;/Users/admin/Desktop/Columbia/Spring 2018/Applied DS/GitHub/project-2-predictive-modelling-group-5/output/feature_SIFT_randompets_Noah_2000_n100.RData&quot;)
+ORB &lt;- dat
 
-# nfeatures = 5 tells the functions to return only top 5 keypoints
-orb = cv2.ORB_create(nfeatures = 5)
+source(&quot;../doc/train_SVM.R&quot;)
+train.duration.noah.svm.1600 &lt;- system.time(fit_train.noah.svm.1600 &lt;- train_SVM(noah[1:1600,], label_train[1:1600,], par = 0.00001))
+train.duration.noah.svm.1600
+#n=30
+#   user  system elapsed 
+#116.250   0.859 117.322
+# n=100
+#   user  system elapsed 
+#422.034   4.384 427.441 
 
-keypoints2, py_descriptors2 = orb.detectAndCompute(gray_img2, None)
+summary(fit_train.noah.svm.1600$fit)
 
-print(py_descriptors2)
+source(&quot;../doc/test_SVM.R&quot;)
+test.duration.noah.svm.400 &lt;- system.time(pred_test.noah.svm.400 &lt;- test_SVM(fit_train.noah.svm.1600, noah[1601:2000,]))
+comparison_chart.noah.svm.400 &lt;- table(predict=pred_test.noah.svm.400, truth=label_train[1601:2000,])
+chart &lt;- comparison_chart.noah.svm.400
+misclass &lt;- sum(chart[1,2],chart[2,1])
+test_error.noah.svm.400 &lt;- misclass/length(pred_test.noah.svm.400)
+test_error.noah.svm.400
+# 0.365
+
+# n= 100, par = 0.00001
+#0.4325
+
+test.duration.noah.svm.400
+#user  system elapsed 
+#  8.835   0.074   8.916 
+
+# n= 100, par = 0.00001
+#   user  system elapsed 
+# 34.066   0.806  34.964
 </code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiW1sgODkgMTg5ICA1MSAxMjAgIDU3IDI1MyAgODkgIDg3IDIzOSAgNzcgMTc0ICAgOCAxOTAgMTUxICAgMiAyNDQgMTY0ICA2M1xuICAyNTIgIDEyIDE1NSAgNzUgMTc4IDExNyAyMTEgMjUzICA1MCAyNTAgMTMwICAgNCAgIDcgMTI1XVxuIFsgOTAgMTg3IDExNSAxMDQgMTg3IDIyMCAxMjMgIDg3IDIzOSAgNzcgMjU0IDEwOSAgNDYgMTU4IDEzNCAyNDQgMTY2IDE5MVxuICAyNTMgIDY4IDE1MSAgIDkgMTYyIDI0NSAyNTEgMjUzICA0OCAyNTEgIDk4ICAgNiAxNjcgMTI3XVxuIFsgOTAgMjUxIDExNSAgNzIgIDU5IDIxNiAxMjMgMjQ1IDIzNyAgNzcgMjU0IDIzNyAgNDYgMTU5IDEzNCAyNDQgMTY2IDE5MVxuICAyNTMgIDgxIDIyMyAgMTEgMTY3IDI1MyAyNTAgMjUzICAzNCAyNTEgMTAyIDEzNCAxNjcgMTI3XVxuIFsgOTEgMjUxIDEyMyAxMDYgMTE0IDIyMSAxMjMgMjQ0ICA0NSAgNzYgMjUyIDIzNyAxOTEgIDMxIDE1MCAyNDQgMTY2IDE4NVxuICAyMjMgMTk3IDIwNyAgNDMgMTE3IDI1MyAyNDcgMjUzICA0MiAyNTEgMTE5IDE1MCAgMzkgMTI1XVxuIFsyMzkgMTEyICA5NiAgIDcgMTExICAyNyAxODIgMTg0IDEyMSAyMjYgIDUxIDIzOSAgNzQgIDcyIDIyMyAxODMgMTkwICA2OFxuICAyMzAgMTAzIDIyOSAxMTYgMjUzIDE2MCAgNTQgMTIwICA2OSAxOTAgMTExICA2MyAgOTAgIDg1XV1cbiJ9 -->
-<pre><code>[[ 89 189  51 120  57 253  89  87 239  77 174   8 190 151   2 244 164  63
-  252  12 155  75 178 117 211 253  50 250 130   4   7 125]
- [ 90 187 115 104 187 220 123  87 239  77 254 109  46 158 134 244 166 191
-  253  68 151   9 162 245 251 253  48 251  98   6 167 127]
- [ 90 251 115  72  59 216 123 245 237  77 254 237  46 159 134 244 166 191
-  253  81 223  11 167 253 250 253  34 251 102 134 167 127]
- [ 91 251 123 106 114 221 123 244  45  76 252 237 191  31 150 244 166 185
-  223 197 207  43 117 253 247 253  42 251 119 150  39 125]
- [239 112  96   7 111  27 182 184 121 226  51 239  74  72 223 183 190  68
-  230 103 229 116 253 160  54 120  69 190 111  63  90  85]]</code></pre>
-<!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
-<p>should I add nfeatures as a variable? # Creating the feature_ORB.R function</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyMjIEdvYWw6ID8/Py8gY29uc3RydWN0IGZlYXR1cmVzIHJlZ2FyZGxlc3Mgb2Ygd2hldGhlciBpbWFnZXMgY29tZSBmcm9tIHRyYWluaW5nIG9yIHVsdGltYXRlIHRlc3Qgc2V0XG4jIyMgSW5wdXRzOiBcbiMgXCJpbWdfZGlyXCIgPSBhIGRpcmVjdG9yeSBwYXRoIHRoYXQgY29udGFpbnMgaW1hZ2VzIHJlYWR5IGZvciBwcm9jZXNzaW5nXG4jIFwiZXhwb3J0XCIgPSBsb2dpY2FsIHZhbHVlIHRlbGxpbmcgbWUgd2hldGhlciB0byBzYXZlIHRoZSAucmRhdGEgdG8gdGhlIG91dHB1dCBmb2xkZXIgXG4jIFwibmZlYXR1cmVzXCIgPSBudW1iZXIgb2Yga2V5cG9pbnRzIHRoZSBhbGdvIHdpbGwgZXh0cmFjdCBwZXIgaW1hZ2UuIERlZmF1bHQgPSA1XG4jIE5vdGU6IFRoZSBcImltZ19kaXJcIiBpbnB1dCBpcyBhIHBhdGggbmFtZSBlbmRpbmcgaW4gYSBmb2xkZXJcbiMgTm90ZTogSSBnb3QgcmlkIG9mIHRoZSBpbnB1dCBcImRhdGFfbmFtZVwiIGJlY2F1c2UgYWxsIG91ciBkYXRhIGlzIFwicGV0c1wiIFxuIyMjIE91dHB1dDogXG4jIFwiZGF0XCIgPSAgIGFuIC5SRGF0YSBmaWxlIGNvbnRhaW5pbmcgYSBtYXRyaXggb2YgIHByb2Nlc3NlZCBmZWF0dXJlcyBmb3IgdGhlIGltYWdlcyBpbiBcImltZ19kaXJcIiAqKiogcm93PyBjb2x1bW5zP1xuIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjXG4jIyMgbmFtZSBhbmQgZGVmaW5lIGZ1bmN0aW9uIGlucHV0cyAoYW5kIGRlZmF1bHRzKVxuZmVhdHVyZV9PUkIgPC0gZnVuY3Rpb24oaW1nX2Rpciwgc2V0X25hbWUsIGV4cG9ydD1ULCBuZmVhdHVyZXM9NSl7XG4jIyMgbG9hZCBsaWJyYXJpZXNcbmxpYnJhcnkocmV0aWN1bGF0ZSlcbnVzZV9weXRob24oXCIvVXNlcnMvYWRtaW4vYW5hY29uZGEzL2Jpbi9weXRob25cIilcbmN2MiA8LSByZXRpY3VsYXRlOjppbXBvcnQoXCJjdjJcIilcbiAgXG4gICMgZGVmaW5pdGlvbnM/P1xuICBuX2ZpbGVzIDwtIGxlbmd0aChsaXN0LmZpbGVzKGltZ19kaXIpKVxuIyMjIENyZWF0ZSBvdXIgZW1wdHkgbWF0cml4OyBjb2xzID0gbnVtYmVyIG9mIGltYWdlcyBpbiBkaXJlY3RvcnkgLCAgcm93cyA9IDMyICogbmZlYXR1cmVzIFxuICBkYXQgPC0gbWF0cml4KE5BLCBucm93ID0gbl9maWxlcywgbmNvbCA9IDMyKm5mZWF0dXJlcykgXG4gIFxuICBmb3IoaSBpbiAxOm5fZmlsZXMpIHtcbiAgICAjIyMgUmVhZCBpbiBhbmQgY29udmVydCBpdGggaW1hZ2VcbiAgICAjcmVhZCBpbiB0aGUgaXRoIGltYWdlXG4gICAgaW1nIDwtIGN2MiRpbXJlYWQocGFzdGUwKGltZ19kaXIsIFwicGV0XCIsIGksIFwiLmpwZ1wiKSlcbiAgICAjIGNvdmVydCBpdGggaW1hZ2UgdG8gZ3JheVxuICAgIGdyYXlfaW1nIDwtIGN2MiRjdnRDb2xvcihucF9hcnJheShpbWcsIGR0eXBlPSdmbG9hdDMyJyksIGN2MiRDT0xPUl9CR1IyR1JBWSlcbiAgICBcbiAgICAjIyMgRXh0cmFjdCBmZWF0dXJlc1xuICAgICMgYWN0aXZhdGUgT1JCIG1vZHVsZSBpbiBweXRob24gYW5kIHRlbGwgaXQgdG8gZXh0cmFjdCBcIm5mZWF0dXJlcyA9ID9cIiBrZXlwb2ludHMgcGVyIGltYWdlXG4gICAgb3JiIDwtIGN2MiRPUkJfY3JlYXRlKG5mZWF0dXJlcyA9IGFzLmludGVnZXIobmZlYXR1cmVzKSlcbiAgICAjIGV4dHJhY3Qga2V5cG9pbnRzIGFuZCB0aGVpciAzMiBkZXNjcmlwdG9yIHZhbHVlcyBmb3IgdGhlIGl0aCBpbWFnZVxuICAgIGtleXBvaW50c19hbmRfZGVzY3JpcHRvcnMgPC0gb3JiJGRldGVjdEFuZENvbXB1dGUobnBfYXJyYXkoZ3JheV9pbWcgKiAyNTUsIGR0eXBlPSd1aW50OCcpLCBOVUxMKVxuICAgICMgY3JlYXQgYW4gb2JqZWN0IG9mIGp1c3QgdGhlIGtleXBvaW50IGRlc2NyaXB0b3JzIG9mIHRoZSBpdGggaW1hZ2VcbiAgICBkZXNjcmlwdG9ycyA8LSBrZXlwb2ludHNfYW5kX2Rlc2NyaXB0b3JzW1syXV1cbiAgICBcbiAgICAjIyMgUG9wdWxhdGUgb3VyIG91dHB1dCBtYXRyaXhcbiAgICAjIGNvbWJpbmUgdGhlIGtleXBvaW50IGRlc2NyaXB0b3JzIG9mIHRoZSBpdGggaW1hZ2UgY29uc2VxdWV0aXZlbHkgaW50byBvbmUgdmVjdG9yIGFuZCBhc3NpZ24gdGhhdCB2ZWN0b3IgdG8gdGhlIGl0aCByb3cgb2Ygb3VyIGRhdGEgbWF0cml4XG4gICAgZGF0W2ksXSA8LSBhcy52ZWN0b3IodChkZXNjcmlwdG9ycykpXG4gIH1cbiAgXG4gICMjIyBzYXZlIC5SRGF0YSBmaWxlIG9mIGNvbnN0cnVjdGVkIGZlYXR1cmVzICoqIFwiZXhwb3J0XCIgaXMgZGVmaW5lZCBpbiBiaW5hcmllcyBpbiBcIm1haW4uUm1kXCJcbiAgaWYoZXhwb3J0KXtcbiAgICBzYXZlKGRhdCwgZmlsZSA9IHBhc3RlMChcIi4uL291dHB1dC9mZWF0dXJlc19PUkJfXCIsIHNldF9uYW1lLCBcIi5SRGF0YVwiKSlcbiAgfVxuICAjIG91dHB1dCBcImRhdFwiIG1hdHJpeFxuICByZXR1cm4oZGF0KVxufVxuIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyNcbiMjIyMjUG9zc2libGUgaW1wcm92ZW1lbnRzIG9yIGNoYW5nZXNcbiMjZG9lcyBtYWludGFpbmluZyB0aGUgMzIga2V5IHBvaW50cyBpbiBvcmRlciBldmVuIG1ha2UgYSBkaWZmZXJlbmNlIGluIGVzdGltYXRpbmcgdGhlIHBhcmFtZXRlcnMuLi4uPyBwcm9icyBub3RcbiMjUG9zc2libGUgYXBwcm9hY2hlcyB0byBjaGFuZ2luZyByb3dzIGluIHRvIHNpbmdsZSB2ZWN0b3Iga2VlcGluZyByb3dzIHRvZ2V0aGVyOlxuIyhhKXBhc3RlID0gdG8gcGFzdCB2ZWN0b3JzIChtYXliZSB1bml0ZSB0aGVuIHNlcGFyZXRlKVxuIyhiKXRhcHBseSBvcHRpb24vdGlkeSBvcHRpb25cbiMoYylmb3IgbG9vcCBvcHRpb24gdy8gYygpIFxuIyhkKSBmb3Igc3Bsb3R0aW5nIGNvbHM6IHNwbGl0KGRlc2NyaXB0b3JzMiwgcmVwKDE6bmNvbChkZXNjcmlwdG9yczIpLCBlYWNoID0gbnJvdyhkZXNjcmlwdG9yczIpKSlcbiMjIE1ha2UgdGhlIHB5dGhvbiB2ZXJzaW9uIGNhbGxlZCBieSByZXRpY3VsYXRlIGEgcmVsYXRpdmUgcGF0aCBcbmZlYXR1cmVfT1JCKFwiL1VzZXJzL2FkbWluL0Rlc2t0b3AvQ29sdW1iaWEvU3ByaW5nIDIwMTgvQXBwbGllZCBEUy9QZXQgSW1hZ2VzIGFuZCBFeHRyYWN0ZWQgRmVhdHVyZXMgLSBQcm9qZWN0IDIvUHJhY3RpY2UgaW1hZ2Ugc2V0IDUwMFwiLCBcInByYWN0aWNlXCIsZXhwb3J0ID0gRkFMU0UpXG5gYGAifQ== -->
-<pre class="r"><code>### Goal: ???/ construct features regardless of whether images come from training or ultimate test set
-### Inputs: 
-# &quot;img_dir&quot; = a directory path that contains images ready for processing
-# &quot;export&quot; = logical value telling me whether to save the .rdata to the output folder 
-# &quot;nfeatures&quot; = number of keypoints the algo will extract per image. Default = 5
-# Note: The &quot;img_dir&quot; input is a path name ending in a folder
-# Note: I got rid of the input &quot;data_name&quot; because all our data is &quot;pets&quot; 
-### Output: 
-# &quot;dat&quot; =   an .RData file containing a matrix of  processed features for the images in &quot;img_dir&quot; *** row? columns?
-#########################################################
-### name and define function inputs (and defaults)
-feature_ORB &lt;- function(img_dir, set_name, export=T, nfeatures=5){
-### load libraries
-library(reticulate)
-use_python(&quot;/Users/admin/anaconda3/bin/python&quot;)
-cv2 &lt;- reticulate::import(&quot;cv2&quot;)
-  
-  # definitions??
-  n_files &lt;- length(list.files(img_dir))
-### Create our empty matrix; cols = number of images in directory ,  rows = 32 * nfeatures 
-  dat &lt;- matrix(NA, nrow = n_files, ncol = 32*nfeatures) 
-  
-  for(i in 1:n_files) {
-    ### Read in and convert ith image
-    #read in the ith image
-    img &lt;- cv2$imread(paste0(img_dir, &quot;pet&quot;, i, &quot;.jpg&quot;))
-    # covert ith image to gray
-    gray_img &lt;- cv2$cvtColor(np_array(img, dtype='float32'), cv2$COLOR_BGR2GRAY)
-    
-    ### Extract features
-    # activate ORB module in python and tell it to extract &quot;nfeatures = ?&quot; keypoints per image
-    orb &lt;- cv2$ORB_create(nfeatures = as.integer(nfeatures))
-    # extract keypoints and their 32 descriptor values for the ith image
-    keypoints_and_descriptors &lt;- orb$detectAndCompute(np_array(gray_img * 255, dtype='uint8'), NULL)
-    # creat an object of just the keypoint descriptors of the ith image
-    descriptors &lt;- keypoints_and_descriptors[[2]]
-    
-    ### Populate our output matrix
-    # combine the keypoint descriptors of the ith image consequetively into one vector and assign that vector to the ith row of our data matrix
-    dat[i,] &lt;- as.vector(t(descriptors))
-  }
-  
-  ### save .RData file of constructed features ** &quot;export&quot; is defined in binaries in &quot;main.Rmd&quot;
-  if(export){
-    save(dat, file = paste0(&quot;../output/features_ORB_&quot;, set_name, &quot;.RData&quot;))
-  }
-  # output &quot;dat&quot; matrix
-  return(dat)
-}
-###############################################
-#####Possible improvements or changes
-##does maintaining the 32 key points in order even make a difference in estimating the parameters....? probs not
-##Possible approaches to changing rows in to single vector keeping rows together:
-#(a)paste = to past vectors (maybe unite then separete)
-#(b)tapply option/tidy option
-#(c)for loop option w/ c() 
-#(d) for splotting cols: split(descriptors2, rep(1:ncol(descriptors2), each = nrow(descriptors2)))
-## Make the python version called by reticulate a relative path 
-feature_ORB(&quot;/Users/admin/Desktop/Columbia/Spring 2018/Applied DS/Pet Images and Extracted Features - Project 2/Practice image set 500&quot;, &quot;practice&quot;,export = FALSE)</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiRXJyb3IgaW4gYXMuYXJyYXkuZGVmYXVsdChkYXRhKSA6IGF0dGVtcHQgdG8gc2V0IGFuIGF0dHJpYnV0ZSBvbiBOVUxMXG4ifQ== -->
-<pre><code>Error in as.array.default(data) : attempt to set an attribute on NULL</code></pre>
-<!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
 </div>
 
-<div id="rmd-source-code">LS0tCnRpdGxlOiAiUiBOb3RlYm9vayIKb3V0cHV0OiBodG1sX25vdGVib29rCi0tLQpIb3cgaXMgImRhdCIgY3JlYXRlZCBpbiBmZWF0dXJlLlIgW3N0cnVjdHVyZSBvZiBkYXQgaXMgb25lIHJvdyBwZXIgaW1hZ2VdLi4uIGFuZCBpbXBsaWNhdGlvbiBmb3Igcm93cyBwZXIgdmFyaWFibGUKbG9vayBhdCByb2xlIG9mIGZlYXR1cmUuUiBpbiBNYWluLlIKV3JpdGUgRmVhdHVyZV9vcmIuUgpFeHRyYWN0IHNhbXBsZSBvZiA1MDAKCndoYXQgYXJlIHRoZSBkaW1lbnNpb25zIHdlIGFyZSBkb2luZyBTVk0gb24/IGZvciBvcmIgaXNuJ3QgZWFjaCBpbWFnZSBhIGNvbGxlY3RvbiBvZiA1MDAgdmFyaWFibGVzIGluIDMyIGRpbWVuc2lvbmFsIHNwYWNlPwoKI0V4dHJhY3QgT1JCIGZlYXR1cmVzIGZyb20gcGV0MQpgYGB7cn0KbGlicmFyeShyZXRpY3VsYXRlKQp1c2VfcHl0aG9uKCIvVXNlcnMvYWRtaW4vYW5hY29uZGEzL2Jpbi9weXRob24iKQpjdjIgPC0gcmV0aWN1bGF0ZTo6aW1wb3J0KCJjdjIiKQpsaWJyYXJ5KEVCSW1hZ2UpCgoKCiMgdXNlIGN2MiB0byBjcmVhdGUgYSBweXRob24gYXJyYXkgb2YgdGhlIGltYWdlICEhbGVhcm4gbW9yZSBhYm91dCB0aGlzIG9iamVjdCB0eXBlCiMgZmlndXJlIG91dCBob3cgdG8gcmVsYXRpb25hbGx5IHNldCB0aGUgcGF0aCBsYXRlcgppbWcxIDwtIGN2MiRpbXJlYWQoJy9Vc2Vycy9hZG1pbi9EZXNrdG9wL0NvbHVtYmlhL1NwcmluZyAyMDE4L0FwcGxpZWQgRFMvUGV0IEltYWdlcyBhbmQgRXh0cmFjdGVkIEZlYXR1cmVzIC0gUHJvamVjdCAyL1BldCBJbWFnZXMvcGV0MS5qcGcnKQoKIyBDb252ZXJ0cyB0byBncmV5IHNjYWxlLiBJIGRvbid0IHVuZGVyc3RhbmQgd2h5IG5wX2FycmF5KGltZzEsIGR0eXBlPSdmbG9hdDMyJykgaXMgbmVjZXNzYXJ5ICoqKj8/PyB3b3VsZCBpdCBub3QgYmUgbmVjZXNzYXJ5IGlmIEkgd2FzIG5hdGl2ZWx5IGluIHB5dGhvbj8KZ3JheV9pbWcxIDwtIGN2MiRjdnRDb2xvcihucF9hcnJheShpbWcxLCBkdHlwZT0nZmxvYXQzMicpLCBjdjIkQ09MT1JfQkdSMkdSQVkpCgojIHRoaXMgbG9hZHMgdGhlIGRldGVjdG9yIGNvZGUgc28gdGhhdCB3ZSBjYSB1c2UgaXQgb24gdGhlIGltYWdlCm9yYiA8LSBjdjIkT1JCX2NyZWF0ZSgpCgojIFdoYXQga2luZCBvZiBvYmplY3QgYXJlIHRoZSBrZXlwb2ludHMgYmVmb3JlIHdlIGNyZWF0IHRoZSBkZXNjcmlwdG9ycyBvZiB0aG9zZSBrZXkgcG9pbnRzLCBhcmUgdGhleSBqdXN0IHJlZ2lvbnMgb24gdGhlIGluaXRpYWwgaW1hZ2UqKio/Pz8gV2hhdCA1MDAga2V5IHBvaW50IG1lYW4/ICAgZnJvbSBGQVNUIGFuZCBCUklFRj8gKioqPz8/IAojIGNvbnZlcnRzIGZyb20gWzAsMV0gcGl4ZWwgaW50ZW5zaXR5IHRvIFswLCAyNTVdIHNjYWxlLiBXaGF0IGlzIGR0eXBlPSd1aW50OCc/IFdoeSB0aGUgdHJhbnNmb3JtYXRpb24gYWdhaW4/CmtleXBvaW50c19hbmRfZGVzY3JpcHRvcnMxIDwtIG9yYiRkZXRlY3RBbmRDb21wdXRlKG5wX2FycmF5KGdyYXlfaW1nMSAqIDI1NSwgZHR5cGU9J3VpbnQ4JyksIE5VTEwpCmRlc2NyaXB0b3JzMSA8LSBrZXlwb2ludHNfYW5kX2Rlc2NyaXB0b3JzMVtbMl1dCgojIyBRdWVzdGlvbnMgZ29pbmcgZm9yd2FyZDogCiMgRG9lcyB0aGUgbnVtYmVyIG9mIGtleSBwb2ludHMgdmFyeSBwZXIgaW1hZ2UgaW4gT1JCPyBJZiBzbywgd2lsbCBJIGhhdmUgdG8gaW5kZXggdGhlbSBpbnRvIGEgY29uc3RhbnQgZm9ybT8KIyBXaGF0IGlzIHRoZSBjb2RlIHRvIHJ1biBmZWF0dXJlIGV4dHJhY3Rpb24gb24gZXZlcnkgaW1hZ2UgYW5kIG91dHB1dCBhIHNpbmdsZSAucmRhdGEgZmlsZS4gVGhpcyBpcyBidWlsZGluZyBhIGZlYXR1cmVfT1JCLlIgZmlsZS4KYGBgCgojRXh0cmFjdCBPUkIgZmVhdHVyZXMgZnJvbSBwZXQyIChhbmQgcGxheSB3aXRoIG51bWJlciBvZiBleHRyYWN0ZWQga2V5cG9pbnRzKQoKYGBge3J9CiMjTm90ZTogcGV0MSBhbmQgcGV0MiBhcmUgb2YgZGlmZmVyZW50IGhpZWdodHMsIGJ1dCBvdXRwdXRlZCBmZWF0dXJlcyBhcmUKI3NhbWUgWzUwMCwgMzJdIGRpbWVuc2lvbnMgKioqIEloYXZlIGNoYW5nZWQgdGhhdCB0byA1IGhlcmUKIyBTYW1lIHBwcm9jZXNzIGFzIGZvciBwZXQxIAoKaW1nMiA8LSBjdjIkaW1yZWFkKCcvVXNlcnMvYWRtaW4vRGVza3RvcC9Db2x1bWJpYS9TcHJpbmcgMjAxOC9BcHBsaWVkIERTL1BldCBJbWFnZXMgYW5kIEV4dHJhY3RlZCBGZWF0dXJlcyAtIFByb2plY3QgMi9QZXQgSW1hZ2VzL3BldDIuanBnJykKCmdyYXlfaW1nMiA8LSBjdjIkY3Z0Q29sb3IobnBfYXJyYXkoaW1nMiwgZHR5cGU9J2Zsb2F0MzInKSwgY3YyJENPTE9SX0JHUjJHUkFZKQoKIyBzZXR0aW5nIG5mZWF0dXJlcyA9IDUgdGVsbHMgdGhlIGZ1bmN0aW9ucyB0byByZXR1cm4gb25seSB0b3AgNSBrZXlwb2ludHMKIyBJIGFzc3VtZSB0aGlzIGlzIHRoZSB0b3AgNSBtb3N0ICJjaGFyYXRlcmlzdGljIiBrZXlwb2ludCBiZWNhdXNlIHRoZXkgYXJlIGNob29zZW4gYnkgdGhlaXIgSGFycmlzIGNvcm5lciBkZXRlY3Rpb24gc2NvcmUgYXMgSSB1bmRlcnN0YW5kIHRoZSBkb2N1bWVudGF0aW9uLiAKb3JiIDwtIGN2MiRPUkJfY3JlYXRlKG5mZWF0dXJlcyA9IGFzLmludGVnZXIoNSkpCgprZXlwb2ludHNfYW5kX2Rlc2NyaXB0b3JzMiA8LSBvcmIkZGV0ZWN0QW5kQ29tcHV0ZShucF9hcnJheShncmF5X2ltZzIgKiAyNTUsIGR0eXBlPSd1aW50OCcpLCBOVUxMKQoKZGVzY3JpcHRvcnMyIDwtIGtleXBvaW50c19hbmRfZGVzY3JpcHRvcnMyW1syXV0KYGBgCgoKI0V4dHJhY3RpbmcgaW1nMiBpbiBQeXRob24KYGBge3B5dGhvbn0KaW1wb3J0IGN2MgoKIyBzYW1lIGFzIFIgaW1wbGVtZW50YXRpb24gYnV0ICp3aXRob3V0KiBhbnkgb2YgdGhlIGltYWdlIHJlLWZvcm1hdHRpbmcKaW1nMiA9IGN2Mi5pbXJlYWQoJy9Vc2Vycy9hZG1pbi9EZXNrdG9wL0NvbHVtYmlhL1NwcmluZyAyMDE4L0FwcGxpZWQgRFMvUGV0IEltYWdlcyBhbmQgRXh0cmFjdGVkIEZlYXR1cmVzIC0gUHJvamVjdCAyL1BldCBJbWFnZXMvcGV0Mi5qcGcnKQoKZ3JheV9pbWcyID0gY3YyLmN2dENvbG9yKGltZzIsIGN2Mi5DT0xPUl9CR1IyR1JBWSkKCiMgbmZlYXR1cmVzID0gNSB0ZWxscyB0aGUgZnVuY3Rpb25zIHRvIHJldHVybiBvbmx5IHRvcCA1IGtleXBvaW50cwpvcmIgPSBjdjIuT1JCX2NyZWF0ZShuZmVhdHVyZXMgPSA1KQoKa2V5cG9pbnRzMiwgcHlfZGVzY3JpcHRvcnMyID0gb3JiLmRldGVjdEFuZENvbXB1dGUoZ3JheV9pbWcyLCBOb25lKQoKcHJpbnQocHlfZGVzY3JpcHRvcnMyKQoKYGBgCgoKc2hvdWxkIEkgYWRkIG5mZWF0dXJlcyBhcyBhIHZhcmlhYmxlPwojIENyZWF0aW5nIHRoZSBmZWF0dXJlX09SQi5SIGZ1bmN0aW9uCmBgYHtyfQoKIyMjIEdvYWw6ID8/Py8gY29uc3RydWN0IGZlYXR1cmVzIHJlZ2FyZGxlc3Mgb2Ygd2hldGhlciBpbWFnZXMgY29tZSBmcm9tIHRyYWluaW5nIG9yIHVsdGltYXRlIHRlc3Qgc2V0CgojIyMgSW5wdXRzOiAKIyAiaW1nX2RpciIgPSBhIGRpcmVjdG9yeSBwYXRoIHRoYXQgY29udGFpbnMgaW1hZ2VzIHJlYWR5IGZvciBwcm9jZXNzaW5nCiMgImV4cG9ydCIgPSBsb2dpY2FsIHZhbHVlIHRlbGxpbmcgbWUgd2hldGhlciB0byBzYXZlIHRoZSAucmRhdGEgdG8gdGhlIG91dHB1dCBmb2xkZXIgCiMgIm5mZWF0dXJlcyIgPSBudW1iZXIgb2Yga2V5cG9pbnRzIHRoZSBhbGdvIHdpbGwgZXh0cmFjdCBwZXIgaW1hZ2UuIERlZmF1bHQgPSA1CiMgTm90ZTogVGhlICJpbWdfZGlyIiBpbnB1dCBpcyBhIHBhdGggbmFtZSBlbmRpbmcgaW4gYSBmb2xkZXIKIyBOb3RlOiBJIGdvdCByaWQgb2YgdGhlIGlucHV0ICJkYXRhX25hbWUiIGJlY2F1c2UgYWxsIG91ciBkYXRhIGlzICJwZXRzIiAKCgojIyMgT3V0cHV0OiAKIyAiZGF0IiA9ICAgYW4gLlJEYXRhIGZpbGUgY29udGFpbmluZyBhIG1hdHJpeCBvZiAgcHJvY2Vzc2VkIGZlYXR1cmVzIGZvciB0aGUgaW1hZ2VzIGluICJpbWdfZGlyIiAqKiogcm93PyBjb2x1bW5zPwoKCiMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIwoKCgojIyMgbmFtZSBhbmQgZGVmaW5lIGZ1bmN0aW9uIGlucHV0cyAoYW5kIGRlZmF1bHRzKQpmZWF0dXJlX09SQiA8LSBmdW5jdGlvbihpbWdfZGlyLCBzZXRfbmFtZSwgZXhwb3J0PVQsIG5mZWF0dXJlcz01KXsKCiMjIyBsb2FkIGxpYnJhcmllcwpsaWJyYXJ5KHJldGljdWxhdGUpCnVzZV9weXRob24oIi9Vc2Vycy9hZG1pbi9hbmFjb25kYTMvYmluL3B5dGhvbiIpCmN2MiA8LSByZXRpY3VsYXRlOjppbXBvcnQoImN2MiIpCiAgCiAgIyBkZWZpbml0aW9ucz8/CiAgbl9maWxlcyA8LSBsZW5ndGgobGlzdC5maWxlcyhpbWdfZGlyKSkKCiMjIyBDcmVhdGUgb3VyIGVtcHR5IG1hdHJpeDsgY29scyA9IG51bWJlciBvZiBpbWFnZXMgaW4gZGlyZWN0b3J5ICwgIHJvd3MgPSAzMiAqIG5mZWF0dXJlcyAKICBkYXQgPC0gbWF0cml4KE5BLCBucm93ID0gbl9maWxlcywgbmNvbCA9IDMyKm5mZWF0dXJlcykgCiAgCiAgZm9yKGkgaW4gMTpuX2ZpbGVzKSB7CiAgICAjIyMgUmVhZCBpbiBhbmQgY29udmVydCBpdGggaW1hZ2UKICAgICNyZWFkIGluIHRoZSBpdGggaW1hZ2UKICAgIGltZyA8LSBjdjIkaW1yZWFkKHBhc3RlMChpbWdfZGlyLCAicGV0IiwgaSwgIi5qcGciKSkKICAgICMgY292ZXJ0IGl0aCBpbWFnZSB0byBncmF5CiAgICBncmF5X2ltZyA8LSBjdjIkY3Z0Q29sb3IobnBfYXJyYXkoaW1nLCBkdHlwZT0nZmxvYXQzMicpLCBjdjIkQ09MT1JfQkdSMkdSQVkpCiAgICAKICAgICMjIyBFeHRyYWN0IGZlYXR1cmVzCiAgICAjIGFjdGl2YXRlIE9SQiBtb2R1bGUgaW4gcHl0aG9uIGFuZCB0ZWxsIGl0IHRvIGV4dHJhY3QgIm5mZWF0dXJlcyA9ID8iIGtleXBvaW50cyBwZXIgaW1hZ2UKICAgIG9yYiA8LSBjdjIkT1JCX2NyZWF0ZShuZmVhdHVyZXMgPSBhcy5pbnRlZ2VyKG5mZWF0dXJlcykpCiAgICAjIGV4dHJhY3Qga2V5cG9pbnRzIGFuZCB0aGVpciAzMiBkZXNjcmlwdG9yIHZhbHVlcyBmb3IgdGhlIGl0aCBpbWFnZQogICAga2V5cG9pbnRzX2FuZF9kZXNjcmlwdG9ycyA8LSBvcmIkZGV0ZWN0QW5kQ29tcHV0ZShucF9hcnJheShncmF5X2ltZyAqIDI1NSwgZHR5cGU9J3VpbnQ4JyksIE5VTEwpCiAgICAjIGNyZWF0IGFuIG9iamVjdCBvZiBqdXN0IHRoZSBrZXlwb2ludCBkZXNjcmlwdG9ycyBvZiB0aGUgaXRoIGltYWdlCiAgICBkZXNjcmlwdG9ycyA8LSBrZXlwb2ludHNfYW5kX2Rlc2NyaXB0b3JzW1syXV0KICAgIAogICAgIyMjIFBvcHVsYXRlIG91ciBvdXRwdXQgbWF0cml4CiAgICAjIGNvbWJpbmUgdGhlIGtleXBvaW50IGRlc2NyaXB0b3JzIG9mIHRoZSBpdGggaW1hZ2UgY29uc2VxdWV0aXZlbHkgaW50byBvbmUgdmVjdG9yIGFuZCBhc3NpZ24gdGhhdCB2ZWN0b3IgdG8gdGhlIGl0aCByb3cgb2Ygb3VyIGRhdGEgbWF0cml4CiAgICBkYXRbaSxdIDwtIGFzLnZlY3Rvcih0KGRlc2NyaXB0b3JzKSkKICB9CiAgCiAgIyMjIHNhdmUgLlJEYXRhIGZpbGUgb2YgY29uc3RydWN0ZWQgZmVhdHVyZXMgKiogImV4cG9ydCIgaXMgZGVmaW5lZCBpbiBiaW5hcmllcyBpbiAibWFpbi5SbWQiCiAgaWYoZXhwb3J0KXsKICAgIHNhdmUoZGF0LCBmaWxlID0gcGFzdGUwKCIuLi9vdXRwdXQvZmVhdHVyZXNfT1JCXyIsIHNldF9uYW1lLCAiLlJEYXRhIikpCiAgfQogICMgb3V0cHV0ICJkYXQiIG1hdHJpeAogIHJldHVybihkYXQpCn0KCiMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjCiMjIyMjUG9zc2libGUgaW1wcm92ZW1lbnRzIG9yIGNoYW5nZXMKCiMjZG9lcyBtYWludGFpbmluZyB0aGUgMzIga2V5IHBvaW50cyBpbiBvcmRlciBldmVuIG1ha2UgYSBkaWZmZXJlbmNlIGluIGVzdGltYXRpbmcgdGhlIHBhcmFtZXRlcnMuLi4uPyBwcm9icyBub3QKCiMjUG9zc2libGUgYXBwcm9hY2hlcyB0byBjaGFuZ2luZyByb3dzIGluIHRvIHNpbmdsZSB2ZWN0b3Iga2VlcGluZyByb3dzIHRvZ2V0aGVyOgojKGEpcGFzdGUgPSB0byBwYXN0IHZlY3RvcnMgKG1heWJlIHVuaXRlIHRoZW4gc2VwYXJldGUpCiMoYil0YXBwbHkgb3B0aW9uL3RpZHkgb3B0aW9uCiMoYylmb3IgbG9vcCBvcHRpb24gdy8gYygpIAojKGQpIGZvciBzcGxvdHRpbmcgY29sczogc3BsaXQoZGVzY3JpcHRvcnMyLCByZXAoMTpuY29sKGRlc2NyaXB0b3JzMiksIGVhY2ggPSBucm93KGRlc2NyaXB0b3JzMikpKQoKIyMgTWFrZSB0aGUgcHl0aG9uIHZlcnNpb24gY2FsbGVkIGJ5IHJldGljdWxhdGUgYSByZWxhdGl2ZSBwYXRoIAoKZmVhdHVyZV9PUkIoIi9Vc2Vycy9hZG1pbi9EZXNrdG9wL0NvbHVtYmlhL1NwcmluZyAyMDE4L0FwcGxpZWQgRFMvUGV0IEltYWdlcyBhbmQgRXh0cmFjdGVkIEZlYXR1cmVzIC0gUHJvamVjdCAyL1ByYWN0aWNlIGltYWdlIHNldCA1MDAiLCAicHJhY3RpY2UiLGV4cG9ydCA9IEZBTFNFKQoKYGBgCgo=</div>
+<div id="rmd-source-code">LS0tCnRpdGxlOiAiUiBOb3RlYm9vayIKb3V0cHV0OiBodG1sX25vdGVib29rCi0tLQoKIyBDViBhbmQgcHJlZHRpYy90ZXN0IGVycm9yIHdpdGggYmVzdCBtb2RlbAoKYGBge3J9CiMjIyMjIyMjIFJlcXVpcmVkIHBhY2thZ2VzCiNsaWJyYXJ5KFJjcHBDTlB5KQoKbGFiZWxfdHJhaW4gPC0gIi9Vc2Vycy9hZG1pbi9EZXNrdG9wL0NvbHVtYmlhL1NwcmluZyAyMDE4L0FwcGxpZWQgRFMvUGV0IEltYWdlcyBhbmQgRXh0cmFjdGVkIEZlYXR1cmVzIC0gUHJvamVjdCAyL3RyYWluX2xhYmVsLnR4dCIKbGFiZWwgPC0gcmVhZC50YWJsZShsYWJlbF90cmFpbiwgaGVhZGVyID0gRikKbGFiZWwgPC0gYXMubnVtZXJpYyh1bmxpc3QobGFiZWwpID09ICJkb2ciKQpsYWJlbF90cmFpbiA8LSBhcy5tYXRyaXgobGFiZWwpCmNvbG5hbWVzKGxhYmVsX3RyYWluKSA8LSAibGFiZWxzIgogIApsb2FkKCIvVXNlcnMvYWRtaW4vRGVza3RvcC9Db2x1bWJpYS9TcHJpbmcgMjAxOC9BcHBsaWVkIERTL0dpdEh1Yi9wcm9qZWN0LTItcHJlZGljdGl2ZS1tb2RlbGxpbmctZ3JvdXAtNS9vdXRwdXQvZmVhdHVyZV9PUkJfcmFuZG9tcGV0c19uMTAwLlJEYXRhIikKT1JCIDwtIGRhdAoKI3JlbWVtYmVyIHRvIHRyYWluLnkgdmFsdWUgaW4gYXMuZmFjdG9yKCkuIFdpdGhvdXQgYXMuZmFjdG9yIHRoZSBzdm0oKSBmdW5jdGlvbiB3aWxsIGRvIHJlZ3Jlc3Npb24gYW5kIGdpdmUgdmVyeSBkaWZmZXJlbnQgKGNvbnRpbnVvdXMpIG91dHB1dHMKY3YuZHVyYXRpb24ubm9haC5PUkIuMTAwMCA8LSBzeXN0ZW0udGltZShjdi5vdXRwdXQubm9haC5PUkIuMTAwMCA8LSB0dW5lKHN2bSwgdHJhaW4ueCA9IE9SQlsxOjEwMDAsXSwgdHJhaW4ueSA9IGFzLmZhY3RvcihsYWJlbF90cmFpblsxOjEwMDAsXSksIGtlcm5lbCA9ICJsaW5lYXIiLCBzY2FsZSA9IEZBTFNFLCByYW5nZXMgPSBsaXN0KGNvc3Q9YyguMDAwMDAwMDEsIC4wMDAwMDAxLCAuMDAwMDAxLCAuMDAwMDEsIDAuMDAwMSwgMC4wMDEsIDAuMDEpKSwgdHVuZWNvbnRyb2wgPSB0dW5lLmNvbnRyb2woY3Jvc3MgPSA1KSkpCmN2LmR1cmF0aW9uLm5vYWguT1JCLjEwMDAKCnN1bW1hcnkoY3Yub3V0cHV0Lm5vYWguT1JCLjEwMDApCgpiZXN0X3N2bV9tb2RlbC5ub2FoLk9SQi4xMDAwIDwtIGxpc3QoZml0ID0gY3Yub3V0cHV0Lm5vYWguT1JCLjEwMDAkYmVzdC5tb2RlbCkKc3VtbWFyeShiZXN0X3N2bV9tb2RlbC5ub2FoLk9SQi4xMDAwJGZpdCkKCnByZWRfdGVzdC5ub2FoLk9SQi4xMDAwIDwtIHRlc3RfU1ZNKGJlc3Rfc3ZtX21vZGVsLm5vYWguT1JCLjEwMDAsIE9SQlsxMDAxOjIwMDAsXSkKY29tcGFyaXNvbl9jaGFydC5ub2FoLk9SQi4xMDAwIDwtIHRhYmxlKHByZWRpY3Q9cHJlZF90ZXN0Lm5vYWguT1JCLjEwMDAsIHRydXRoPWxhYmVsX3RyYWluWzEwMDE6MjAwMCxdKQpjaGFydCA8LSBjb21wYXJpc29uX2NoYXJ0Lm5vYWguT1JCLjEwMDAKbWlzY2xhc3MgPC0gc3VtKGNoYXJ0WzEsMl0sY2hhcnRbMiwxXSkKdGVzdF9lcnJvci5ub2FoLk9SQi4xMDAwIDwtIG1pc2NsYXNzL2xlbmd0aChwcmVkX3Rlc3Qubm9haC5PUkIuMTAwMCkKdGVzdF9lcnJvci5ub2FoLk9SQi4xMDAwCgpgYGAKCgojIFRyYWluIE9SQiArIFNWTSBvbiAxNjAwIGZpbGVzCgpgYGB7cn0KI0Nob3NlbiB2YWx1ZSBvZiBjb3N0ID0gPz8/Pz8KCmxhYmVsX3RyYWluIDwtICIvVXNlcnMvYWRtaW4vRGVza3RvcC9Db2x1bWJpYS9TcHJpbmcgMjAxOC9BcHBsaWVkIERTL1BldCBJbWFnZXMgYW5kIEV4dHJhY3RlZCBGZWF0dXJlcyAtIFByb2plY3QgMi90cmFpbl9sYWJlbC50eHQiCmxhYmVsIDwtIHJlYWQudGFibGUobGFiZWxfdHJhaW4sIGhlYWRlciA9IEYpCmxhYmVsIDwtIGFzLm51bWVyaWModW5saXN0KGxhYmVsKSA9PSAiZG9nIikKbGFiZWxfdHJhaW4gPC0gYXMubWF0cml4KGxhYmVsKQpjb2xuYW1lcyhsYWJlbF90cmFpbikgPC0gImxhYmVscyIKCiMgTm90ZXMgd2hpY2ggZmlsZSBJIGFtIHVwbG9hZGluZyEhISEKbG9hZCgiL1VzZXJzL2FkbWluL0Rlc2t0b3AvQ29sdW1iaWEvU3ByaW5nIDIwMTgvQXBwbGllZCBEUy9HaXRIdWIvcHJvamVjdC0yLXByZWRpY3RpdmUtbW9kZWxsaW5nLWdyb3VwLTUvb3V0cHV0L2ZlYXR1cmVfU0lGVF9yYW5kb21wZXRzX05vYWhfMjAwMF9uMTAwLlJEYXRhIikKT1JCIDwtIGRhdAoKc291cmNlKCIuLi9kb2MvdHJhaW5fU1ZNLlIiKQp0cmFpbi5kdXJhdGlvbi5ub2FoLnN2bS4xNjAwIDwtIHN5c3RlbS50aW1lKGZpdF90cmFpbi5ub2FoLnN2bS4xNjAwIDwtIHRyYWluX1NWTShub2FoWzE6MTYwMCxdLCBsYWJlbF90cmFpblsxOjE2MDAsXSwgcGFyID0gMC4wMDAwMSkpCnRyYWluLmR1cmF0aW9uLm5vYWguc3ZtLjE2MDAKI249MzAKIyAgIHVzZXIgIHN5c3RlbSBlbGFwc2VkIAojMTE2LjI1MCAgIDAuODU5IDExNy4zMjIKIyBuPTEwMAojICAgdXNlciAgc3lzdGVtIGVsYXBzZWQgCiM0MjIuMDM0ICAgNC4zODQgNDI3LjQ0MSAKCnN1bW1hcnkoZml0X3RyYWluLm5vYWguc3ZtLjE2MDAkZml0KQoKc291cmNlKCIuLi9kb2MvdGVzdF9TVk0uUiIpCnRlc3QuZHVyYXRpb24ubm9haC5zdm0uNDAwIDwtIHN5c3RlbS50aW1lKHByZWRfdGVzdC5ub2FoLnN2bS40MDAgPC0gdGVzdF9TVk0oZml0X3RyYWluLm5vYWguc3ZtLjE2MDAsIG5vYWhbMTYwMToyMDAwLF0pKQpjb21wYXJpc29uX2NoYXJ0Lm5vYWguc3ZtLjQwMCA8LSB0YWJsZShwcmVkaWN0PXByZWRfdGVzdC5ub2FoLnN2bS40MDAsIHRydXRoPWxhYmVsX3RyYWluWzE2MDE6MjAwMCxdKQpjaGFydCA8LSBjb21wYXJpc29uX2NoYXJ0Lm5vYWguc3ZtLjQwMAptaXNjbGFzcyA8LSBzdW0oY2hhcnRbMSwyXSxjaGFydFsyLDFdKQp0ZXN0X2Vycm9yLm5vYWguc3ZtLjQwMCA8LSBtaXNjbGFzcy9sZW5ndGgocHJlZF90ZXN0Lm5vYWguc3ZtLjQwMCkKdGVzdF9lcnJvci5ub2FoLnN2bS40MDAKIyAwLjM2NQoKIyBuPSAxMDAsIHBhciA9IDAuMDAwMDEKIzAuNDMyNQoKdGVzdC5kdXJhdGlvbi5ub2FoLnN2bS40MDAKI3VzZXIgIHN5c3RlbSBlbGFwc2VkIAojICA4LjgzNSAgIDAuMDc0ICAgOC45MTYgCgojIG49IDEwMCwgcGFyID0gMC4wMDAwMQojICAgdXNlciAgc3lzdGVtIGVsYXBzZWQgCiMgMzQuMDY2ICAgMC44MDYgIDM0Ljk2NAoKCmBgYAoKCmBgYHtyfQoKYGBgCgo=</div>
 
 
 

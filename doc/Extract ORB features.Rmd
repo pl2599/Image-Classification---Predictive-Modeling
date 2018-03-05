@@ -3,15 +3,16 @@ title: "R Notebook"
 output: html_notebook
 ---
 ```{r}
+#library(RcppCNPy)
 
 source("../doc/feature_ORB_topn.R")
 
-ORB <- feature_ORB_topn("/Users/admin/Desktop/Columbia/Spring 2018/Applied DS/Pet Images and Extracted Features - Project 2/python pets", set_name = "n30", nfeatures = 30)
+ORB.data <- feature_ORB_topn("/Users/admin/Desktop/Columbia/Spring 2018/Applied DS/Pet Images and Extracted Features - Project 2/python pets", set_name = "n60", nfeatures = 60)
 
 ```
 
 
-
+# Scratchwork
 ```{r}
 feature_ORB_topn <- function(img_dir, set_name = "", data_name = "pets", export=T, nfeatures = 5) {
   
