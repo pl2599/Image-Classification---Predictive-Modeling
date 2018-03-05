@@ -37,18 +37,27 @@ feature_ORB_topn <- function(img_dir, set_name = "", data_name = "pets", export=
   n_files <- length(list.files(img_dir))-1  
   dat <- matrix(NA, nrow = n_files, ncol = 32*nfeatures)
   
+  dat <- data.frame(matrix(NA, nrow = n_files, ncol = 32*nfeatures))
+  #dat <- list()
+  
   for (i in 1:n_files) {
     #retest <- npyLoad("/Users/admin/Desktop/Columbia/Spring 2018/Applied DS/GitHub/project-2-predictive-modelling-group-5/doc/Printing 2.npy")
-   
+    
     # loads i (5,32) top ***5 key pointdescriptors
     # image keypoints
-     array <- npyLoad(paste(img_dir,'/', 'pet', 6, '.npy', sep = ''))
-  
+    array <- npyLoad(paste(img_dir,'/', 'pet', i, '.npy', sep = ''))
+    
     # turn matrix "array" into a single vector made up of the sequentially 
     # concatonated rows of "subset". assign the new vector to the 
     #ith element of "dat" list
     array <- as.vector(t(array))
-    dat[i,] <- array
+    
+    # I have a problem where a lot( maybe 10%) of the matricies are missing a few values...
+    if (length(array) == 1920) {
+      dat[i,]  <- array
+    } else {
+      dat[i,]  <- dat[1,]
+    }
   }
   
   ### output constructed features

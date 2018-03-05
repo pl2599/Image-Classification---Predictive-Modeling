@@ -14,12 +14,13 @@ label <- read.table(label_train, header = F)
 label <- as.numeric(unlist(label) == "dog")
 label_train <- as.matrix(label)
 colnames(label_train) <- "labels"
-  
-load("/Users/admin/Desktop/Columbia/Spring 2018/Applied DS/GitHub/project-2-predictive-modelling-group-5/output/feature_ORB_randompets_n100.RData")
+ 
+# Notes which file I am uploading!!!! 
+load("/Users/admin/Desktop/Columbia/Spring 2018/Applied DS/GitHub/project-2-predictive-modelling-group-5/output/feature_ORB_randompets_n60.RData")
 ORB <- dat
 
 #remember to train.y value in as.factor(). Without as.factor the svm() function will do regression and give very different (continuous) outputs
-cv.duration.noah.ORB.1000 <- system.time(cv.output.noah.ORB.1000 <- tune(svm, train.x = ORB[1:1000,], train.y = as.factor(label_train[1:1000,]), kernel = "linear", scale = FALSE, ranges = list(cost=c(.00000001, .0000001, .000001, .00001, 0.0001, 0.001, 0.01)), tunecontrol = tune.control(cross = 5)))
+cv.duration.noah.ORB.1000 <- system.time(cv.output.noah.ORB.1000 <- tune(svm, train.x = ORB.data[1:1000,], train.y = as.factor(label_train[1:1000,]), kernel = "linear", scale = FALSE, ranges = list(cost=c(.00000001, .00001, 0.001,0.01, 1, 5)), tunecontrol = tune.control(cross = 5)))
 cv.duration.noah.ORB.1000
 
 summary(cv.output.noah.ORB.1000)
@@ -49,40 +50,29 @@ label_train <- as.matrix(label)
 colnames(label_train) <- "labels"
 
 # Notes which file I am uploading!!!!
-load("/Users/admin/Desktop/Columbia/Spring 2018/Applied DS/GitHub/project-2-predictive-modelling-group-5/output/feature_SIFT_randompets_Noah_2000_n100.RData")
+load("/Users/admin/Desktop/Columbia/Spring 2018/Applied DS/GitHub/project-2-predictive-modelling-group-5/output/feature_ORB_randompets_n60.RData")
 ORB <- dat
 
+# Remember to set par!!!!
 source("../doc/train_SVM.R")
-train.duration.noah.svm.1600 <- system.time(fit_train.noah.svm.1600 <- train_SVM(noah[1:1600,], label_train[1:1600,], par = 0.00001))
-train.duration.noah.svm.1600
-#n=30
-#   user  system elapsed 
-#116.250   0.859 117.322
-# n=100
-#   user  system elapsed 
-#422.034   4.384 427.441 
+train.duration.noah.ORB.1600 <- system.time(fit_train.noah.ORB.1600 <- train_SVM(ORB[1:1600,], label_train[1:1600,], par = 0.00001))
+train.duration.noah.ORB.1600
 
-summary(fit_train.noah.svm.1600$fit)
+
+summary(fit_train.noah.ORB.1600$fit)
 
 source("../doc/test_SVM.R")
-test.duration.noah.svm.400 <- system.time(pred_test.noah.svm.400 <- test_SVM(fit_train.noah.svm.1600, noah[1601:2000,]))
-comparison_chart.noah.svm.400 <- table(predict=pred_test.noah.svm.400, truth=label_train[1601:2000,])
-chart <- comparison_chart.noah.svm.400
+test.duration.noah.ORB.400 <- system.time(pred_test.noah.ORB.400 <- test_SVM(fit_train.noah.ORB.1600, ORB[1601:2000,]))
+comparison_chart.noah.ORB.400 <- table(predict=pred_test.noah.ORB.400, truth=label_train[1601:2000,])
+chart <- comparison_chart.noah.ORB.400
 misclass <- sum(chart[1,2],chart[2,1])
-test_error.noah.svm.400 <- misclass/length(pred_test.noah.svm.400)
-test_error.noah.svm.400
-# 0.365
+test_error.noah.ORB.400 <- misclass/length(pred_test.noah.ORB.400)
+test_error.noah.ORB.400
 
-# n= 100, par = 0.00001
-#0.4325
 
-test.duration.noah.svm.400
-#user  system elapsed 
-#  8.835   0.074   8.916 
 
-# n= 100, par = 0.00001
-#   user  system elapsed 
-# 34.066   0.806  34.964
+test.duration.noah.ORB.400
+
 
 
 ```

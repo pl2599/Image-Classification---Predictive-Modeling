@@ -175,62 +175,58 @@ $(document).ready(function () {
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuT1JCLmRhdGEgPC0gZmVhdHVyZV9PUkJfdG9wbihcIi9Vc2Vycy9hZG1pbi9EZXNrdG9wL0NvbHVtYmlhL1NwcmluZyAyMDE4L0FwcGxpZWQgRFMvUGV0IEltYWdlcyBhbmQgRXh0cmFjdGVkIEZlYXR1cmVzIC0gUHJvamVjdCAyL3B5dGhvbiBwZXRzXCIsIHNldF9uYW1lID0gXCJuNjBcIiwgbmZlYXR1cmVzID0gNjApXG5cbmBgYCJ9 -->
-<pre class="r"><code>ORB.data &lt;- feature_ORB_topn(&quot;/Users/admin/Desktop/Columbia/Spring 2018/Applied DS/Pet Images and Extracted Features - Project 2/python pets&quot;, set_name = &quot;n60&quot;, nfeatures = 60)
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuc291cmNlKFwiLi4vZG9jL2ZlYXR1cmVfT1JCX3RvcG4uUlwiKVxuXG5gYGAifQ== -->
+<pre class="r"><code>source(&quot;../doc/feature_ORB_topn.R&quot;)
 </code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiV2FybmluZyBtZXNzYWdlczpcbjE6IEluIGRpci5jcmVhdGUoZGlybmFtZShkZXN0KSwgcmVjdXJzaXZlID0gVFJVRSkgOlxuICBjYW5ub3QgY3JlYXRlIGRpciAnL1VzZXJzL2FkbWluLy4uL2RvYycsIHJlYXNvbiAnUGVybWlzc2lvbiBkZW5pZWQnXG4yOiBJbiBmaWxlLmNyZWF0ZSh0b1tva2F5XSkgOlxuICBjYW5ub3QgY3JlYXRlIGZpbGUgJy9Vc2Vycy9hZG1pbi8uLi9kb2MvZmVhdHVyZV9PUkJfdG9wbi5SJywgcmVhc29uICdObyBzdWNoIGZpbGUgb3IgZGlyZWN0b3J5J1xuMzogSW4gZGlyLmNyZWF0ZShkaXJuYW1lKGRlc3QpLCByZWN1cnNpdmUgPSBUUlVFKSA6XG4gIGNhbm5vdCBjcmVhdGUgZGlyICcvVXNlcnMvYWRtaW4vLi4vZG9jJywgcmVhc29uICdQZXJtaXNzaW9uIGRlbmllZCdcbjQ6IEluIGZpbGUuY3JlYXRlKHRvW29rYXldKSA6XG4gIGNhbm5vdCBjcmVhdGUgZmlsZSAnL1VzZXJzL2FkbWluLy4uL2RvYy90cmFpbl9TVk0uUicsIHJlYXNvbiAnTm8gc3VjaCBmaWxlIG9yIGRpcmVjdG9yeSdcbjU6IEluIGRpci5jcmVhdGUoZGlybmFtZShkZXN0KSwgcmVjdXJzaXZlID0gVFJVRSkgOlxuICBjYW5ub3QgY3JlYXRlIGRpciAnL1VzZXJzL2FkbWluLy4uL2RvYycsIHJlYXNvbiAnUGVybWlzc2lvbiBkZW5pZWQnXG42OiBJbiBmaWxlLmNyZWF0ZSh0b1tva2F5XSkgOlxuICBjYW5ub3QgY3JlYXRlIGZpbGUgJy9Vc2Vycy9hZG1pbi8uLi9kb2MvdGVzdF9TVk0uUicsIHJlYXNvbiAnTm8gc3VjaCBmaWxlIG9yIGRpcmVjdG9yeSdcbiJ9 -->
+<!-- rnb-output-begin eyJkYXRhIjoiV2FybmluZyBtZXNzYWdlczpcbjE6IEluIGRpci5jcmVhdGUoZGlybmFtZShkZXN0KSwgcmVjdXJzaXZlID0gVFJVRSkgOlxuICBjYW5ub3QgY3JlYXRlIGRpciAnL1VzZXJzL2FkbWluLy4uL2RvYycsIHJlYXNvbiAnUGVybWlzc2lvbiBkZW5pZWQnXG4yOiBJbiBmaWxlLmNyZWF0ZSh0b1tva2F5XSkgOlxuICBjYW5ub3QgY3JlYXRlIGZpbGUgJy9Vc2Vycy9hZG1pbi8uLi9kb2MvZmVhdHVyZV9PUkJfdG9wbi5SJywgcmVhc29uICdObyBzdWNoIGZpbGUgb3IgZGlyZWN0b3J5J1xuIn0= -->
 <pre><code>Warning messages:
 1: In dir.create(dirname(dest), recursive = TRUE) :
   cannot create dir '/Users/admin/../doc', reason 'Permission denied'
 2: In file.create(to[okay]) :
-  cannot create file '/Users/admin/../doc/feature_ORB_topn.R', reason 'No such file or directory'
-3: In dir.create(dirname(dest), recursive = TRUE) :
-  cannot create dir '/Users/admin/../doc', reason 'Permission denied'
-4: In file.create(to[okay]) :
-  cannot create file '/Users/admin/../doc/train_SVM.R', reason 'No such file or directory'
-5: In dir.create(dirname(dest), recursive = TRUE) :
-  cannot create dir '/Users/admin/../doc', reason 'Permission denied'
-6: In file.create(to[okay]) :
-  cannot create file '/Users/admin/../doc/test_SVM.R', reason 'No such file or directory'</code></pre>
+  cannot create file '/Users/admin/../doc/feature_ORB_topn.R', reason 'No such file or directory'</code></pre>
 <!-- rnb-output-end -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuT1JCLmRhdGEgPC0gZmVhdHVyZV9PUkJfdG9wbihcIi9Vc2Vycy9hZG1pbi9EZXNrdG9wL0NvbHVtYmlhL1NwcmluZyAyMDE4L0FwcGxpZWQgRFMvUGV0IEltYWdlcyBhbmQgRXh0cmFjdGVkIEZlYXR1cmVzIC0gUHJvamVjdCAyL3B5dGhvbiBwZXRzXCIsIHNldF9uYW1lID0gXCJuNjBcIiwgbmZlYXR1cmVzID0gNjApXG5gYGAifQ== -->
+<pre class="r"><code>ORB.data &lt;- feature_ORB_topn(&quot;/Users/admin/Desktop/Columbia/Spring 2018/Applied DS/Pet Images and Extracted Features - Project 2/python pets&quot;, set_name = &quot;n60&quot;, nfeatures = 60)</code></pre>
+<!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <div id="scratchwork" class="section level1">
 <h1>Scratchwork</h1>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubmZlYXR1cmVzID0gMzBcbiAgaW1nX2RpciA8LSAgXCIvVXNlcnMvYWRtaW4vRGVza3RvcC9Db2x1bWJpYS9TcHJpbmcgMjAxOC9BcHBsaWVkIERTL1BldCBJbWFnZXMgYW5kIEV4dHJhY3RlZCBGZWF0dXJlcyAtIFByb2plY3QgMi9weXRob24gcGV0c1wiXG4gIG5fZmlsZXMgPC0gbGVuZ3RoKGxpc3QuZmlsZXMoaW1nX2RpcikpLTEgIFxuICBkYXQgPC0gbWF0cml4KE5BLCBucm93ID0gbl9maWxlcywgbmNvbCA9IDMyKm5mZWF0dXJlcylcbiAgXG4gIGZvciAoaSBpbiAxOm5fZmlsZXMpIHtcbiAgICAjcmV0ZXN0IDwtIG5weUxvYWQoXCIvVXNlcnMvYWRtaW4vRGVza3RvcC9Db2x1bWJpYS9TcHJpbmcgMjAxOC9BcHBsaWVkIERTL0dpdEh1Yi9wcm9qZWN0LTItcHJlZGljdGl2ZS1tb2RlbGxpbmctZ3JvdXAtNS9kb2MvUHJpbnRpbmcgMi5ucHlcIilcbiAgIFxuICAgICMgbG9hZHMgaSAoNSwzMikgdG9wICoqKjUga2V5IHBvaW50ZGVzY3JpcHRvcnNcbiAgICAjIGltYWdlIGtleXBvaW50c1xuICAgICBhcnJheSA8LSBucHlMb2FkKHBhc3RlKGltZ19kaXIsJy8nLCAncGV0JywgaSwgJy5ucHknLCBzZXAgPSAnJykpXG4gIFxuICAgICMgdHVybiBtYXRyaXggXCJhcnJheVwiIGludG8gYSBzaW5nbGUgdmVjdG9yIG1hZGUgdXAgb2YgdGhlIHNlcXVlbnRpYWxseSBcbiAgICAjIGNvbmNhdG9uYXRlZCByb3dzIG9mIFwic3Vic2V0XCIuIGFzc2lnbiB0aGUgbmV3IHZlY3RvciB0byB0aGUgXG4gICAgI2l0aCBlbGVtZW50IG9mIFwiZGF0XCIgbGlzdFxuICAgIGFycmF5IDwtIGFzLnZlY3Rvcih0KGFycmF5KSlcbiAgICBkYXRbaSxdIDwtIGFycmF5XG4gIH1cblxuYGBgIn0= -->
-<pre class="r"><code>nfeatures = 30
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIG5mZWF0dXJlcyA9IDYwXG4gIGltZ19kaXIgPC0gIFwiL1VzZXJzL2FkbWluL0Rlc2t0b3AvQ29sdW1iaWEvU3ByaW5nIDIwMTgvQXBwbGllZCBEUy9QZXQgSW1hZ2VzIGFuZCBFeHRyYWN0ZWQgRmVhdHVyZXMgLSBQcm9qZWN0IDIvcHl0aG9uIHBldHNcIlxuICBuX2ZpbGVzIDwtIGxlbmd0aChsaXN0LmZpbGVzKGltZ19kaXIpKS0xICBcbiAgZGF0IDwtIGRhdGEuZnJhbWUobWF0cml4KE5BLCBucm93ID0gbl9maWxlcywgbmNvbCA9IDMyKm5mZWF0dXJlcykpXG4gICNkYXQgPC0gbGlzdCgpXG4gIFxuICBmb3IgKGkgaW4gMTpuX2ZpbGVzKSB7XG4gICAgI3JldGVzdCA8LSBucHlMb2FkKFwiL1VzZXJzL2FkbWluL0Rlc2t0b3AvQ29sdW1iaWEvU3ByaW5nIDIwMTgvQXBwbGllZCBEUy9HaXRIdWIvcHJvamVjdC0yLXByZWRpY3RpdmUtbW9kZWxsaW5nLWdyb3VwLTUvZG9jL1ByaW50aW5nIDIubnB5XCIpXG4gICBcbiAgICAjIGxvYWRzIGkgKDUsMzIpIHRvcCAqKio1IGtleSBwb2ludGRlc2NyaXB0b3JzXG4gICAgIyBpbWFnZSBrZXlwb2ludHNcbiAgICAgYXJyYXkgPC0gZGF0YS5mcmFtZShucHlMb2FkKHBhc3RlKGltZ19kaXIsJy8nLCAncGV0JywgaSwgJy5ucHknLCBzZXAgPSAnJykpKVxuICBcbiAgICAjIHR1cm4gbWF0cml4IFwiYXJyYXlcIiBpbnRvIGEgc2luZ2xlIHZlY3RvciBtYWRlIHVwIG9mIHRoZSBzZXF1ZW50aWFsbHkgXG4gICAgIyBjb25jYXRvbmF0ZWQgcm93cyBvZiBcInN1YnNldFwiLiBhc3NpZ24gdGhlIG5ldyB2ZWN0b3IgdG8gdGhlIFxuICAgICNpdGggZWxlbWVudCBvZiBcImRhdFwiIGxpc3RcbiAgICBhcnJheSA8LSBhcy52ZWN0b3IodChhcnJheSkpXG4gICAgZGF0W2ksXSAgPC0gYXJyYXlcbiAgfVxuXG5gYGAifQ== -->
+<pre class="r"><code> nfeatures = 60
   img_dir &lt;-  &quot;/Users/admin/Desktop/Columbia/Spring 2018/Applied DS/Pet Images and Extracted Features - Project 2/python pets&quot;
   n_files &lt;- length(list.files(img_dir))-1  
-  dat &lt;- matrix(NA, nrow = n_files, ncol = 32*nfeatures)
+  dat &lt;- data.frame(matrix(NA, nrow = n_files, ncol = 32*nfeatures))
+  #dat &lt;- list()
   
   for (i in 1:n_files) {
     #retest &lt;- npyLoad(&quot;/Users/admin/Desktop/Columbia/Spring 2018/Applied DS/GitHub/project-2-predictive-modelling-group-5/doc/Printing 2.npy&quot;)
    
     # loads i (5,32) top ***5 key pointdescriptors
     # image keypoints
-     array &lt;- npyLoad(paste(img_dir,'/', 'pet', i, '.npy', sep = ''))
+     array &lt;- data.frame(npyLoad(paste(img_dir,'/', 'pet', i, '.npy', sep = '')))
   
     # turn matrix &quot;array&quot; into a single vector made up of the sequentially 
     # concatonated rows of &quot;subset&quot;. assign the new vector to the 
     #ith element of &quot;dat&quot; list
     array &lt;- as.vector(t(array))
-    dat[i,] &lt;- array
+    dat[i,]  &lt;- array
   }
 </code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiRXJyb3IgaW4gZGF0W2ksIF0gPC0gYXJyYXkgOiBcbiAgbnVtYmVyIG9mIGl0ZW1zIHRvIHJlcGxhY2UgaXMgbm90IGEgbXVsdGlwbGUgb2YgcmVwbGFjZW1lbnQgbGVuZ3RoXG4ifQ== -->
-<pre><code>Error in dat[i, ] &lt;- array : 
-  number of items to replace is not a multiple of replacement length</code></pre>
+<!-- rnb-output-begin eyJkYXRhIjoiRXJyb3IgaW4gYFs8LS5kYXRhLmZyYW1lYChgKnRtcCpgLCBpLCAsIHZhbHVlID0gYygtMS4xOTc5MTIwMjIyNzcwOWUrMTI5LCAgOiBcbiAgcmVwbGFjZW1lbnQgaGFzIDE4NTYgaXRlbXMsIG5lZWQgMTkyMFxuIn0= -->
+<pre><code>Error in `[&lt;-.data.frame`(`*tmp*`, i, , value = c(-1.19791202227709e+129,  : 
+  replacement has 1856 items, need 1920</code></pre>
 <!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
 </div>
 
-<div id="rmd-source-code">LS0tCnRpdGxlOiAiUiBOb3RlYm9vayIKb3V0cHV0OiBodG1sX25vdGVib29rCi0tLQpgYGB7cn0KI2xpYnJhcnkoUmNwcENOUHkpCgpzb3VyY2UoIi4uL2RvYy9mZWF0dXJlX09SQl90b3BuLlIiKQoKT1JCLmRhdGEgPC0gZmVhdHVyZV9PUkJfdG9wbigiL1VzZXJzL2FkbWluL0Rlc2t0b3AvQ29sdW1iaWEvU3ByaW5nIDIwMTgvQXBwbGllZCBEUy9QZXQgSW1hZ2VzIGFuZCBFeHRyYWN0ZWQgRmVhdHVyZXMgLSBQcm9qZWN0IDIvcHl0aG9uIHBldHMiLCBzZXRfbmFtZSA9ICJuNjAiLCBuZmVhdHVyZXMgPSA2MCkKCmBgYAoKCiMgU2NyYXRjaHdvcmsKYGBge3J9CmZlYXR1cmVfT1JCX3RvcG4gPC0gZnVuY3Rpb24oaW1nX2Rpciwgc2V0X25hbWUgPSAiIiwgZGF0YV9uYW1lID0gInBldHMiLCBleHBvcnQ9VCwgbmZlYXR1cmVzID0gNSkgewogIAogIGxpYnJhcnkoUmNwcENOUHkpCiAgCiAgI3B5X2xvYWRfb2JqZWN0KCIvVXNlcnMvYWRtaW4vRGVza3RvcC9Db2x1bWJpYS9TcHJpbmcgMjAxOC9BcHBsaWVkIERTL0dpdEh1Yi9wcm9qZWN0LTItcHJlZGljdGl2ZS1tb2RlbGxpbmctZ3JvdXAtNS9kb2MvcHlfZGVzY3JpcHRvcnMubnB5IikKICAjcHlfcnVuX2ZpbGUoIi9Vc2Vycy9hZG1pbi9EZXNrdG9wL0NvbHVtYmlhL1NwcmluZyAyMDE4L0FwcGxpZWQgRFMvR2l0SHViL3Byb2plY3QtMi1wcmVkaWN0aXZlLW1vZGVsbGluZy1ncm91cC01L2RvYy9weV9PUkJfRklOQUwucHkiKQogICNweV9ydW5fZmlsZSgiLi4vbGliL3B5X09SQl9GSU5BTC5weSIpCiAgCiAgbmZlYXR1cmVzID0gMzAKICBpbWdfZGlyIDwtICAiL1VzZXJzL2FkbWluL0Rlc2t0b3AvQ29sdW1iaWEvU3ByaW5nIDIwMTgvQXBwbGllZCBEUy9QZXQgSW1hZ2VzIGFuZCBFeHRyYWN0ZWQgRmVhdHVyZXMgLSBQcm9qZWN0IDIvcHl0aG9uIHBldHMiCiAgbl9maWxlcyA8LSBsZW5ndGgobGlzdC5maWxlcyhpbWdfZGlyKSktMSAgCiAgZGF0IDwtIG1hdHJpeChOQSwgbnJvdyA9IG5fZmlsZXMsIG5jb2wgPSAzMipuZmVhdHVyZXMpCiAgCiAgZm9yIChpIGluIDE6bl9maWxlcykgewogICAgI3JldGVzdCA8LSBucHlMb2FkKCIvVXNlcnMvYWRtaW4vRGVza3RvcC9Db2x1bWJpYS9TcHJpbmcgMjAxOC9BcHBsaWVkIERTL0dpdEh1Yi9wcm9qZWN0LTItcHJlZGljdGl2ZS1tb2RlbGxpbmctZ3JvdXAtNS9kb2MvUHJpbnRpbmcgMi5ucHkiKQogICAKICAgICMgbG9hZHMgaSAoNSwzMikgdG9wICoqKjUga2V5IHBvaW50ZGVzY3JpcHRvcnMKICAgICMgaW1hZ2Uga2V5cG9pbnRzCiAgICAgYXJyYXkgPC0gbnB5TG9hZChwYXN0ZShpbWdfZGlyLCcvJywgJ3BldCcsIGksICcubnB5Jywgc2VwID0gJycpKQogIAogICAgIyB0dXJuIG1hdHJpeCAiYXJyYXkiIGludG8gYSBzaW5nbGUgdmVjdG9yIG1hZGUgdXAgb2YgdGhlIHNlcXVlbnRpYWxseSAKICAgICMgY29uY2F0b25hdGVkIHJvd3Mgb2YgInN1YnNldCIuIGFzc2lnbiB0aGUgbmV3IHZlY3RvciB0byB0aGUgCiAgICAjaXRoIGVsZW1lbnQgb2YgImRhdCIgbGlzdAogICAgYXJyYXkgPC0gYXMudmVjdG9yKHQoYXJyYXkpKQogICAgZGF0W2ksXSA8LSBhcnJheQogIH0KICAKICAjIyMgb3V0cHV0IGNvbnN0cnVjdGVkIGZlYXR1cmVzCiAgaWYoZXhwb3J0KXsKICAgIHNhdmUoZGF0LCBmaWxlID0gcGFzdGUwKCIuLi9vdXRwdXQvZmVhdHVyZV9PUkJfcmFuZG9tIiwgZGF0YV9uYW1lLCAiXyIsIHNldF9uYW1lLCAiLlJEYXRhIikpCiAgfSAKICAjb3V0cHV0ICJkYXQiIGFzIG1hdHJpeAogIHJldHVybihkYXQpCn0KYGBgCgo=</div>
+<div id="rmd-source-code">LS0tCnRpdGxlOiAiUiBOb3RlYm9vayIKb3V0cHV0OiBodG1sX25vdGVib29rCi0tLQpgYGB7cn0KI2xpYnJhcnkoUmNwcENOUHkpCgpzb3VyY2UoIi4uL2RvYy9mZWF0dXJlX09SQl90b3BuLlIiKQoKT1JCLmRhdGEgPC0gZmVhdHVyZV9PUkJfdG9wbigiL1VzZXJzL2FkbWluL0Rlc2t0b3AvQ29sdW1iaWEvU3ByaW5nIDIwMTgvQXBwbGllZCBEUy9QZXQgSW1hZ2VzIGFuZCBFeHRyYWN0ZWQgRmVhdHVyZXMgLSBQcm9qZWN0IDIvcHl0aG9uIHBldHMiLCBzZXRfbmFtZSA9ICJuNjAiLCBuZmVhdHVyZXMgPSA2MCkKCmBgYAoKCiMgU2NyYXRjaHdvcmsKYGBge3J9CmZlYXR1cmVfT1JCX3RvcG4gPC0gZnVuY3Rpb24oaW1nX2Rpciwgc2V0X25hbWUgPSAiIiwgZGF0YV9uYW1lID0gInBldHMiLCBleHBvcnQ9VCwgbmZlYXR1cmVzID0gNSkgewogIAogIGxpYnJhcnkoUmNwcENOUHkpCiAgCiAgI3B5X2xvYWRfb2JqZWN0KCIvVXNlcnMvYWRtaW4vRGVza3RvcC9Db2x1bWJpYS9TcHJpbmcgMjAxOC9BcHBsaWVkIERTL0dpdEh1Yi9wcm9qZWN0LTItcHJlZGljdGl2ZS1tb2RlbGxpbmctZ3JvdXAtNS9kb2MvcHlfZGVzY3JpcHRvcnMubnB5IikKICAjcHlfcnVuX2ZpbGUoIi9Vc2Vycy9hZG1pbi9EZXNrdG9wL0NvbHVtYmlhL1NwcmluZyAyMDE4L0FwcGxpZWQgRFMvR2l0SHViL3Byb2plY3QtMi1wcmVkaWN0aXZlLW1vZGVsbGluZy1ncm91cC01L2RvYy9weV9PUkJfRklOQUwucHkiKQogICNweV9ydW5fZmlsZSgiLi4vbGliL3B5X09SQl9GSU5BTC5weSIpCiAgCiAgbmZlYXR1cmVzID0gNjAKICBpbWdfZGlyIDwtICAiL1VzZXJzL2FkbWluL0Rlc2t0b3AvQ29sdW1iaWEvU3ByaW5nIDIwMTgvQXBwbGllZCBEUy9QZXQgSW1hZ2VzIGFuZCBFeHRyYWN0ZWQgRmVhdHVyZXMgLSBQcm9qZWN0IDIvcHl0aG9uIHBldHMiCiAgbl9maWxlcyA8LSBsZW5ndGgobGlzdC5maWxlcyhpbWdfZGlyKSktMSAgCiAgZGF0IDwtIGRhdGEuZnJhbWUobWF0cml4KE5BLCBucm93ID0gbl9maWxlcywgbmNvbCA9IDMyKm5mZWF0dXJlcykpCiAgI2RhdCA8LSBsaXN0KCkKICAKICBmb3IgKGkgaW4gMTpuX2ZpbGVzKSB7CiAgICAjcmV0ZXN0IDwtIG5weUxvYWQoIi9Vc2Vycy9hZG1pbi9EZXNrdG9wL0NvbHVtYmlhL1NwcmluZyAyMDE4L0FwcGxpZWQgRFMvR2l0SHViL3Byb2plY3QtMi1wcmVkaWN0aXZlLW1vZGVsbGluZy1ncm91cC01L2RvYy9QcmludGluZyAyLm5weSIpCiAgICAgCiAgICAjIGxvYWRzIGkgKDUsMzIpIHRvcCAqKio1IGtleSBwb2ludGRlc2NyaXB0b3JzCiAgICAjIGltYWdlIGtleXBvaW50cwogICAgIGFycmF5IDwtIG5weUxvYWQocGFzdGUoaW1nX2RpciwnLycsICdwZXQnLCBpLCAnLm5weScsIHNlcCA9ICcnKSkKICAKICAgICMgdHVybiBtYXRyaXggImFycmF5IiBpbnRvIGEgc2luZ2xlIHZlY3RvciBtYWRlIHVwIG9mIHRoZSBzZXF1ZW50aWFsbHkgCiAgICAjIGNvbmNhdG9uYXRlZCByb3dzIG9mICJzdWJzZXQiLiBhc3NpZ24gdGhlIG5ldyB2ZWN0b3IgdG8gdGhlIAogICAgI2l0aCBlbGVtZW50IG9mICJkYXQiIGxpc3QKICAgIGFycmF5IDwtIGFzLnZlY3Rvcih0KGFycmF5KSkKICAgIAogICAgaWYgKGxlbmd0aChhcnJheSkgPT0gMTkyMCkgewogICAgICBkYXRbaSxdICA8LSBhcnJheQogICAgfSBlbHNlIHsKICAgICAgZGF0W2ksXSAgPC0gZGF0WzEsXQogICAgfQogIH0KICAKYGBgCgo=</div>
 
 
 
