@@ -10,7 +10,7 @@
 
 feature <- function(img_dir, set_name, data_name = "data", export = T){
 
-<<<<<<< HEAD
+#<<<<<<< HEAD
 #import normalize vector library
 library(ppls)
 
@@ -28,8 +28,8 @@ nbins = 9L
 
 hog = cv2$HOGDescriptor(winSize, blockSize, blockStride, cellSize, nbins)
 
-=======
->>>>>>> b3baabe422e23c8e234d48848e40e08a7948ada6
+#=======
+#>>>>>>> b3baabe422e23c8e234d48848e40e08a7948ada6
 ######################### CHANGE THIS VARIABLE #########################
 #set the starting pet image number in test_features_dir
 
@@ -44,14 +44,14 @@ test_features_dir <- paste(experiment_dir, "test-features/", sep = "")
 
 if (img_dir == img_train_dir) {
 
-n_files <- length(list.files(img_dir))
+  n_files <- length(list.files(img_dir))
 
-load(paste(train_features_dir, 'pet', 1, '.jpg.sift.Rdata', sep = ''))
+  load(paste(train_features_dir, 'pet', 1, '.jpg.sift.Rdata', sep = ''))
 
-set.seed(1234)
-bof <- kmeans(features, 20, iter.max = 20)
+  set.seed(1234)
+  bof <- kmeans(features, 20, iter.max = 20)
 
-dat1 <- cbind(normalize.vector(t(bof$centers[1, ])), 
+  dat1 <- cbind(normalize.vector(t(bof$centers[1, ])), 
              normalize.vector(t(bof$centers[2, ])),
              normalize.vector(t(bof$centers[3, ])),
              normalize.vector(t(bof$centers[4, ])),
@@ -73,7 +73,7 @@ dat1 <- cbind(normalize.vector(t(bof$centers[1, ])),
              normalize.vector(t(bof$centers[20, ]))
             )
 
-for (i in 2 : n_files) {
+  for (i in 2 : n_files) {
     	load(paste(train_features_dir, 'pet', i, '.jpg.sift.Rdata', sep = ''))
         set.seed(1234)
         bof <- kmeans(features, 20, iter.max = 20)
@@ -99,18 +99,16 @@ for (i in 2 : n_files) {
                                 normalize.vector(t(bof$centers[20, ]))
     	                       ))
 	}
-}
+} else {
 
-else {
+  n_files <- length(list.files(img_dir))
 
-n_files <- length(list.files(img_dir))
+  load(paste(test_features_dir, 'pet', test_start, '.jpg.sift.Rdata', sep = ''))
 
-load(paste(test_features_dir, 'pet', test_start, '.jpg.sift.Rdata', sep = ''))
+  set.seed(1234)
+  bof <- kmeans(features, 20, iter.max = 20)
 
-set.seed(1234)
-bof <- kmeans(features, 20, iter.max = 20)
-
-dat <- cbind(t(bof$centers[1, ]), 
+  dat <- cbind(t(bof$centers[1, ]), 
              t(bof$centers[2, ]),
              t(bof$centers[3, ]),
              t(bof$centers[4, ]),
@@ -120,9 +118,9 @@ dat <- cbind(t(bof$centers[1, ]),
              t(bof$centers[8, ]),
              t(bof$centers[9, ]),
              t(bof$centers[10, ])
-)
+  )
 
-for (i in (test_start + 1) : (test_start - 1 + n_files)) {
+    for (i in (test_start + 1) : (test_start - 1 + n_files)) {
         load(paste(test_features_dir, 'pet', i, '.jpg.sift.Rdata', sep = ''))
         set.seed(1234)
         bof <- kmeans(features, 20, iter.max = 20)
@@ -152,12 +150,9 @@ dat2[i, ] <- t(hog_values)
 
 dat <- cbind(dat1, dat2)
 
-}
-
 #when img_dir == test_features_dir
-
-else {
-
+} else {
+  
 n_files <- length(list.files(img_dir))
 
 load(paste(test_features_dir, 'pet', test_start, '.jpg.sift.Rdata', sep = ''))

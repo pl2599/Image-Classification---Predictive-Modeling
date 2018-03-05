@@ -3,14 +3,24 @@ title: 'Project 2 - Image Classification: Cats vs Dogs'
 author: Group 5
 date: "March 5, 2018"
 output:
-  html_document: default
   pdf_document: default
+  html_document: default
 ---
 In your final Project 2 repo, there should be an R markdown file called `main.Rmd` that organizes **all computational steps** for evaluating your proposed image classification framework. 
 
 This file is meant to be a template for evaluating models used for image analysis (and could be generalized for any predictive modeling). You should update it according to your models/codes but your final document should have precisely the same structure. 
 
-```{r, warning = FALSE}
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  eval = FALSE
+)
+```
+
+```{r, warning = FALSE,}
+
+
+
 if(!require("EBImage")){
   source("https://bioconductor.org/biocLite.R")
   biocLite("EBImage")
@@ -45,7 +55,8 @@ library("xgboost")
 We first set the working directory to the location of this .Rmd file  (it should be in a project folder). Then we specify our training and testing data. If you do not have an independent test set, you need to create your own testing data by random subsampling from the training data (we haven't done this here), and in order to obain reproducible results, you should use `set.seed()` whenever randomization is used. 
 
 ```{r wkdir, eval=FALSE}
-setwd("./Documents/GitHub/project-2-predictive-modelling-group-5/doc")
+setwd("../Documents/GitHub/project-2-predictive-modelling-group-5/doc")
+
 # Replace the above with your own path or manually set it in RStudio to where this rmd file is located. 
 ```
 
