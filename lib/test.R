@@ -2,9 +2,9 @@
 ### Fit the classification model with testing data ###
 ######################################################
 
-### Author: Yuting Ma
-### Project 3
-### ADS Spring 2016
+### Author: Yuting Ma with modification by Ginny Gao
+### Project 2
+### ADS Spring 2018
 
 test <- function(fit_train, dat_test){
   
@@ -22,6 +22,6 @@ test <- function(fit_train, dat_test){
   pred <- predict(fit_train$fit, newdata = dat_test, 
                   n.trees = fit_train$iter, type = "response")
   
-  return(as.numeric(pred > 0.7))
+  return(as.numeric(pred > 0.5)) #test with 0.7
 }
 
