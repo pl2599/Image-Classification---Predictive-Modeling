@@ -11,13 +11,7 @@ In your final Project 2 repo, there should be an R markdown file called `main.Rm
 This file is meant to be a template for evaluating models used for image analysis (and could be generalized for any predictive modeling). You should update it according to your models/codes but your final document should have precisely the same structure. 
 
 
-```{r, include = FALSE}
-knitr::opts_chunk$set(
-  eval = FALSE
-)
-```
-
-```{r, warning = FALSE,}
+```{r, warning = FALSE}
 
 
 
