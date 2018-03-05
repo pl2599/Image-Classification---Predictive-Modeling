@@ -53,7 +53,11 @@ a. Extracted arrays from raw iamges and organized them into one dataset that is 
 b. Built neural networks model with three layers by Tensorflow.
 c. Tested the neuron network classifier with an accuracy of ?%.
 
+#### Juho Ma
 
+a. Constructed HoG features
+b. Built randomForest classifier
+c. Tested models; SIFT + GBM, SIFT + RF, HoG + RF, SIFT + HoG + RF
 
 
 
