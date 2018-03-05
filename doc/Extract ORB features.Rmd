@@ -25,8 +25,8 @@ feature_ORB_topn <- function(img_dir, set_name = "", data_name = "pets", export=
   nfeatures = 60
   img_dir <-  "/Users/admin/Desktop/Columbia/Spring 2018/Applied DS/Pet Images and Extracted Features - Project 2/python pets"
   n_files <- length(list.files(img_dir))-1  
-  dat <- data.frame(matrix(NA, nrow = n_files, ncol = 32*nfeatures))
-  #dat <- list()
+  #dat <- data.frame(matrix(NA, nrow = n_files, ncol = 32*nfeatures))
+  dat <- list()
   
   for (i in 1:n_files) {
     #retest <- npyLoad("/Users/admin/Desktop/Columbia/Spring 2018/Applied DS/GitHub/project-2-predictive-modelling-group-5/doc/Printing 2.npy")
@@ -34,6 +34,7 @@ feature_ORB_topn <- function(img_dir, set_name = "", data_name = "pets", export=
     # loads i (5,32) top ***5 key pointdescriptors
     # image keypoints
      array <- npyLoad(paste(img_dir,'/', 'pet', i, '.npy', sep = ''))
+     #<- t(simplify2array(array)
   
     # turn matrix "array" into a single vector made up of the sequentially 
     # concatonated rows of "subset". assign the new vector to the 
@@ -41,11 +42,12 @@ feature_ORB_topn <- function(img_dir, set_name = "", data_name = "pets", export=
     array <- as.vector(t(array))
     
     if (length(array) == 1920) {
-      dat[i,]  <- array
+      dat[[i]]  <- array
     } else {
-      dat[i,]  <- dat[1,]
+      dat[[i]]  <- dat[[1]]
     }
   }
+ 
   
 ```
 

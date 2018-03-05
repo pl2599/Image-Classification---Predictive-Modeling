@@ -35,9 +35,8 @@ feature_ORB_topn <- function(img_dir, set_name = "", data_name = "pets", export=
   
   
   n_files <- length(list.files(img_dir))-1  
-  dat <- matrix(NA, nrow = n_files, ncol = 32*nfeatures)
   
-  dat <- data.frame(matrix(NA, nrow = n_files, ncol = 32*nfeatures))
+  dat <- matrix(NA, nrow = n_files, ncol = 32*nfeatures)
   #dat <- list()
   
   for (i in 1:n_files) {
@@ -45,12 +44,13 @@ feature_ORB_topn <- function(img_dir, set_name = "", data_name = "pets", export=
     
     # loads i (5,32) top ***5 key pointdescriptors
     # image keypoints
-    array <- npyLoad(paste(img_dir,'/', 'pet', i, '.npy', sep = ''))
+    array <- unlist(npyLoad(paste(img_dir,'/', 'pet', i, '.npy', sep = '')))
     
     # turn matrix "array" into a single vector made up of the sequentially 
     # concatonated rows of "subset". assign the new vector to the 
     #ith element of "dat" list
     array <- as.vector(t(array))
+    #array <- as.numeric(array)
     
     # I have a problem where a lot( maybe 10%) of the matricies are missing a few values...
     if (length(array) == 1920) {

@@ -20,7 +20,7 @@ load("/Users/admin/Desktop/Columbia/Spring 2018/Applied DS/GitHub/project-2-pred
 ORB <- dat
 
 #remember to train.y value in as.factor(). Without as.factor the svm() function will do regression and give very different (continuous) outputs
-cv.duration.noah.ORB.1000 <- system.time(cv.output.noah.ORB.1000 <- tune(svm, train.x = ORB.data[1:1000,], train.y = as.factor(label_train[1:1000,]), kernel = "linear", scale = FALSE, ranges = list(cost=c(.00000001, .00001, 0.001,0.01, 1, 5)), tunecontrol = tune.control(cross = 5)))
+cv.duration.noah.ORB.1000 <- system.time(cv.output.noah.ORB.1000 <- tune(svm, train.x = ORB[1:1000,], train.y = as.factor(label_train[1:1000,]), kernel = "linear", scale = FALSE, ranges = list(cost=c(.00000001, .00001, 0.001,0.01, 1, 5)), tunecontrol = tune.control(cross = 5)))
 cv.duration.noah.ORB.1000
 
 summary(cv.output.noah.ORB.1000)
