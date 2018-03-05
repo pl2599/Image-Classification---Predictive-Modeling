@@ -25,7 +25,7 @@ Term: Spring 2018
   + Baseline model: GBM with SIFT feature
   + Proposed model:
 
-+ Project details: We explored different feature extraction methods, such as SIFT, HoG, SIFT + HoG, RGB + PCA, SIFT + HoG + RGB + PCA, and ORB. We also tested with different classfication models to select a model that achieves best performance, from algorithm accuracy, runtime, and memory perspective. Please refer to our `main.Rmd` for more details.
++ Project details: We explored different feature extraction methods, such as SIFT, HoG, SIFT + HoG, RGB + PCA, and SIFT + HoG + RGB + PCA. We also tested with different classfication models to select a model that achieves best performance, from algorithm accuracy, runtime, and memory perspective. Please refer to our `main.Rmd` for more details.
 
 Below is a summary comparison for different model and feature combiations we explored.
 
@@ -35,7 +35,7 @@ Contribution statement: [default](doc/a_note_on_contributions.md) All team membe
 
 1. Feature    
 a. Compiled SIFT features from separate .RData files to an organized feature matrix that is used by different models, selected key features points using Bag of Visual Words methodology.  
-b. Prepared HoG feature to read training and testing images.
+b. Prepared HoG, and SIFT + HoG feature to read training and testing images.
 
 2. Model  
 a. Tested SIFT with GBM model with parameter tuning.  
