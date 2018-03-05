@@ -60,6 +60,10 @@ d. Debugged SIFT and HoG
 #### Chris Lai
 
 #### Noah Chasek-Macfoy
+a. Constructed SVM model, cross validated cost parameter on SIFT and HoG features
+b. Built ORB feature extraction method between python and R
+c. Worked on de-bugging ORB features
+d. built alternative summarization method for SIFT features selecting random keypoints 
 
 #### All
 a. Client problem analysis  
