@@ -75,12 +75,6 @@ run.feature.test  <- TRUE # process features for test set
 
 
 #swithes for testing xgboost with different feature selections
-
-run.rgb.features <- FALSE
-run.cv.xgb.rgb <- FALSE
-run.xgb.rgb.train <- FALSE
-run.xgb.rgb.test <- F
-
 run.sift.features <- FALSE
 run.cv.xgb.sift <- FALSE
 run.xgb.sift.train <- FALSE
@@ -221,14 +215,6 @@ if(run.cv){
 
 
 #For advanced model: XGB parameter Tuning
-
-if(run.cv.xgb.rgb)
-{
-  xgb_rgb_param <- cv_xgboost(rgb_feature_train, label_train)
-  
-  save(xgb_rgb_param, file = "../output/xgb_rgb_param.RData")
-}
-
 if(run.cv.xgb.sift)
 {
   xgb_sift_param <- cv_xgboost(sift_feature_train, label_train)
