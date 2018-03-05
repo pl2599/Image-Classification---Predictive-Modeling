@@ -22,12 +22,12 @@ Term: Spring 2018
                 
 + Project summary: In this project, we extracted features of cats and dogs, explored and compared various classification models to detect whether an image shows a cat or dog.
 
-  + Baseline model: GBM with SIFT feature
-  + Proposed model:
+  + Baseline model: GBM with SIFT features
+  + Proposed model: XGBoost with SIFT + HoG features
 
-+ Project details: We explored different feature extraction methods, such as SIFT, HoG, SIFT + HoG, RGB + PCA, and SIFT + HoG + RGB + PCA. We also tested with different classfication models to select a model that achieves best performance, from algorithm accuracy, runtime, and memory perspective. Please refer to our `main.Rmd` for more details.
++ Project details: We explored different feature extraction methods, such as SIFT, HoG, SIFT + HoG, RGB + PCA, and SIFT + HoG + RGB + PCA. We also tested with different classfication models to select a model that achieves best performance, from algorithm accuracy, runtime, and memory perspective. Please refer to our `main.Rmd` for more details. For the efficiency of computation and the improved accuracy, we chose XGBoost classifer with SIFT + HoG features, which increased the accuracy by % and decreased runtime by %.
 
-Below is a summary comparison for different model and feature combiations we explored.
+Below is a summary comparison for different model and feature combiations we explored. <- if we have time
 
 Contribution statement: [default](doc/a_note_on_contributions.md) All team members contributed equally in all stages of this project. All team members approve our work presented in this GitHub repository including this contributions statement.
 
@@ -57,17 +57,17 @@ c. Tested the neuron network classifier with an accuracy of ?%.
 
 a. Constructed HoG features  
 b. Built randomForest classifier  
-c. Tested models; SIFT + GBM, SIFT + RF, HoG + RF, SIFT + HoG + RF  
+c. Tested models; SIFT + GBM, SIFT + RF, HoG + RF, SIFT + HoG + RF
+d. Debugged SIFT and HoG
 
+#### Chris Lai
 
-
+#### Noah Chasek-Macfoy
 
 #### All
 a. Client problem analysis  
 b. Github collaboration and organization  
 c. Contribution to presentation content
-
-
 
 Following [suggestions](http://nicercode.github.io/blog/2013-04-05-projects/) by [RICH FITZJOHN](http://nicercode.github.io/about/#Team) (@richfitz). This folder is orgarnized as follows.
 
