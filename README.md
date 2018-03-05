@@ -30,6 +30,10 @@ Term: Spring 2018
 
 Below is a summary comparison for different model and feature combiations we explored. <- if we have time
 
+
++ CNN architecture
+![image](figs/cnn-image-1.jpg)
+
 Contribution statement: [default](doc/a_note_on_contributions.md) All team members contributed equally in all stages of this project. All team members approve our work presented in this GitHub repository including this contributions statement.
 
 #### Ginny Gao
@@ -59,9 +63,9 @@ d. Debugged SIFT and HoG; ran the final model
 e. Contributed to `readMe.md`
 
 #### Chris Lai
-a. Constructed RGB + PCA features
-b. Built XGBoost classifier
-c. Tested XGBoost models
+a. Constructed RGB + PCA features  
+b. Built XGBoost classifier  
+c. Tested XGBoost models  
 d. Contributed to `main.Rmd`
 
 #### Noah Chasek-Macfoy
