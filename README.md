@@ -46,6 +46,17 @@ a. Contributed to `main.Rmd` and `README.md`.
 b. Facilitated meetings, discussions, result output.
 
 
+#### Chri Lai
+
+1. Feature
+a. Compiled RGB and RGB+PCA features.
+
+2. Model
+a. Coded the entirety of XGBoost and ran it with all features available, including SIFT, HOG, SIFT + HOG, RGB, RGB + PCA features. Included a cross validation technique for hyper parameter tuning using a grid of potential parameters. 
+
+3. Misc
+a. Contributed to 'main.Rmd'.
+b. Facilitated discussions.
 
 
 
