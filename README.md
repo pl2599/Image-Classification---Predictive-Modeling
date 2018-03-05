@@ -25,7 +25,7 @@ Term: Spring 2018
   + Baseline model: GBM with SIFT features
   + Proposed model: XGBoost with SIFT + HoG features
 
-+ Project details: We explored different feature extraction methods, such as SIFT, HoG, SIFT + HoG, ORB, RGB + PCA, and SIFT + HoG + RGB + PCA. We also tested different classfication models to select a model that achieves best performance, from algorithm accuracy, runtime, and memory perspective. Please refer to our `main.Rmd` for more details. For the efficiency of computation and the improved accuracy, we chose XGBoost classifer with SIFT + HoG features, which increased the accuracy by % and decreased runtime by %.
++ Project details: We explored different feature extraction methods, such as SIFT, HoG, SIFT + HoG, RGB + PCA, and SIFT + HoG + RGB + PCA. We also tested different classfication models to select a model that achieves best performance, from algorithm accuracy, runtime, and memory perspective. Please refer to our `main.Rmd` for more details. For the efficiency of computation and the improved accuracy, we chose XGBoost classifer with SIFT + HoG features, which increased the accuracy by % and decreased runtime by %.
 
 Below is a summary comparison for different model and feature combiations we explored. <- if we have time
 
