@@ -46,7 +46,7 @@ a. Contributed to `main.Rmd` and `README.md`.
 b. Facilitated meetings, discussions, result output.
 
 
-#### Chri Lai
+#### Chris Lai
 
 1. Feature
 a. Compiled RGB and RGB+PCA features.
