@@ -33,8 +33,8 @@ Contribution statement: [default](doc/a_note_on_contributions.md) All team membe
 
 #### Ginny Gao
 
-1. Feature  
-a. Compiled SIFT features from separate .RData files to an organized feature matrix that is used by different models, selected key features points using Bag of Visual Words methodology.  
+1. Feature    
+a. Compiled SIFT features from separate .RData files to an organized feature matrix that is used by different models, selected key features points using Bag of Visual Words methodology.  
 b. Prepared HoG feature to read training and testing images.
 
 2. Model  
@@ -42,8 +42,8 @@ a. Tested SIFT with GBM model with parameter tuning.
 b. Tested GBM on HoG, and SIFT + HoG.
 
 3. Misc  
-a. Contributed to `main.Rmd` and `README.md`  
-b. Facilitated meetings, discussion, result output
+a. Contributed to `main.Rmd` and `README.md`.  
+b. Facilitated meetings, discussions, result output.
 
 
 
