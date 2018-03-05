@@ -26,7 +26,7 @@ Term: Spring 2018
    
  + Proposed model: XGBoost with SIFT + HoG features, Convolutional Neral Network 
 
-+ Project details: We explored different feature extraction methods, such as SIFT, HoG, SIFT + HoG, RGB + PCA, and SIFT + HoG + RGB + PCA. We also tested different classfication models to select a model that achieves best performance, from algorithm accuracy, runtime, and memory perspective. Please refer to our `main.Rmd` for more details. For the efficiency of computation and the improved accuracy, we chose XGBoost classifer with SIFT + HoG features, which increased the accuracy from 64% to 79% and decreased runtime from 1096.47s to 183.979s.
++ Project details: We explored different feature extraction methods, such as SIFT, HoG, SIFT + HoG, RGB + PCA, and SIFT + HoG + RGB + PCA. We also tested different classfication models to select a model that achieves best performance, from algorithm accuracy, runtime, and memory perspective. Please refer to our [`main.Rmd`](https://github.com/GU4243-ADS/project-2-predictive-modelling-group-5/blob/master/doc/main.Rmd) for more details. For the efficiency of computation and the improved accuracy, we chose XGBoost classifer with SIFT + HoG features, which increased the accuracy from 64% to 79% and decreased runtime from 1096.47s to 183.979s.
 
 + CNN architecture
 ![image](figs/cnn-image-1.jpg)
@@ -56,7 +56,7 @@ c. Tested the neuron network classifier.
 a. Constructed HoG features  
 b. Built randomForest classifier  
 c. Tested models; SIFT + GBM, SIFT + RF, HoG + RF, SIFT + HoG + RF
-d. Debugged SIFT and HoG; ran the final model 
+d. Debugged SIFT and HoG; ran the final model  
 e. Contributed to `readMe.md`
 
 #### Chris Lai
