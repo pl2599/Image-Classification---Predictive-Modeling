@@ -32,7 +32,7 @@ Term: Spring 2018
   ![image](figs/Performance_comparison_1.png)
   
   + Performance comparison across different features and models explored  
-  ![image](figs/Performance_comparsion_2.png)
+  ![image](figs/Performance_comparison_2.png)
 
 + CNN architecture. 
 Convolution is a mathematical operation that’s used in single processing to filter signals, find patterns in signals.    
