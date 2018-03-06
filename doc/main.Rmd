@@ -330,7 +330,7 @@ label_test <- read.table(paste(experiment_dir, "test_label.txt", sep = ""), head
 label_test <- as.numeric(unlist(label_test) == "dog")
 
 library(caret)
-confusionMatrix(get(load('/Users/qinqingao/Documents/GitHub/project-2-predictive-modelling-group-5/output/pred_test.RData')), label_test)$overall['Accuracy']
+confusionMatrix(get(load('./Documents/GitHub/project-2-predictive-modelling-group-5/output/pred_test.RData')), label_test)$overall['Accuracy']
 
 #For advanced model
 if(run.xgb.rgb.test)
