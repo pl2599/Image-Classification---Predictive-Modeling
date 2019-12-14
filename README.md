@@ -42,48 +42,6 @@ More details can be found [here](https://github.com/GU4243-ADS/project-2-predict
 
 Contribution statement: [default](doc/a_note_on_contributions.md) All team members contributed equally in all stages of this project. All team members approve our work presented in this GitHub repository including this contributions statement.
 
-#### Ginny Gao
-1. Feature    
-a. Compiled SIFT features from separate .RData files to an organized feature matrix that is used by different models, selected key features points using Bag of Visual Words methodology.  
-b. Prepared HoG, and SIFT + HoG feature to read training and testing images.
-
-2. Model  
-a. Tested SIFT with GBM model with parameter tuning.  
-b. Tested GBM on HoG, and SIFT + HoG.
-
-3. Misc  
-a. Contributed to `main.Rmd` and `README.md`.  
-b. Facilitated meetings, discussions, result output.
-
-#### Sile Yang
-Convolutional Neral Networks  
-a. Extracted arrays from raw iamges and organized them into one dataset that is suitable for convolutional Neural Networks model.    
-b. Built neural networks model with three layers by Tensorflow.  
-c. Tested the neuron network classifier.
-
-#### Juho Ma
-a. Constructed HoG features  
-b. Built randomForest classifier  
-c. Tested models; SIFT + GBM, SIFT + RF, HoG + RF, SIFT + HoG + RF
-d. Debugged SIFT and HoG; ran the final model  
-e. Contributed to `README.md`
-
-#### Chris Lai
-a. Constructed RGB + PCA features  
-b. Built XGBoost classifier  
-c. Tested XGBoost models  
-d. Contributed to `main.Rmd`
-
-#### Noah Chasek-Macfoy
-a. Constructed SVM model, cross validated cost parameter on SIFT and HoG features  
-b. Built ORB feature extraction method between python and R  
-c. Worked on de-bugging ORB features  
-d. built alternative summarization method for SIFT features selecting random keypoints   
-
-#### All
-a. Client problem analysis  
-b. Github collaboration and organization  
-c. Contribution to presentation content
 
 Following [suggestions](http://nicercode.github.io/blog/2013-04-05-projects/) by [RICH FITZJOHN](http://nicercode.github.io/about/#Team) (@richfitz). This folder is orgarnized as follows.
 
